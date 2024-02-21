@@ -2,7 +2,7 @@
 import { useGetCompanyQuery } from "@/lib/features/apiSlice"
 import { Payment, columns } from "./columns"
 import { DataTable } from "./DataTable"
-import Modal from "@/components/utils/Model"
+
 async function getData() {
     const res = await fetch('http://localhost:8000/company',{ next: { revalidate:10, tags:["Company"] } })
     // The return value is *not* serialized
@@ -21,7 +21,7 @@ export default async function Companies() {
   return (
     <div className="container mx-auto py-10">
       <DataTable columns={columns} data={data} />
-      <Modal/>
+      
     </div>
   )
 }

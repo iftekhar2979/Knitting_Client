@@ -53,7 +53,7 @@ export const columns = [
     header: "Action",
     cell: ({ row }) => {
 
-      return <Action action={action}/>
+      return <Action action={action} data={row.original}/>
     },
   },
 ]
