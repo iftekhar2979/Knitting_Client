@@ -1,14 +1,8 @@
 import { AddCompany } from "@/components/dashboard/company/AddCompany";
-
-
-
-const  addCompany=()=> {
-
-
+const addCompany = () => {
   return (
     <main className="mx-6">
-
-        <AddCompany></AddCompany>
+      <AddCompany></AddCompany>
     </main>
   )
 }

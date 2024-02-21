@@ -1,12 +1,9 @@
-import Navbar from "@/components/Navbar";
-import { MenubarDemo } from "@/components/ui/menubar";
-
+// app/page.js
 
 export default function Home() {
   return (
     <main className="px-16">
-   
-
-    </main>
+      {/* Content of your page */}
+    </main> 
   );
 }

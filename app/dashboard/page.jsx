@@ -1,8 +1,12 @@
+// import Counter from "@/components/counter/counter";
 
 
 const dashboard = (props) => {
     return (
-        <div>this is dashboard</div>
+        <div>
+            {/* <Counter/> */}
+        </div>
+
     )
 };
 export default dashboard;

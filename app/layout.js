@@ -1,3 +1,6 @@
+// app/layout.js
+
+import React from 'react';
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -10,9 +13,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  console.log('val')
   return (
     <html lang="en">
-
       <body className={inter.className}>
         <Navbar />
         <main className="">

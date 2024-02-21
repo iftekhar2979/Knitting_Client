@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { number, z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { toast } from "@/components/ui/use-toast"
 
 const FormSchema = z.object({
   companyName: z.string().min(2, {
@@ -25,7 +24,7 @@ const FormSchema = z.object({
   location:z.string().min(3,{
     message: "Location must be at least 2 characters.",
   }),
-  contact:z.number().min(10,{
+  contact:z.string().min(10,{
     message: "Contact Number must be at least 10 characters.",
   })
 })
@@ -35,27 +34,32 @@ const info=[
     id:1,
     name:'companyName',
     header:"Company Name",
-    placeholder:"Company Name..."
+    placeholder:"Company Name...",
+    type:"String"
   },
   {
     id:2,
     name:'email',
     header:"Email",
-    placeholder:"email..."
+    placeholder:"Email...",
+    type:"String"
   },
   {
     id:3,
     name:'location',
     header:"Location",
-    placeholder:"location..."
+    placeholder:"Location...",
+    type:"String"
   },
   {
     id:4,
     name:'contact',
     header:"Contact",
-    placeholder:"Contact..."
+    placeholder:"Contact...",
+    type:"Number"
   },
 ]
+
 export function AddCompany() {
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -68,25 +72,28 @@ export function AddCompany() {
     },
   })
 
-  function onSubmit(data) {
-    console.log(data)
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function onSubmit(data) {
+    const response = await fetch("http://localhost:8000/company",
+    {method:'POST', 
+    headers: {
+      "Content-Type": "application/json",
+     
+    },
+    body:JSON.stringify(data)
+  },
+   
+  
+  );
+  const movies = await response.json();
   }
 
   return (
     <div className="w-full my-4 flex justify-center">  
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 border space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/2 shadow-md px-8 py-8 rounded-xl hover:shadow-xl space-y-6">
         {
           info.map(item=>{
-            const {name,header,placeholder,id}=item
+            const {name,header,placeholder,id,type}=item
             return (
               <FormField
               key={id}
