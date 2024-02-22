@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input"
 
 import { Button } from "../../../ui/button";
 import {  useForm } from "react-hook-form";
+import { useEditCompanyMutation } from '@/lib/features/company/companyApi';
 
 
 const FormSchema = z.object({
@@ -60,7 +61,8 @@ const info=[
     },
   ]
 const EditModal = ({defaultValues}) => {
-    const {companyName,location,contact,email}=defaultValues
+  const [editCompany]=useEditCompanyMutation()
+    const {companyName,location,contact,email,id}=defaultValues
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -72,8 +74,10 @@ const EditModal = ({defaultValues}) => {
         },
       })
      
+
     async function onSubmit(data) {
-        console.log(data)
+      editCompany({id:id,body:data})
+        
        
       }
     return (

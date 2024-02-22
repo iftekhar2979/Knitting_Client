@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+   
 
     return (
         <nav className="bg-white border-gray-200  dark:bg-gray-900  relative">

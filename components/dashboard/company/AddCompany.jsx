@@ -15,6 +15,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useAddCompanyMutation } from "@/lib/features/company/companyApi"
+import { toast, useToast } from "@/components/ui/use-toast"
 
 const FormSchema = z.object({
   companyName: z.string().min(2, {
@@ -61,6 +63,9 @@ const info=[
 ]
 
 export function AddCompany() {
+  const [addCompany,{isLoading,isError,isSuccess}]=useAddCompanyMutation()
+  const { toast } = useToast()
+
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -68,23 +73,16 @@ export function AddCompany() {
       email:"",
       location:"",
       contact:""
-
     },
   })
 
   async function onSubmit(data) {
-    const response = await fetch("http://localhost:8000/company",
-    {method:'POST', 
-    headers: {
-      "Content-Type": "application/json",
-     
-    },
-    body:JSON.stringify(data)
-  },
-   
-  
-  );
-  const movies = await response.json();
+    addCompany(data)
+    if(isSuccess){
+      toast({
+        title: "Added Company Succesfully",
+      })
+    }
   }
 
   return (
@@ -104,8 +102,7 @@ export function AddCompany() {
                   <FormLabel>{header}</FormLabel>
                   <FormControl>
                     <Input placeholder={placeholder} {...field} />
-                  </FormControl>
-                 
+                  </FormControl>  
                   <FormMessage />
                 </FormItem>
               )}
@@ -113,7 +110,7 @@ export function AddCompany() {
             )
           })
         }
-        <Button type="submit" className="">Submit</Button>
+        <Button type="submit" className="">{isLoading ? "Submitting" :"Submit"}</Button>
       </form>
     </Form>
     </div>
