@@ -36,9 +36,9 @@ const SideBar = (props) => {
                         <Link href='/dashboard/addOrder'> <div className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" >
                             <span className="mx-2 text-sm font-medium">Add Order</span>
                         </div></Link>
-                        <div className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" >
+                        <Link href='/dashboard/order'>  <div className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" >
                             <span className="mx-2 text-sm font-medium">View Orders</span>
-                        </div>
+                        </div></Link>
                         <div className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" >
 
                             <span className="mx-2 text-sm font-medium">Chalans</span>
