@@ -3,11 +3,12 @@
 import { useGetOrderQuery } from "@/lib/features/order/orderApi";
 import { DataTable } from "../company/DataTable";
 import { columns } from "./columns";
+import Loading from "@/components/utils/Loading";
 
 const ViewOrder = (props) => {
     const {data,isLoading,isError,error}=useGetOrderQuery()
     if(isLoading){
-        return "Loading..."
+        return <Loading/>
     }
     return (
         <>

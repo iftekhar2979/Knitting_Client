@@ -1,17 +1,7 @@
 "use client"
 import {
     Menubar,
-    MenubarCheckboxItem,
-    MenubarContent,
-    MenubarItem,
     MenubarMenu,
-    MenubarRadioGroup,
-    MenubarRadioItem,
-    MenubarSeparator,
-    MenubarShortcut,
-    MenubarSub,
-    MenubarSubContent,
-    MenubarSubTrigger,
     MenubarTrigger,
 } from "@/components/ui/menubar"
 const Navbar = (props) => {
@@ -19,7 +9,10 @@ const Navbar = (props) => {
 
         <Menubar>
             <MenubarMenu className="hover:bg-gray-200 py-4">
-                <MenubarTrigger>Details</MenubarTrigger>
+            <MenubarTrigger>Order Information</MenubarTrigger>
+            </MenubarMenu>
+            <MenubarMenu className="hover:bg-gray-200 py-4">
+            <MenubarTrigger>Details</MenubarTrigger>
             </MenubarMenu>
             <MenubarMenu>
                 <MenubarTrigger>Yarn Details</MenubarTrigger>

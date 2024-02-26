@@ -1,6 +1,7 @@
 
 import Navbar from '@/components/dashboard/order/SingleOrder/Navbar';
 const layout = ({ children }) => {
+
     return (
         <section className='flex justify-center flex-col'>
             <Navbar />
