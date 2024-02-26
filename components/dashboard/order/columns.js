@@ -25,6 +25,10 @@ export const columns = [
         header: "Buyer",
     },
     {
+        accessorKey: "fabricsName",
+        header: "Fabrics Type",
+    },
+    {
         accessorKey: "season",
         header: "Season",
     },
@@ -32,7 +36,6 @@ export const columns = [
         accessorKey: "orderNumber",
         header: "Order Number",
         cell: ({ row }) => {
-            // console.log(row.original)
             const {id,orderNumber}=row.original
             return <Link href={`/dashboard/order/${id}`} className="text-blue-300">{orderNumber}</Link>
         }
@@ -70,7 +73,7 @@ export const columns = [
         accessorKey: "targetDate",
         header: "Target Date",
         cell: ({ row }) => {
-            console.log(row.original)
+
             return <div >{format(row.original.createdAt, 'PP')}</div>
         }
     },
