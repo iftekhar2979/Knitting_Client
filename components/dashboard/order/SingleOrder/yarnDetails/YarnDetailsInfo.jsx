@@ -15,7 +15,7 @@ const YarnDetailsInfo = ({ id }) => {
         <div>
             <h2 className="text-center text-3xl underline font-serif">Yarn Information</h2>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 font-serif my-4">
-                {data?.map(item => <SingleYarnInfo key={item.id} item={item} />)}
+                {data?.map((item ,index)=> <SingleYarnInfo key={item.id} index={index} item={item} />)}
             </div>
     </div>
     )

@@ -29,6 +29,21 @@ export const yarnDetailsApi = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ['Yarn']
         }),
+        addYarnReceived:builder.mutation({
+            query:(body)=>({
+                url: '/order/yarn/received',
+                method: 'POST',
+                body: body
+            }),
+            invalidatesTags: ['Yarn']
+        }),
+        deleteYarnInfoWithDetail:builder.mutation({
+            query:(id)=>({
+                url: `/order/yarn/received/remove/${id}`,
+                method: 'POST',
+            }),
+            invalidatesTags: ['Yarn']
+        }),
         deleteYarnDetails:builder.mutation({
             query:(id)=>({
                 url: `/order/details/${id}`,
@@ -42,6 +57,8 @@ export const {
     useGetYarnDetailsQuery,
     useAddYarnDetailsMutation,
     useGetSingleYarnDetailsQuery,
+    useAddYarnReceivedMutation,
     useDeleteYarnDetailsMutation,
+    useDeleteYarnInfoWithDetailMutation,
     useEditYarnDetailsMutation
 } = yarnDetailsApi;

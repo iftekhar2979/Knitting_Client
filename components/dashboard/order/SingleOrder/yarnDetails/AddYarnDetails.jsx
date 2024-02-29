@@ -80,7 +80,6 @@ console.log(form)
     return (
         <div className="w-full my-4">
             <div className="w-2/3 px-8 m-auto py-8 rounded-xl hover:shadow-xl space-y-6 shadow-md ">
-
                 <h1 className="text-center text-2xl ">Add New Yarn Details For This Order</h1>
                 <InputDropDown
                     label={'Company'}
@@ -93,8 +92,7 @@ console.log(form)
                     required
                 />
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="   ">
-
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="">
                         {
                             info.map(item => {
                                 const { name, header, placeholder, id, type } = item
@@ -120,22 +118,7 @@ console.log(form)
                     </form>
                 </Form>
             </div>
-            {/* <div className="my-2 border rounded-md shadow-sm p-10 font-mono flex justify-center flex-col">
-            <h2 className="py-2 px-4">Company Name  : <span className="border-b py-2 px-4">{}</span></h2>
-            <h2 className="py-2 px-4">Yarn  : <span className="border-b py-2 px-4">{}</span></h2>
-            <h2 className="py-2 px-4">Booking Quantity : <span className="border-b py-2 px-4 text-bold">{}</span> KG</h2>
-            <h2 className="py-2 px-4">Received Quantity  :
-                <span className="border-b py-2 px-4 text-bold">
-                    <Input type="number" placeholder="Quantity.." className="w-72 inline" onChange={(e) => handleDelivery(e)} />
-                </span>
-                <span className="mx-4">
-                    Kg
-                </span>
-                <Button>Send</Button>
-            </h2>
-            <h2 className="py-2 px-4">Rest of Quantity  : <span className="border-b py-2 px-4 text-bold">{}</span> KG</h2>
-            <h2 className="py-2 px-4">Created At  : <span className="border-b py-2 px-4 text-bold">{}</span></h2>
-        </div> */}
+ 
 
         </div>
     )
