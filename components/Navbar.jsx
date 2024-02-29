@@ -1,10 +1,21 @@
 'use client'
+import dashboard from '@/app/dashboard/page';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { usePathname, } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-   
+    const pathName = usePathname()
+    const path = ["home", 'about', 'service', 'contact', 'dashboard']
+    const [selectedRoute, setSelectedRoute] = useState()
+
+    useEffect(() => {
+    console.log(pathName)
+        let pathIndex = path.indexOf(pathName.split("/")[1])
+        console.log(path[pathIndex])
+        setSelectedRoute(path[pathIndex])
+    }, [])
 
     return (
         <nav className="bg-white border-gray-200  dark:bg-gray-900  relative">
@@ -28,22 +39,27 @@ const Navbar = () => {
                     style={{ animation: isMenuOpen ? 'slideDown 0.5s ease-out' : '' }}
                 >
                     <ul className="flex flex-col items-center justify-center space-y-2 text-black border">
-                        <li><Link href="/"  className="text-black hover:text-purple-700 cursor-pointer">Home</Link></li>
+                      
+                        {/* <li><Link href="/"  className="text-black hover:text-purple-700 cursor-pointer">Home</Link></li>
                          <li><Link href="/service" className="text-black hover:text-purple-700 cursor-pointer ">Services</Link></li>
                         <li><Link href="/about" className="text-black hover:text-purple-700 cursor-pointer">About</Link></li>
                          <li><Link href="/contact"  className="text-black hover:text-purple-700 cursor-pointer">Contact</Link></li>
-                        <li><Link href="/dashboard" className="text-black hover:text-purple-700 cursor-pointer">Dashboard</Link></li>
+                        <li><Link href="/dashboard" className="text-black hover:text-purple-700 cursor-pointer">Dashboard</Link></li> */}
                     </ul>
                 </div>
                 {/* Desktop Menu */}
                 <div className="hidden lg:block ">
                     <ul className="flex flex-row items-center justify-center py-2 space-x-8 text-black ">
-                    <li><Link href="/"  className="text-black hover:text-purple-700 cursor-pointer">Home</Link></li>
-                         <li><Link href="/service" className="text-black hover:text-purple-700 cursor-pointer ">Services</Link></li>
+                        {/* <li><Link href="/" className="text-black hover:text-purple-700 cursor-pointer">Home</Link></li>
+                        <li><Link href="/service" className="text-black hover:text-purple-700 cursor-pointer ">Services</Link></li>
                         <li><Link href="/about" className="text-black hover:text-purple-700 cursor-pointer">About</Link></li>
-                         <li><Link href="/contact"  className="text-black hover:text-purple-700 cursor-pointer">Contact</Link></li>
-                        <li><Link href="/dashboard" className="text-black hover:text-purple-700 cursor-pointer">Dashboard</Link></li>
-
+                        <li><Link href="/contact" className="text-black hover:text-purple-700 cursor-pointer">Contact</Link></li>
+                        <li><Link href="/dashboard" className="text-black hover:text-purple-700 cursor-pointer">Dashboard</Link></li> */}
+                        {path?.map((item ,i)=> {
+                            return (
+                                <li key={i}><Link href={`/${item}`} className={`text-black hover:text-purple-700 cursor-pointer ${selectedRoute === item && "text-purple-700"}`}>{item.toUpperCase()}</Link></li>
+                            )
+                        })}
                     </ul>
                 </div>
             </div>

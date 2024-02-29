@@ -1,10 +1,10 @@
 
 import Navbar from '@/components/dashboard/order/SingleOrder/Navbar';
-const layout = ({ children }) => {
+const layout = ({ children ,params}) => {
 
     return (
         <section className='flex justify-center flex-col'>
-            <Navbar />
+            <Navbar id={params.id} />
             <section className='my-4'>
                 {children}
             </section>

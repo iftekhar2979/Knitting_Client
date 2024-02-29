@@ -4,19 +4,22 @@ import {
     MenubarMenu,
     MenubarTrigger,
 } from "@/components/ui/menubar"
-const Navbar = (props) => {
+import Link from "next/link";
+import { useRouter } from "next/router";
+const Navbar = ({id}) => {
+
     return (
 
         <Menubar>
-            <MenubarMenu className="hover:bg-gray-200 py-4">
+           <Link href={`/dashboard/order/${id}`}><MenubarMenu className="hover:bg-gray-200 py-4">
             <MenubarTrigger>Order Information</MenubarTrigger>
-            </MenubarMenu>
-            <MenubarMenu className="hover:bg-gray-200 py-4">
+            </MenubarMenu></Link>
+             <Link href={`/dashboard/order/${id}/details`}><MenubarMenu className="hover:bg-gray-200 py-4">
             <MenubarTrigger>Details</MenubarTrigger>
-            </MenubarMenu>
-            <MenubarMenu>
+            </MenubarMenu></Link>
+            <Link href={`/dashboard/order/${id}/yarnDetails`}> <MenubarMenu>
                 <MenubarTrigger>Yarn Details</MenubarTrigger>
-            </MenubarMenu>
+            </MenubarMenu></Link>
             <MenubarMenu>
                 <MenubarTrigger>Delivery Details</MenubarTrigger>
             </MenubarMenu>
