@@ -26,7 +26,7 @@ const orderRoutes = [
     },
     {
         id:404,
-        routeName: "deliveryDetails",
+        routeName: "delivery",
         value: "Delivery"
     },
 
