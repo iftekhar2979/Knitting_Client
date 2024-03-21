@@ -156,7 +156,7 @@ export function AddOrder() {
     }
 
     return (
-        <div className="w-full my-4 flex flex-col shadow-md justify-center">
+        <div className="w-full my-4 flex flex-col  justify-center">
             <div className="grid grid-cols-2 gap-6 mx-6 ">
                 <InputDropDown
                     label={'Company'}
@@ -217,7 +217,7 @@ export function AddOrder() {
             </div>
 
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="w-full  rounded-xl hover:shadow-xl ">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="w-full  rounded-xl  ">
                     <div className="grid grid-cols-2 gap-6 p-6">
                     {
                         info.map(item => {

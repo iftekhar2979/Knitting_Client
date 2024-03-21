@@ -3,7 +3,7 @@ import react from 'react';
 
 const page = () => {
     return (
-        <div>
+        <div className='basis-1'> 
             <ViewOrder/>
         </div>
     )

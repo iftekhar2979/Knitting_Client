@@ -5,7 +5,7 @@ export default function Layout({ children }) {
     <>
      <main className="flex">
     <SideBar></SideBar>
-    <section className="p-2 w-full py-4">
+    <section className="pl-8 w-full py-4">
      {children}
     </section>
      </main>

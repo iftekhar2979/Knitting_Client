@@ -6,7 +6,7 @@ import { format } from "date-fns";
 
 const singleOrder = async ({ params: { id } }) => {
     const data = await getData(`http://localhost:8000/order/${id}`, { next: { revalidate: 100, tags: ["Company"] } })
-    const { companyName, company: { location="" }, buyerName,targetDate, orderNumber, status, pmNumber, poNumber, season, boNumber, invoiceNumber, orderQuantity, restQuantity, fabricsName, orderedDate } = data
+    const { companyName,company={}, buyerName,targetDate, orderNumber, pmNumber, poNumber, season, boNumber, invoiceNumber, fabricsName, orderedDate } = data
     return (
         
         <div>
@@ -16,7 +16,7 @@ const singleOrder = async ({ params: { id } }) => {
 
                 <div className="my-4 border rounded-md shadow-sm p-10">
                     <h2 className="py-2 px-4">Company Name : <span className="border-b py-2 px-4 font-extrabold">{companyName}</span></h2>
-                    <h2 className="py-2 px-4">Location : <span className="border-b py-2 px-4">{location}</span></h2>
+                    <h2 className="py-2 px-4">Location : <span className="border-b py-2 px-4">{company?.location}</span></h2>
                     <h2 className="py-2 px-4">Buyer  : <span className="border-b py-2 px-4 font-extrabold ">{buyerName}</span></h2>
                     <h2 className="py-2 px-4 ">Fabrics Name  : <span className="border-b py-2 px-4 selection:bg-pink-300 font-extrabold">{fabricsName}</span></h2>
                     <h2 className="py-2 px-4">Ordered Date : <span className="border-b py-2 px-4 ">{format(orderedDate, "PP")}</span></h2>

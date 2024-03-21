@@ -3,6 +3,7 @@ import dashboard from '@/app/dashboard/page';
 import Link from 'next/link';
 import { usePathname, } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import '../app/globals.css'
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,11 +12,10 @@ const Navbar = () => {
     const [selectedRoute, setSelectedRoute] = useState()
 
     useEffect(() => {
-    console.log(pathName)
         let pathIndex = path.indexOf(pathName.split("/")[1])
-        console.log(path[pathIndex])
+       
         setSelectedRoute(path[pathIndex])
-    }, [])
+    }, [pathName])
 
     return (
         <nav className="bg-white border-gray-200  dark:bg-gray-900  relative">
@@ -49,7 +49,7 @@ const Navbar = () => {
                 </div>
                 {/* Desktop Menu */}
                 <div className="hidden lg:block ">
-                    <ul className="flex flex-row items-center justify-center py-2 space-x-8 text-black ">
+                    <ul className="flex flex-row items-center justify-center py-2 space-x-4 text-black ">
                         {/* <li><Link href="/" className="text-black hover:text-purple-700 cursor-pointer">Home</Link></li>
                         <li><Link href="/service" className="text-black hover:text-purple-700 cursor-pointer ">Services</Link></li>
                         <li><Link href="/about" className="text-black hover:text-purple-700 cursor-pointer">About</Link></li>
@@ -57,7 +57,7 @@ const Navbar = () => {
                         <li><Link href="/dashboard" className="text-black hover:text-purple-700 cursor-pointer">Dashboard</Link></li> */}
                         {path?.map((item ,i)=> {
                             return (
-                                <li key={i}><Link href={`/${item}`} className={`text-black hover:text-purple-700 cursor-pointer ${selectedRoute === item && "text-purple-700"}`}>{item.toUpperCase()}</Link></li>
+                                <li key={i}><Link href={`/${item}`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${selectedRoute === item && "text-white py-4 px-2  bg-purple-700"}`}>{item.toUpperCase()}</Link></li>
                             )
                         })}
                     </ul>

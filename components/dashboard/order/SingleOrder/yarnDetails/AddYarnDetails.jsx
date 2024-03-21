@@ -58,7 +58,7 @@ const AddYarnDetails = ({ id }) => {
             yarn: "",
         },
     })
-console.log(form)
+
     const companyNames = data?.map(item => item.companyName)
     const handleInputDropdown = (e) => {
         const val = e.target.value
