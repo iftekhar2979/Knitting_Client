@@ -29,18 +29,16 @@ const QuantityInfo = ({ id }) => {
     }
     let restContent = ""
     deliveryQuantity ? restContent = restQuantity - deliveryQuantity : restContent = restQuantity
-    let statusContent = ""
-    let value = orderQuantity - restQuantity
-    switch (value) {
-        case value === 0:
-            statusContent = "Ordered"
-            break;
-        case restQuantity === 0:
-            statusContent = "Fullfilled"
-            break;
-        case value > 0:
-            statusContent = "Ordered"
-    }
+            if (orderQuantity - restQuantity > 0) {
+                status = "Pending"
+            } 
+             if (restQuantity === 0) {
+                status = "Fullfilled"
+
+            } 
+             if(orderQuantity === restQuantity){
+                status = "Ordered"
+            }
 const handleInputDropdown=(e)=>{
     const val = e.target.value
     setDeliveryMan(val)
@@ -55,7 +53,7 @@ const handleInputDropdown=(e)=>{
 
             <div className="my-2 border rounded-md shadow-sm p-10 font-mono flex justify-center flex-col">
 
-                <h2 className="py-2 px-4">Status  : <span className="border-b py-2 px-4">{statusContent}</span></h2>
+                <h2 className="py-2 px-4">Status  : <span className="border-b py-2 px-4">{status}</span></h2>
 
                 <h2 className="py-2 px-4">Total Order Quantity: <span className="border-b py-2 px-4 text-bold">{orderQuantity}</span> KG</h2>
                 <InputDropDown

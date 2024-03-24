@@ -16,7 +16,8 @@ const ViewOrder = (props) => {
     }
     return (
         <>
-             <DataTable columns={columns} data={data} />
+             <DataTable columns={columns} data={data} searchingValue={"orderNumber"} placeholder={"Filter with Order Number..."}>
+                </DataTable>
         </>
     )
 };

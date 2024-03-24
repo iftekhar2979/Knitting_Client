@@ -2,53 +2,90 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
+import { FaBuildingColumns } from "react-icons/fa6";
+import { BsBuildingAdd } from "react-icons/bs";
+import { MdDashboard, MdDashboardCustomize } from "react-icons/md";
+import { IoDocumentSharp } from "react-icons/io5";
+import { CiViewList } from "react-icons/ci";
+import { CiDeliveryTruck } from "react-icons/ci";
+import { CiViewTable } from "react-icons/ci";
+import { IoAnalyticsOutline } from "react-icons/io5";
+import { RiBillLine } from "react-icons/ri";
+import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
+import { BiCreditCard } from "react-icons/bi";
 const companySection = [
     {
 
         routeName: "addCompany",
-        value: "Add Company"
+        value: "Add Company",
+        icon:<BsBuildingAdd />
     },
     {
         routeName: "company",
-        value: "Company List"
+        value: "Company List",
+        icon:<FaBuildingColumns />
     }
 ]
 const orderSection = [
     {
 
         routeName: "addOrder",
-        value: "Add Order"
+        value: "Add Order",
+        icon:<IoDocumentSharp />
     },
     {
         routeName: "order",
-        value: "Order List"
+        value: "Order List",
+        icon:<CiViewList/>
     },
     {
-        routeName: "delivery",
-        value: "Delivery List"
+        routeName: "deliveryList",
+        value: "Delivery List",
+        icon:<CiDeliveryTruck/>
+    }
+]
+const billSection = [
+    {
+
+        routeName: "createInvoices",
+        value: "Create Invoice",
+        icon:<BiCreditCard />
+    },
+    {
+        routeName: "pi",
+        value: "Performa Invoices",
+        icon:<LiaFileInvoiceDollarSolid/>
+    },
+    {
+        routeName: "bills",
+        value: "Bills",
+        icon:<RiBillLine/>
     }
 ]
 const productSection = [
     {
         routeName: "analytics",
-        value: "Analytics"
+        value: "Analytics",
+        icon:<IoAnalyticsOutline/>
     },
     {
 
         routeName: "product",
-        value: "Products"
+        value: "Products",
+        icon:<CiViewList/>
     },
 
 ]
 const dashboardSection = [
     {
         routeName: "dashboard",
-        value: "Dashboard"
+        value: "Dashboard",
+        icon:<MdDashboardCustomize/>
     },
 
 
 ]
+
 
 const SideBar = (props) => {
     const pathName = usePathname()
@@ -69,6 +106,7 @@ const SideBar = (props) => {
                             dashboardSection?.map((item, index) => {
                                 return (
                                     <Link href={`/dashboard`}> <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${selectedRoute === item.routeName && "bg-purple-700 text-white rouded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`} >
+                                      {item.icon}
                                         <span className="mx-2 text-sm font-medium">{item.value}</span>
                                     </div></Link>
                                 )
@@ -82,6 +120,7 @@ const SideBar = (props) => {
                             companySection?.map((item, index) => {
                                 return (
                                     <Link href={`/dashboard/${item.routeName}`}> <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${selectedRoute === item.routeName && "bg-purple-700 text-white rouded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`} >
+                                          {item.icon}
                                         <span className="mx-2 text-sm font-medium">{item.value}</span>
                                     </div></Link>
                                 )
@@ -94,6 +133,7 @@ const SideBar = (props) => {
                             productSection?.map((item, index) => {
                                 return (
                                     <Link href={`/dashboard/${item.routeName}`}> <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${selectedRoute === item.routeName && "bg-purple-700 text-white rouded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`} >
+                                       {item.icon}
                                         <span className="mx-2 text-sm font-medium">{item.value}</span>
                                     </div></Link>
                                 )
@@ -106,6 +146,7 @@ const SideBar = (props) => {
                             orderSection?.map((item, index) => {
                                 return (
                                     <Link href={`/dashboard/${item.routeName}`}> <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${selectedRoute === item.routeName && "bg-purple-700 text-white rouded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`} >
+                                          {item.icon}
                                         <span className="mx-2 text-sm font-medium">{item.value}</span>
                                     </div></Link>
                                 )
@@ -115,18 +156,19 @@ const SideBar = (props) => {
                     </div>
 
                     <div className="space-y-3 ">
-                        <label className="px-3 text-xs text-black uppercase dark:text-gray-400">Invoice</label>
-                        <div className="flex items-center px-3 py-2 text-gray-500 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white" >
-                            <span className="mx-2 text-sm font-medium">Create Invoice</span>
-                        </div>
-                        <div className="flex items-center px-3 py-2 text-gray-500 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white" >
-
-                            <span className="mx-2 text-sm font-medium">Performa Invoice</span>
-                        </div>
-                        <div className="flex items-center px-3 py-2 text-gray-500 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white" >
-
-                            <span className="mx-2 text-sm font-medium">Bills</span>
-                        </div>
+                        <label className="px-3 text-xs text-black uppercase font-bold dark:text-gray-400">Invoice</label>
+                        
+                        {
+                            billSection?.map((item, index) => {
+                                return (
+                                    <Link href={`/dashboard/${item.routeName}`}> <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${selectedRoute === item.routeName && "bg-purple-700 text-white rouded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`} >
+                                          {item.icon}
+                                        <span className="mx-2 text-sm font-medium">{item.value}</span>
+                                    </div></Link>
+                                )
+                            })
+                        }
+                        
                     </div>
                 </nav>
             </div>

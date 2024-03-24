@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { MdDelete } from "react-icons/md"
 import { format } from "date-fns"
+import { RiArrowUpDownFill } from 'react-icons/ri';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -17,57 +18,167 @@ const action = [
 export const columns = [
     {
         accessorKey: "companyName",
-        header: "Company",
-        
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Company Name
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
+
     },
 
     {
         accessorKey: "buyerName",
-        header: "Buyer",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Buyer Name
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
     },
     {
         accessorKey: "fabricsName",
-        header: "Fabrics Type",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Fabrics
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
     },
     {
         accessorKey: "season",
-        header: "Season",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Season
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
     },
     {
         accessorKey: "orderNumber",
-        header: "Order Number",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Order No.
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
         cell: ({ row }) => {
-            const {id,orderNumber}=row.original
+            const { id, orderNumber } = row.original
             return <Link href={`/dashboard/order/${id}`} className="text-blue-300">{orderNumber}</Link>
         }
-    
+
     },
     {
         accessorKey: "invoiceNumber",
-        header: "Invoice Number",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Invoice No.
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
     },
     {
         accessorKey: "pmNumber",
-        header: "PM Number",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    PM No.
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
     },
     {
         accessorKey: "poNumber",
-        header: "PO Number",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    PO No.
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
     },
     {
         accessorKey: "boNumber",
-        header: "BO Number",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    BO No.
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
     },
     {
         accessorKey: "orderQuantity",
-        header: "Order Qty",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Order Qty.
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
     },
     {
         accessorKey: "deliveryQuantity",
-        header: "Delivery Qty",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Delivery Qty.
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
         cell: ({ row }) => {
-            const {orderQuantity,restQuantity}=row.original
-            return <div >{orderQuantity-restQuantity}</div>
+            const { orderQuantity, restQuantity } = row.original
+            return <div >{orderQuantity - restQuantity}</div>
         }
     },
     {
@@ -76,10 +187,39 @@ export const columns = [
     },
     {
         accessorKey: "targetDate",
-        header: "Target Date",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Created
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
         cell: ({ row }) => {
 
             return <div >{format(row.original.createdAt, 'PP')}</div>
+        }
+    },
+    {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) => {
+            const { orderQuantity, restQuantity } = row.original
+            let status = ""
+            if (orderQuantity - restQuantity > 0) {
+                status = "Pending"
+            } 
+             if (restQuantity === 0) {
+                status = "Fullfilled"
+
+            } 
+             if(orderQuantity === restQuantity){
+                status = "Ordered"
+            }
+            return <div >{status}</div>
         }
     },
 
