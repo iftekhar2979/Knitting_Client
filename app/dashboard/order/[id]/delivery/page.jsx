@@ -1,16 +1,16 @@
-import { DataTable } from '@/components/dashboard/company/DataTable';
-import { columns } from '@/components/dashboard/order/SingleOrder/delivery/columns';
-import { getData } from '@/hooksAndFunctions/getApi';
-import react from 'react';
+import ShowChalan from '@/components/dashboard/chalan/ShowChalan';
 
-const page = async ({params}) => {
-    console.log(params)
-    const data = await getData(`http://localhost:8000/order/delivery/${params.id}`,{ next: { revalidate: 1, tags: ["Delivery"] } })
-    // console.log(data)
+import DeliveryList from '@/components/dashboard/order/SingleOrder/delivery/DeliveryList';
+
+
+const page = ({params}) => {
+ 
     return (
         <div>
-            <DataTable columns={columns} data={data} />
+            <DeliveryList id={params.id}/>
+           <ShowChalan/>
         </div>
     )
 };
+
 export default page;

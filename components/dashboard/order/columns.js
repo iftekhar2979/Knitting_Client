@@ -18,6 +18,7 @@ export const columns = [
     {
         accessorKey: "companyName",
         header: "Company",
+        
     },
 
     {
@@ -64,6 +65,10 @@ export const columns = [
     {
         accessorKey: "deliveryQuantity",
         header: "Delivery Qty",
+        cell: ({ row }) => {
+            const {orderQuantity,restQuantity}=row.original
+            return <div >{orderQuantity-restQuantity}</div>
+        }
     },
     {
         accessorKey: "restQuantity",

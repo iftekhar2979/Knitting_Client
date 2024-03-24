@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import InputDropDown from "@/components/utils/InputDropDown";
+import { revalidatePath } from 'next/cache'
 
 const deliveryMen=["Alif","kalif","Jalif"]
 const QuantityInfo = ({ id }) => {

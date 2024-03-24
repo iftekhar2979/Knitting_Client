@@ -5,7 +5,7 @@ import { format } from "date-fns";
 
 
 const singleOrder = async ({ params: { id } }) => {
-    const data = await getData(`http://localhost:8000/order/${id}`, { next: { revalidate: 100, tags: ["Company"] } })
+    const data = await getData(`http://localhost:8000/order/${id}`, { next: { revalidate: 100, tags: ["Order"] } })
     const { companyName,company={}, buyerName,targetDate, orderNumber, pmNumber, poNumber, season, boNumber, invoiceNumber, fabricsName, orderedDate } = data
     return (
         

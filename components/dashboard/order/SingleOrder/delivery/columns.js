@@ -2,6 +2,8 @@
 import Link from 'next/link';
 import { MdDelete } from "react-icons/md"
 import { format } from "date-fns"
+import { IoMdDownload } from "react-icons/io";
+import Action from './Action';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -23,7 +25,7 @@ export const columns = [
 
     {
         accessorKey: "deliveredQuantity",
-        header: "Delivered Quantity",
+        header: "Delivered Quantity (KG)",
     },
     {
         accessorKey: "deliveredBy",
@@ -37,14 +39,15 @@ export const columns = [
             return <div >{format(row.original.createdAt, 'PP')}</div>
         }
     },
-
     {
         accessorKey: "Action",
         header: "Action",
         cell: ({ row }) => {
-            return <div ><MdDelete size={32} color={"red"} className="cursor-pointer" /></div>
+            
+            return(<Action id={row.original.id}/>)
         }
     }
+  
 
 
 ]
