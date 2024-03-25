@@ -1,6 +1,8 @@
 "use client"
+import { Input } from "@/components/ui/input"
 import { format } from "date-fns"
 import { RiArrowUpDownFill } from "react-icons/ri"
+import Action from "./Action"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -32,38 +34,64 @@ export const columns = [
     {
         accessorKey: "companyName",
         header: ({ column }) => {
+
             return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                <div
+                    className={"flex flex-col"}
+
                 >
-                    Company Name
-                    <RiArrowUpDownFill className=" h-4 w-4" />
-                </p>
+                    <div className='flex'>
+
+                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Company</h2>
+                        <RiArrowUpDownFill size={22} />
+                    </div>
+                    <div>
+                        <Input type="text"
+                            value={(column?.getFilterValue()) ?? ""}
+                            onChange={(event) =>
+                                column?.setFilterValue(event.target.value)
+                            }
+                            className="h-4 text-[11px]"
+                            placeholder="Company..."
+                        />
+                    </div>
+                </div>
             )
         },
         accessorFn: (originalRow, index) => {
-            return originalRow.order.orderNumber
+            return originalRow.order.company.companyName
         },
         cell: ({ row }) => {
-            return row.original.order.companyName
+            return row.original.order.company.companyName
         }
     },
     {
         accessorKey: "buyerName",
         header: ({ column }) => {
             return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                <div
+                    className={"flex flex-col"}
                 >
-                    Buyer Name
-                    <RiArrowUpDownFill className=" h-4 w-4" />
-                </p>
+                    <div className='flex'>
+                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Buyer</h2>
+                        <RiArrowUpDownFill size={22} />
+                    </div>
+                    <div>
+                        <Input type="text"
+                            value={(column?.getFilterValue()) ?? ""}
+                            onChange={(event) =>
+                                column?.setFilterValue(event.target.value)
+                            }
+                            className="h-4 text-[11px]"
+                            placeholder="Buyer..."
+                        />
+                    </div>
+                </div>
             )
+        }, accessorFn: (originalRow, index) => {
+            return originalRow.order.buyerName
         },
         cell: ({ row }) => {
-
             return row.original.order.buyerName
         }
     },
@@ -71,14 +99,28 @@ export const columns = [
         accessorKey: "orderNumber",
         header: ({ column }) => {
             return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                <div
+                    className={"flex flex-col"}
                 >
-                    Order Number
-                    <RiArrowUpDownFill className=" h-4 w-4" />
-                </p>
+                    <div className='flex'>
+                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Order Number</h2>
+                        <RiArrowUpDownFill size={22} />
+                    </div>
+                    <div>
+                        <Input type="text"
+                            value={(column?.getFilterValue()) ?? ""}
+                            onChange={(event) =>
+                                column?.setFilterValue(event.target.value)
+                            }
+                            className="h-4 text-[11px]"
+                            placeholder="Buyer..."
+                        />
+                    </div>
+                </div>
             )
+        },
+        accessorFn: (originalRow, index) => {
+            return originalRow.order.orderNumber
         },
         cell: ({ row }) => {
             return row.original.order.orderNumber
@@ -126,10 +168,17 @@ export const columns = [
             )
         },
         cell: ({ row }) => {
-            return <div >{format(row.original.createdAt, 'PP')}</div>
+            return <div className="w-auto">{format(row.original.createdAt, 'Pp')}</div>
         }
     },
-
+    {
+        accessorKey: "Action",
+        header: "Action",
+        cell: ({ row }) => {
+            
+            return(<Action id={row.original.id} data={row.original}/>)
+        }
+    }
 
 
 

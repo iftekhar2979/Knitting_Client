@@ -16,8 +16,7 @@ const AllDeliveryLists = ({}) => {
     }
     return (
         <>
-     <DataTable columns={columns} data={data} searchingValue={"id"} placeholder={"Filter With Chalan No..."}>
-                
+     <DataTable columns={columns} data={data} searchingValue={"id"} placeholder={"Filter With Chalan No..."}> 
       </DataTable>
         </>
     )

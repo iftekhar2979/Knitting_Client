@@ -26,7 +26,8 @@ Font.register({
 // Create Document Component
 const Chalan = ({id,data}) => {
     if(id){
-        const {createdAt,deliveredQuantity,deliveredBy,order:{invoiceNumber="",company:{companyName="",location=""},poNumber="",pmNumber="",buyerName="",season="",fabricsName="",details:{colour='',e_DIA='',mc_DIA="",lycraBrand="",lycraLot="",lycraCount="",polyStarCount="",polyStarBrand="",polyStarLot="",yarnCount="",yarnBrand="",yarnLot="",sl="",f_GSM="",style=""}}}=data
+        const {createdAt,deliveredQuantity,deliveredBy,order}=data
+        // :{invoiceNumber="",company:{companyName="",location=""},poNumber="",pmNumber="",buyerName="",season="",fabricsName="",details:{colour='',e_DIA='',mc_DIA="",lycraBrand="",lycraLot="",lycraCount="",polyStarCount="",polyStarBrand="",polyStarLot="",yarnCount="",yarnBrand="",yarnLot="",sl="",f_GSM="",style=""}
 return (
 
         <Document>
@@ -47,20 +48,20 @@ return (
            <Text style={{fontStyle:"italic",fontSize:17,textAlign:'center'}}>( Fabrics Unit )</Text>
      <View style={{flexDirection:'row', marginTop:15}}>
           <View style={{width:'60%',fontSize:14,marginLeft:30,display:'flex',flexDirection:'column'}}>
-                <Text style={styles.childrenChalanInfo}>Company Name : {companyName}</Text>
-                  <Text style={styles.childrenChalanInfo}>Address : {location}</Text>
-                  <Text style={styles.childrenChalanInfo}>Fabrics Name : {fabricsName}</Text>
-            <Text style={styles.childrenChalanInfo}>Invoice No : {invoiceNumber}</Text>
-            <Text style={styles.childrenChalanInfo}>PO No : {poNumber}</Text>
-             <Text style={styles.childrenChalanInfo}>PM No : {pmNumber}</Text>
+                <Text style={styles.childrenChalanInfo}>Company Name : {order?.company?.companyName}</Text>
+                  <Text style={styles.childrenChalanInfo}>Address : {order?.company?.location}</Text>
+                  <Text style={styles.childrenChalanInfo}>Fabrics Name : {order?.fabricsName}</Text>
+            <Text style={styles.childrenChalanInfo}>Invoice No : {order?.invoiceNumber}</Text>
+            <Text style={styles.childrenChalanInfo}>PO No : {order?.poNumber}</Text>
+             <Text style={styles.childrenChalanInfo}>PM No : {order?.pmNumber}</Text>
             
               </View>
            <View style={{width:'30%',marginLeft:40,fontSize:14,display:'flex',flexDirection:'column'}}>
                 <Text style={{}}>Date : {format(createdAt,"PP")}</Text>
              <Text style={styles.childrenChalanInfo}>Challan No : {id}</Text>
                   <Text style={styles.childrenChalanInfo}>Gate Pass No : </Text>
-                 <Text style={styles.childrenChalanInfo}>Buyer : {buyerName}</Text>
-                 <Text style={styles.childrenChalanInfo}>Season : {season}</Text>
+                 <Text style={styles.childrenChalanInfo}>Buyer : {order?.buyerName}</Text>
+                 <Text style={styles.childrenChalanInfo}>Season : {order?.season}</Text>
              <Text style={styles.childrenChalanInfo}>Through By : {deliveredBy}</Text>
               </View>
        </View>
@@ -87,21 +88,21 @@ return (
         </View> 
            <View style={{width:"45%",height:"100%",borderRight:"1px solid black"}}>
                           <Text style={{textAlign:'center',height:"5%",fontSize:13,borderBottom:"1px solid black",paddingTop:4}}>Description of Goods</Text>
-                        <Text style={styles.descOfGoods}>Style : {style}</Text>
-                         <Text style={styles.descOfGoods}>Color : {colour}</Text>
-                           <Text style={styles.descOfGoods}>Fabrics Gsm : {f_GSM}</Text>
-                           <Text style={styles.descOfGoods}>Stitch Length (mm) : {sl}</Text>
-                         <Text style={styles.descOfGoods}>Yarn Count : {yarnCount}</Text>
-                           <Text style={styles.descOfGoods}>Yarn Lot : {yarnLot}</Text>
-                        <Text style={styles.descOfGoods}>Yarn Brand : {yarnBrand}</Text>
-                         <Text style={styles.descOfGoods}>Lycra Count : {lycraCount}</Text>
-                          <Text style={styles.descOfGoods}>Lycra Lot : {lycraLot}</Text> 
-                          <Text style={styles.descOfGoods}>Lycra Brand : {lycraBrand}</Text>
-                         <Text style={styles.descOfGoods}>PolyStar Count : {polyStarCount}</Text>
-                        <Text style={styles.descOfGoods}>PolyStar Brand : {polyStarBrand}</Text>
-                        <Text style={styles.descOfGoods}>PolyStar Lot : {polyStarLot}</Text>
-                         <Text style={styles.descOfGoods}>M/C DIA : {mc_DIA}</Text>
-                         <Text style={styles.descOfGoods}>E DIA : {e_DIA}</Text>
+                        <Text style={styles.descOfGoods}>Style : {order?.details?.style}</Text>
+                         <Text style={styles.descOfGoods}>Color : {order?.details?.colour}</Text>
+                           <Text style={styles.descOfGoods}>Fabrics Gsm : {order?.details?.f_GSM}</Text>
+                           <Text style={styles.descOfGoods}>Stitch Length (mm) : {order?.details?.sl}</Text>
+                         <Text style={styles.descOfGoods}>Yarn Count : {order?.details?.yarnCount}</Text>
+                           <Text style={styles.descOfGoods}>Yarn Lot : {order?.details?.yarnLot}</Text>
+                        <Text style={styles.descOfGoods}>Yarn Brand : {order?.details?.yarnBrand}</Text>
+                         <Text style={styles.descOfGoods}>Lycra Count : {order?.details?.lycraCount}</Text>
+                          <Text style={styles.descOfGoods}>Lycra Lot : {order?.details?.lycraLot}</Text> 
+                          <Text style={styles.descOfGoods}>Lycra Brand : {order?.details?.lycraBrand}</Text>
+                         <Text style={styles.descOfGoods}>PolyStar Count : {order?.details?.polyStarCount}</Text>
+                        <Text style={styles.descOfGoods}>PolyStar Brand : {order?.details?.polyStarBrand}</Text>
+                        <Text style={styles.descOfGoods}>PolyStar Lot : {order?.details?.polyStarLot}</Text>
+                         <Text style={styles.descOfGoods}>M/C DIA : {order?.details?.mc_DIA}</Text>
+                         <Text style={styles.descOfGoods}>E DIA : {order?.details?.e_DIA}</Text>
              <Text style={{textAlign:'left',height:"5%",fontSize:12,paddingTop:7,marginTop:67,textAlign:'center',borderTop:"1px solid black"}}>Total</Text>
              </View> 
            <View style={{width:"7%",height:"100%",borderRight:"1px solid black"}}>

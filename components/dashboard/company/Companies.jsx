@@ -19,7 +19,7 @@ export default  function Companies() {
   }
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={data} searchingValue={"companyName"} placeholder={"Filter With Company..."}/>
     </div>
   )
 }

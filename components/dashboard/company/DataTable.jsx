@@ -30,6 +30,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
+import InputDropDown from "@/components/utils/InputDropDown"
 
 const DataTableProps = {
   columns: [],
@@ -61,7 +62,7 @@ export function DataTable({
   });
   const [globalFilter, setGlobalFilter] = useState('')
 
-
+  const statuses = ["Pending", "Ordered", "Fullfilled"]
 
 
   const table = useReactTable({
@@ -93,7 +94,6 @@ export function DataTable({
     debugHeaders: true,
     debugColumns: false,
   })
-
   return (
     <div className="rounded-md border">
       <div className="flex items-center py-4 px-4">
@@ -119,7 +119,8 @@ export function DataTable({
                         header.column.columnDef.header,
                         header.getContext()
                       )}
-                    
+
+
                   </TableHead>
                 )
               })}

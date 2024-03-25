@@ -26,6 +26,9 @@ export const columns = [
     {
         accessorKey: "deliveredQuantity",
         header: "Delivered Quantity (KG)",
+        accessorFn: (originalRow, index) => {
+            return String(originalRow.id)
+        },
     },
     {
         accessorKey: "deliveredBy",

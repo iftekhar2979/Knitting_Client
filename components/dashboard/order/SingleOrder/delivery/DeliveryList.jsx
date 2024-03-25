@@ -7,7 +7,6 @@ import react from 'react';
 import { columns } from './columns';
 
 const DeliveryList = ({id}) => {
-    // console.log(id)
     const {data,isLoading,isError}=useGetAllDeliveryforAnSingleOrderQuery(id)
     if(isLoading){
         return <Loading/>
@@ -17,7 +16,7 @@ const DeliveryList = ({id}) => {
     }
     return (
         <>
-         <DataTable columns={columns} data={data} />
+         <DataTable columns={columns} data={data} searchingValue={"deliveredQuantity"} placeholder={"Filter With Delivered Quantity..."}/>
         </>
     )
 };

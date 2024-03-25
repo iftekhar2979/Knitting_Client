@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { MdDelete } from "react-icons/md"
 import { format } from "date-fns"
 import { RiArrowUpDownFill } from 'react-icons/ri';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import InputDropDown from '@/components/utils/InputDropDown';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -19,58 +22,109 @@ export const columns = [
     {
         accessorKey: "companyName",
         header: ({ column }) => {
+
             return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                <div
+                    className={"flex flex-col"}
+
                 >
-                    Company Name
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
+                    <div className='flex'>
+
+                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Company</h2>
+                        <RiArrowUpDownFill size={22} />
+                    </div>
+                    <div>
+                        <Input type="text"
+                            value={(column?.getFilterValue()) ?? ""}
+                            onChange={(event) =>
+                                column?.setFilterValue(event.target.value)
+                            }
+                            className="h-4 text-[11px]"
+                            placeholder="Company..."
+                        />
+                    </div>
+                </div>
             )
         },
-
     },
-
     {
         accessorKey: "buyerName",
         header: ({ column }) => {
             return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                <div
+                    className={"flex flex-col"}
                 >
-                    Buyer Name
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
+                    <div className='flex'>
+                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Buyer</h2>
+                        <RiArrowUpDownFill size={22} />
+                    </div>
+                    <div>
+                        <Input type="text"
+                            value={(column?.getFilterValue()) ?? ""}
+                            onChange={(event) =>
+                                column?.setFilterValue(event.target.value)
+                            }
+                            className="h-4 text-[11px]"
+                            placeholder="Buyer..."
+                        />
+                    </div>
+                </div>
             )
         },
     },
     {
         accessorKey: "fabricsName",
         header: ({ column }) => {
+
             return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                <div
+                    className={"flex flex-col"}
+
                 >
-                    Fabrics
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
+                    <div className='flex'>
+
+                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Fabrics</h2>
+                        <RiArrowUpDownFill size={22} />
+                    </div>
+                    <div>
+                        <Input type="text"
+                            value={(column?.getFilterValue()) ?? ""}
+                            onChange={(event) =>
+                                column?.setFilterValue(event.target.value)
+                            }
+                            className="h-4 text-[11px]"
+                            placeholder="Fabrics..."
+                        />
+                    </div>
+                </div>
             )
         },
     },
     {
         accessorKey: "season",
         header: ({ column }) => {
+
             return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                <div
+                    className={"flex flex-col"}
+
                 >
-                    Season
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
+                    <div className='flex'>
+
+                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Season</h2>
+                        <RiArrowUpDownFill size={22} />
+                    </div>
+                    <div>
+                        <Input type="text"
+                            value={(column?.getFilterValue()) ?? ""}
+                            onChange={(event) =>
+                                column?.setFilterValue(event.target.value)
+                            }
+                            className="h-4 text-[11px]"
+                            placeholder="Season..."
+                        />
+                    </div>
+                </div>
             )
         },
     },
@@ -82,7 +136,7 @@ export const columns = [
                     className={"flex"}
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Order No.
+                    Order Num.
                     <RiArrowUpDownFill className=" h-4 w-4" size={22} />
                 </p>
             )
@@ -101,7 +155,7 @@ export const columns = [
                     className={"flex"}
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Invoice No.
+                    Inv. No.
                     <RiArrowUpDownFill className=" h-4 w-4" size={22} />
                 </p>
             )
@@ -199,27 +253,49 @@ export const columns = [
             )
         },
         cell: ({ row }) => {
-
             return <div >{format(row.original.createdAt, 'PP')}</div>
         }
     },
     {
         accessorKey: "status",
-        header: "Status",
-        cell: ({ row }) => {
-            const { orderQuantity, restQuantity } = row.original
-            let status = ""
-            if (orderQuantity - restQuantity > 0) {
-                status = "Pending"
-            } 
-             if (restQuantity === 0) {
-                status = "Fullfilled"
+        header: ({ column }) => {
+            const statuses = ["All", "Pending", "Ordered", "Fullfilled"]
+            return (
+                <div className={"flex flex-col"} >
+                    <div className='flex'>
+                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Status</h2>
+                        <RiArrowUpDownFill size={22} />
+                    </div>
+                    <div >
+                        <select
+                            className={""}
+                            onChange={(event) => { column?.setFilterValue(event.target.value) }}
+                        >
+                            <option disabled selected>Filter Status</option>
+                            <option className='cursor-pointer' value={""} >{"ALL"}</option>
+                            <option className='cursor-pointer' value={"Ordered"} >{"Ordered"}</option>
+                            <option className='cursor-pointer' value={"Pending"} >{"Pending"}</option>
+                            <option className='cursor-pointer' value={"Fullfilled"} >{"Fullfilled"}</option>
+                        </select>
+                    </div>
+                </div>
+            )
+        },
 
-            } 
-             if(orderQuantity === restQuantity){
-                status = "Ordered"
-            }
-            return <div >{status}</div>
+        cell: ({ row }) => {
+            // const { orderQuantity, restQuantity } = row.original
+            // let status = ""
+            // if (orderQuantity - restQuantity > 0) {
+            //     status = "Pending"
+            // }
+            // if (restQuantity === 0) {
+            //     status = "Fullfilled"
+
+            // }
+            // if (orderQuantity === restQuantity) {
+            //     status = "Ordered"
+            // }
+            return <div >{row.original.status}</div>
         }
     },
 

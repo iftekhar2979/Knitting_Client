@@ -45,7 +45,7 @@ const handleInputDropdown=(e)=>{
     
 }
     const handleSendDelivery = () => {
-        const query={deliveredBy:deliveryMan,amount:deliveryQuantity,from:parseFloat(id)}
+        const query={deliveredBy:deliveryMan,amount:deliveryQuantity,from:parseFloat(id),status}
         createDelivery(query)
     }
     return (
