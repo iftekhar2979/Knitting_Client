@@ -15,7 +15,7 @@ export default  function Companies() {
     return <Loading/>
   }
   if(isError){
-   return <Error data={error}/> 
+   return <Error data={"Fetching Data Error!! Please Try Again and Contact to Provider"}/> 
   }
   return (
     <div className="container mx-auto py-10">

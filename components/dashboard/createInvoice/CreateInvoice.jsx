@@ -6,7 +6,7 @@ import { columns } from "./columns";
 import Loading from "@/components/utils/Loading";
 import Error from "@/components/utils/Error";
 
-const ViewOrder = (props) => {
+const CreateInvoice = (props) => {
     const {data,isLoading,isError,error}=useGetOrderQuery()
     if(isLoading){
         return <Loading/>
@@ -21,4 +21,4 @@ const ViewOrder = (props) => {
         </>
     )
 };
-export default ViewOrder;
+export default CreateInvoice;
