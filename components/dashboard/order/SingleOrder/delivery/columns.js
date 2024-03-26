@@ -27,7 +27,7 @@ export const columns = [
         accessorKey: "deliveredQuantity",
         header: "Delivered Quantity (KG)",
         accessorFn: (originalRow, index) => {
-            return String(originalRow.id)
+            return String(originalRow.deliveredQuantity)
         },
     },
     {
@@ -47,7 +47,7 @@ export const columns = [
         header: "Action",
         cell: ({ row }) => {
             
-            return(<Action id={row.original.id}/>)
+            return(<Action id={row.original.id} actionName={"Delete"}/>)
         }
     }
   

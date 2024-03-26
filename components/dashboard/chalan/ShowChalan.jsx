@@ -18,7 +18,7 @@ const ShowChalan = (props) => {
         return <Loading/>
     }
     if (isError) {
-        return <Error />
+        return <Error  data={"Fetching Error!!!"}/>
     }
     const handlePrint=()=>{
         console.log('value')

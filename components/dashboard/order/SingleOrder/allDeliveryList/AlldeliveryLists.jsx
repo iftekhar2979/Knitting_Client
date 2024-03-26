@@ -7,12 +7,12 @@ import { columns } from './columns';
 
 const AllDeliveryLists = ({}) => {
 
-    const {data,isLoading,isError}=useGetAllDeliveryQuery()
+    const {data,isLoading,isError,error}=useGetAllDeliveryQuery()
     if(isLoading){
         return <Loading/>
     }
     if(isError){
-        return <Error/>
+        return <Error data={'Fetching Data Error !!!'}/>
     }
     return (
         <>

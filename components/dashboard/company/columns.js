@@ -34,7 +34,6 @@ export const columns = [
       const {buyers}=row.original 
       return buyers?.map(item=><div key={item.id} className="py-1">{item.buyerName} <hr/></div>)
     },
-
   },
   {
     accessorKey: "email",

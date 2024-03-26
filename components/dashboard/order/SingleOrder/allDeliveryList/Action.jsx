@@ -9,7 +9,7 @@ const Action = ({ id ,data}) => {
         <div className='flex' >
             <PDFDownloadLink document={<Chalan data={data} id={data.id} />} fileName={`Chalan Number ${data.id}`}>
                 {({ blob, url, loading, error }) =>
-                    loading ? 'Loading...' : <FaDownload size={32} color={"green"} className="cursor-pointer" />
+                    loading ? 'Loading...' : <FaDownload size={24} color={"green"} className="cursor-pointer" />
                 }
             </PDFDownloadLink>
         </div>

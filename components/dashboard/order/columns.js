@@ -6,6 +6,7 @@ import { RiArrowUpDownFill } from 'react-icons/ri';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import InputDropDown from '@/components/utils/InputDropDown';
+import Action from './Action';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -303,7 +304,7 @@ export const columns = [
         accessorKey: "Action",
         header: "Action",
         cell: ({ row }) => {
-            return <div ><MdDelete size={32} color={"red"} className="cursor-pointer" /></div>
+            return (<Action id={row.original.id} orderNumber={row.original.orderNumber} actionName={"Delete"} />)
         }
     }
 

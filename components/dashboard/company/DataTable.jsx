@@ -58,13 +58,8 @@ export function DataTable({
   const [columnFilters, setColumnFilters] = useState([])
   const [pagination, setPagination] = useState({
     pageIndex: 0, //initial page index
-    pageSize: 20, //default page size
+    pageSize: 15, //default page size
   });
-  const [globalFilter, setGlobalFilter] = useState('')
-
-  const statuses = ["Pending", "Ordered", "Fullfilled"]
-
-
   const table = useReactTable({
     data,
     columns,
@@ -82,17 +77,9 @@ export function DataTable({
       sorting,
       columnFilters,
       pagination,
-      globalFilter,
+  
     },
-    onColumnFiltersChange: setColumnFilters,
-    onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: fuzzyFilter,
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    getFacetedMinMaxValues: getFacetedMinMaxValues(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: false,
+ 
   })
   return (
     <div className="rounded-md border">
@@ -168,7 +155,7 @@ export function DataTable({
                 <SelectValue placeholder={table.getState().pagination.pageSize} />
               </SelectTrigger>
               <SelectContent side="top">
-                {[10, 20, 30, 40, 50].map((pageSize) => (
+                {[10,15, 20, 30, 40, 50].map((pageSize) => (
                   <SelectItem key={pageSize} value={`${pageSize}`}>
                     {pageSize}
                   </SelectItem>

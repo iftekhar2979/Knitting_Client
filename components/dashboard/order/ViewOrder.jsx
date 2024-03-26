@@ -12,7 +12,7 @@ const ViewOrder = (props) => {
         return <Loading/>
     }
     if(isError){
-        return <Error data={data}/>
+        return <Error data={error}/>
     }
     return (
         <>

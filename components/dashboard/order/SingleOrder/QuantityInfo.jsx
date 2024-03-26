@@ -3,55 +3,60 @@
 import Loading from "@/components/utils/Loading";
 import { useCreateDeliveryMutation, useGetOnlyQuantityInfoQuery } from "@/lib/features/order/orderApi";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import InputDropDown from "@/components/utils/InputDropDown";
 import { revalidatePath } from 'next/cache'
+import Error from "@/components/utils/Error";
 
-const deliveryMen=["Alif","kalif","Jalif"]
+const deliveryMen = ["Alif", "kalif", "Jalif"]
 const QuantityInfo = ({ id }) => {
-    const { data, isLoading, isError, error } = useGetOnlyQuantityInfoQuery(id)
-    const [createDelivery]=useCreateDeliveryMutation()
-
+    const { data, isLoading, isError, error, isSuccess } = useGetOnlyQuantityInfoQuery(id)
+    const [createDelivery, { isLoading: deliveryLoading, isError: deliveryError, isSuccess: deliverySuccess }] = useCreateDeliveryMutation()
+    // const [status, setStatus] = useState("")
     const [deliveryQuantity, setDeliveryQuantity] = useState("")
     const [deliveryMan, setDeliveryMan] = useState("")
 
+
+    useEffect(() => {
+     
+        if (data?.restQuantity !== 0 && deliveryQuantity >= data?.restQuantity) {
+            alert("You Can't add more number")
+        }
+    }, [deliveryQuantity, data?.restQuantity])
     if (isLoading) {
         return <Loading />
     }
+
     let { orderQuantity = "", restQuantity = "", status = "" } = data
+
     const handleDelivery = (e) => {
         let deliveryValue = e.target.value
         setDeliveryQuantity(parseFloat(deliveryValue))
-        if (deliveryValue === restQuantity || deliveryValue >= restContent) {
-            alert("You did not add more number")
-        }
-    }
-    let restContent = ""
-    deliveryQuantity ? restContent = restQuantity - deliveryQuantity : restContent = restQuantity
-            if (orderQuantity - restQuantity > 0) {
-                status = "Pending"
-            } 
-             if (restQuantity === 0) {
-                status = "Fullfilled"
 
-            } 
-             if(orderQuantity === restQuantity){
-                status = "Ordered"
-            }
-const handleInputDropdown=(e)=>{
-    const val = e.target.value
-    setDeliveryMan(val)
-    
-}
+    }
+
+    const handleInputDropdown = (e) => {
+        const val = e.target.value
+        setDeliveryMan(val)
+
+    }
     const handleSendDelivery = () => {
-        const query={deliveredBy:deliveryMan,amount:deliveryQuantity,from:parseFloat(id),status}
+        const query = { deliveredBy: deliveryMan, amount: deliveryQuantity, from: parseFloat(id), status }
         createDelivery(query)
+            .then(res => {
+                if (res.data) {
+                    setDeliveryQuantity("")
+                    setDeliveryMan("")
+                }
+            })
+
     }
     return (
         <div>
 
             <div className="my-2 border rounded-md shadow-sm p-10 font-mono flex justify-center flex-col">
+                {deliveryError? <Error data={"You can't Add More Quantity than Rest Quantity . Please Put Valid Quantity"}/>:""}
 
                 <h2 className="py-2 px-4">Status  : <span className="border-b py-2 px-4">{status}</span></h2>
 
@@ -68,14 +73,14 @@ const handleInputDropdown=(e)=>{
                 />
                 <h2 className="py-2 px-4">Delivered Quantity  :
                     <span className="border-b py-2 px-4 text-bold">
-                        <Input type="number" placeholder="Quantity.." className="w-72 inline" onChange={(e) => handleDelivery(e)} />
+                        <Input type="number" placeholder="Quantity.." disabled={restQuantity===0} className="w-72 inline" defaultValue={deliveryQuantity} onChange={(e) => handleDelivery(e)} />
                     </span>
                     <span className="mx-4">
                         Kg
                     </span>
-                    <Button onClick={handleSendDelivery}>Send</Button>
+                    <Button onClick={handleSendDelivery}>{deliveryLoading ? "Sending" : "Send"}</Button>
                 </h2>
-                <h2 className="py-2 px-4">Rest of Quantity  : <span className="border-b py-2 px-4 text-bold">{restContent}</span> KG</h2>
+                <h2 className="py-2 px-4">Rest of Quantity  : <span className="border-b py-2 px-4 text-bold">{restQuantity}</span> KG</h2>
             </div>
 
         </div>
