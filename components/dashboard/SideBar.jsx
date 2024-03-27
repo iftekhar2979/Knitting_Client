@@ -13,74 +13,87 @@ import { IoAnalyticsOutline } from "react-icons/io5";
 import { RiBillLine } from "react-icons/ri";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { BiCreditCard } from "react-icons/bi";
+import SingleLink from './Product/SingleLink';
+import dashboard from '@/app/dashboard/page';
 const companySection = [
     {
 
+        id: 510,
         routeName: "addCompany",
         value: "Add Company",
-        icon:<BsBuildingAdd />
+        icon: <BsBuildingAdd />
     },
     {
+        id: 511,
         routeName: "company",
         value: "Company List",
-        icon:<FaBuildingColumns />
+        icon: <FaBuildingColumns />
     }
 ]
 const orderSection = [
     {
 
+        id: 512,
         routeName: "addOrder",
         value: "Add Order",
-        icon:<IoDocumentSharp />
+        icon: <IoDocumentSharp />
     },
     {
+        id: 513,
         routeName: "order",
         value: "Order List",
-        icon:<CiViewList/>
+        icon: <CiViewList />
     },
     {
+        id: 514,
         routeName: "deliveryList",
         value: "Delivery List",
-        icon:<CiDeliveryTruck/>
+        icon: <CiDeliveryTruck />
     }
 ]
 const billSection = [
     {
 
+        id: 515,
         routeName: "createInvoices",
         value: "Create Invoice",
-        icon:<BiCreditCard />
+        icon: <BiCreditCard />
     },
     {
+        id: 516,
         routeName: "pi",
         value: "Performa Invoices",
-        icon:<LiaFileInvoiceDollarSolid/>
+        icon: <LiaFileInvoiceDollarSolid />
     },
     {
+        id: 517,
         routeName: "bills",
         value: "Bills",
-        icon:<RiBillLine/>
+        icon: <RiBillLine />
     }
 ]
 const productSection = [
     {
+        id: 518,
         routeName: "analytics",
         value: "Analytics",
-        icon:<IoAnalyticsOutline/>
+        icon: <IoAnalyticsOutline />
     },
     {
 
+        id: 519,
         routeName: "product",
         value: "Products",
-        icon:<CiViewList/>
+        icon: <CiViewList />
     },
 
 ]
 const dashboardSection = [
     {
+        id: 520,
         routeName: "dashboard",
         value: "Dashboard",
-        icon:<MdDashboardCustomize/>
+        icon: <MdDashboardCustomize />
     },
 
 
@@ -94,7 +107,6 @@ const SideBar = (props) => {
     useEffect(() => {
         setSelectedRoute(pathName.split("/")[2])
     }, [pathName])
-  
 
     return (
         <divside className="flex flex-col w-44  h-screen pl-8 hidden  md:block  bg-white  dark:bg-gray-900">
@@ -102,73 +114,41 @@ const SideBar = (props) => {
                 <nav className="-mx-3 space-y-6 ">
                     <div className="space-y-3 ">
                         <label className="px-3 text-xs text-black uppercase font-bold dark:text-gray-400">analytics</label>
-                        {
-                            dashboardSection?.map((item, index) => {
-                                return (
-                                    <Link href={`/dashboard`}> <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${selectedRoute === item.routeName && "bg-purple-700 text-white rouded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`} >
-                                      {item.icon}
-                                        <span className="mx-2 text-sm font-medium">{item.value}</span>
-                                    </div></Link>
-                                )
-                            })
-                        }
-
+                        <Link href={`/dashboard`}>
+                            <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${!selectedRoute && "bg-purple-700 text-white rouded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`} >
+                                <MdDashboardCustomize />
+                                <span className="mx-2 text-sm font-medium">Dashboard</span>
+                            </div>
+                        </Link>
                     </div>
                     <div className="space-y-3 ">
                         <label className="px-3 text-xs text-black font-bold uppercase dark:text-gray-400">Company</label>
                         {
-                            companySection?.map((item, index) => {
-                                return (
-                                    <Link href={`/dashboard/${item.routeName}`}> <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${selectedRoute === item.routeName && "bg-purple-700 text-white rouded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`} >
-                                          {item.icon}
-                                        <span className="mx-2 text-sm font-medium">{item.value}</span>
-                                    </div></Link>
-                                )
-                            })
-                        }
+                            companySection?.map((item, index) => <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} />
+                            )}
+
                     </div>
                     <div className="space-y-3 ">
                         <label className="px-3 text-xs text-black uppercase font-bold dark:text-gray-400">Product</label>
                         {
-                            productSection?.map((item, index) => {
-                                return (
-                                    <Link href={`/dashboard/${item.routeName}`}> <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${selectedRoute === item.routeName && "bg-purple-700 text-white rouded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`} >
-                                       {item.icon}
-                                        <span className="mx-2 text-sm font-medium">{item.value}</span>
-                                    </div></Link>
-                                )
-                            })
-                        }
+                            productSection?.map((item, index) => <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} />
+                            )}
                     </div>
                     <div className="space-y-3 ">
                         <label className="px-3 text-xs text-black uppercase font-bold dark:text-gray-400">Orders</label>
                         {
-                            orderSection?.map((item, index) => {
-                                return (
-                                    <Link href={`/dashboard/${item.routeName}`}> <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${selectedRoute === item.routeName && "bg-purple-700 text-white rouded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`} >
-                                          {item.icon}
-                                        <span className="mx-2 text-sm font-medium">{item.value}</span>
-                                    </div></Link>
-                                )
-                            })
-                        }
+                            orderSection?.map((item, index) => <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} />
+                            )}
 
                     </div>
 
                     <div className="space-y-3 ">
                         <label className="px-3 text-xs text-black uppercase font-bold dark:text-gray-400">Invoice</label>
-                        
+
                         {
-                            billSection?.map((item, index) => {
-                                return (
-                                    <Link href={`/dashboard/${item.routeName}`}> <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${selectedRoute === item.routeName && "bg-purple-700 text-white rouded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`} >
-                                          {item.icon}
-                                        <span className="mx-2 text-sm font-medium">{item.value}</span>
-                                    </div></Link>
-                                )
-                            })
-                        }
-                        
+                            billSection?.map((item, index) => <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} />
+                            )}
+
                     </div>
                 </nav>
             </div>

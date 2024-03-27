@@ -77,8 +77,6 @@ const EditModal = ({defaultValues}) => {
 
     async function onSubmit(data) {
       editCompany({id:id,body:data})
-        
-       
       }
     return (
         <Form {...form}>

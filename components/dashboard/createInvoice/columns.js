@@ -3,7 +3,11 @@ import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { RiArrowUpDownFill } from "react-icons/ri"
 import OrderListCheckBoxes from "./OrderListCheckBoxes"
-
+import { useEffect, useState } from "react"
+import { useAppDispatch } from "@/lib/hooks"
+import { pushingOnSelectedValue, pushingSelectedCompany } from "@/lib/features/Invoice/invoiceSlice"
+import { CgUnavailable } from "react-icons/cg";
+import { MdOutlineEventAvailable } from "react-icons/md";
 export const columns = [
     {
         id: "select",
@@ -18,10 +22,17 @@ export const columns = [
             />
         ),
         cell: ({ row }) => {
-            // console.log(row.original)
-            return <OrderListCheckBoxes orderList={row.original.orderNumber} row={row}/>
-            },
-      
+            const [disabled, setDisabled] = useState(false)
+            const [state, setState] = useState("")
+            const dispatch = useAppDispatch()
+
+
+            const handleCheckboxChange = (event) => {
+                dispatch(pushingOnSelectedValue(event.target.value))
+            };
+            return <OrderListCheckBoxes orderList={row.original.orderNumber} state={state} setDisabled={setDisabled} handleCheckboxChange={handleCheckboxChange} row={row.original} disabled={disabled} />
+        },
+
     },
     {
         accessorKey: "orderNumber",
@@ -38,6 +49,7 @@ export const columns = [
         },
         cell: ({ row }) => {
             const { id, orderNumber } = row.original
+            // console.log(id)
             return <Link href={`/dashboard/order/${id}`} className="text-blue-300">{orderNumber}</Link>
         }
 
@@ -138,7 +150,24 @@ export const columns = [
         },
     },
 
+    {
+        accessorKey: "isProformaInvoiceCreated",
+        header: ({ column }) => {
+            return (
+                <p
+                    className={"flex"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Invoice Created
+                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
+                </p>
+            )
+        },
+        cell: ({ row }) => {
+            return <div>{row.original.isProformaInvoiceCreated ? <MdOutlineEventAvailable size={25} color={"green"}/> : <CgUnavailable size={25} color={"red"}/>}</div>
+        },
 
+    },
 
 
 
