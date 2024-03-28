@@ -13,9 +13,11 @@ import { Dialog } from "@/components/ui/dialog";
 import { useState } from "react";
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import Table from "@/components/utils/Table/Table";
-import { useGetOrdersInvoiceMutation } from "@/lib/features/Invoice/invoiceApi";
+import { useCreateProformaInvoiceMutation, useGetOrdersInvoiceMutation } from "@/lib/features/Invoice/invoiceApi";
 import ModalTable from "./ModalTable";
 import { clearingState } from "@/lib/features/Invoice/piSlice";
+import { clearingSelectedValue } from "@/lib/features/Invoice/invoiceSlice";
+
 
 const tableHeadings = [
     {
@@ -49,11 +51,12 @@ const tableHeadings = [
 ];
 const CreateInvoice = (props) => {
     const { data, isLoading, isError, error } = useGetInvoiceOrdersQuery()
+    const [createProformaInvoice, { data: invoiceData, isLoading: isInvoiceCreatingLoading, isError: isInvoiceCreatingError, error: invoiceCreatingError }] = useCreateProformaInvoiceMutation()
     const [getOrdersInvoice, { data: piOrders, isLoading: piOrderLoading, isError: isPiOrderError, error: piOrderError }] = useGetOrdersInvoiceMutation()
     const [open, setOpen] = useState(false)
-    const { selectedValues, selectedCompany } = useAppSelector(state => state.invoiceSlice)
+    const { selectedValues, } = useAppSelector(state => state.invoiceSlice)
     const { piValue, totalAmount, totalQuantity } = useAppSelector(state => state.pI)
-    const dispatch=useAppDispatch()
+    const dispatch = useAppDispatch()
     if (isLoading) {
         return <Loading />
     }
@@ -65,8 +68,10 @@ const CreateInvoice = (props) => {
         getOrdersInvoice(selectedValues)
     }
     const handleSubmit = () => {
-        console.log(piValue)
-       dispatch(clearingState())
+        createProformaInvoice(piValue)
+        dispatch(clearingSelectedValue())
+        dispatch(clearingState())
+        setOpen(false)
     }
     return (
         <div className="w-full">
@@ -76,14 +81,13 @@ const CreateInvoice = (props) => {
                 <div className="w-full">
                     <Dialog className='w-full' open={open} onOpenChange={setOpen}>
                         <DialogTrigger><Button onClick={handleProformaInvoice}>Make Performa Invoice</Button></DialogTrigger>
-
                         <DialogContent className="fixed  z-50 grid w-full max-w-4xl translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg ">
                             {isPiOrderError ?
                                 <Error data={"Please Select Same Company and Same Buyers Order for making Proforma Invoice"} />
                                 :
                                 <>
                                     <DialogHeader>
-                                        <DialogTitle>Do You Want to Create PI for Order : {selectedValues.join(", ")}</DialogTitle>
+                                        <DialogTitle> Do You Want to Create PI for Order : {selectedValues.join(", ")}</DialogTitle>
                                     </DialogHeader>
                                     <Table tableHeadings={tableHeadings} >
                                         {piOrders?.map((item, index) => <>

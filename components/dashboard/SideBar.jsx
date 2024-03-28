@@ -61,7 +61,7 @@ const billSection = [
     },
     {
         id: 516,
-        routeName: "pi",
+        routeName: "performaInvoices",
         value: "Performa Invoices",
         icon: <LiaFileInvoiceDollarSolid />
     },

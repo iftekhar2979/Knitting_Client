@@ -3,6 +3,10 @@ import QuantityInfo from "@/components/dashboard/order/SingleOrder/QuantityInfo"
 import { getData } from "@/hooksAndFunctions/getApi";
 import { format } from "date-fns";
 
+export const metadata = {
+    title: "Order of Teritiary Colour Knit",
+    description: "Orders of Teritiary Colour Knit",
+  };
 
 const singleOrder = async ({ params: { id } }) => {
     const data = await getData(`http://localhost:8000/order/${id}`, { next: { revalidate: 100, tags: ["Order"] } })

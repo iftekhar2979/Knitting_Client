@@ -11,7 +11,7 @@ const ModalTable = ({ detail }) => {
     const [style, setStyle] = useState('')
     const [description, setDescription] = useState('')
     const { selectedValues, selectedCompany } = useAppSelector(state => state.invoiceSlice)
-    const { cleared } = useAppSelector(state => state.pI)
+    const { cleared, totalQuantity, totalAmount } = useAppSelector(state => state.pI)
     const { _sum: { orderQuantity }, companyId, fabricsName, buyerId, fabricsId } = detail
     const dispatch = useAppDispatch()
     const handleChange = (e) => {
@@ -28,17 +28,19 @@ const ModalTable = ({ detail }) => {
             style,
             buyerId,
             fabricsId,
-            containsOrder: selectedValues.join("_"),
+            containOrders: selectedValues.join("_"),
             piName: `${companyId}_${selectedValues.join("_")}`,
             piNumber: `${companyId}_${selectedValues.join("_")}`,
             description,
             unitPrice: value,
-            amount: parseFloat(amount.toFixed(4))
+            amount: parseFloat(amount.toFixed(4)),
+            totalPIQuantity: totalQuantity,
+            totalPIAmount: totalAmount,
         }
         dispatch(addPi(object))
         dispatch(totalQuantityCounting())
 
-    }, [value, finishDia, description, style,])
+    }, [value, finishDia, description, style, totalAmount, totalQuantity])
 
     useEffect(() => {
         if (cleared) {

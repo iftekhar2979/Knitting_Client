@@ -15,15 +15,12 @@ import { Button } from "@/components/ui/button";
 import { BsThreeDots } from "react-icons/bs";
 import DeleteModal from "@/components/dashboard/company/Modal/DeleteModal";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { useDeleteSingleProformaInvoiceMutation } from "@/lib/features/Invoice/invoiceApi";
 const Action = ({ id, actionName }) => {
     const [open, setOpen] = useState(false)
-    const [deleteDelivery,{isLoading,isError}] = useDeleteDeliveryMutation()
-    const [chalanName, setChalanName] = useState("")
-    const dispatch = useAppDispatch()
-    const handleChalan = (chalanId) => {
-        setChalanName(chalanId)
-        dispatch(addingId({ id: parseFloat(chalanId), name: `Chalan Number ${chalanId}` }))
-    }
+    const [deleteSingleProformaInvoice,{isLoading,isError}] = useDeleteSingleProformaInvoiceMutation(id)
+ 
+   
     return (
         <div >   <Dialog open={open} onOpenChange={setOpen}>
             <Popover>
@@ -31,8 +28,7 @@ const Action = ({ id, actionName }) => {
                     <Button variant="outline" className={"border-none"}><BsThreeDots size={22} /></Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-44">
-                    <div className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer" onClick={() => handleChalan(id)} ><FaEye size={24} color={"green"} className="cursor-pointer" /> <span className="mx-2">Show</span></div>
-
+            
                     <DialogTrigger>  <div className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer"><MdDelete size={24} color={"red"} className="cursor-pointer" /> <span className="mx-2">Delete</span></div></DialogTrigger>
                 </PopoverContent>
             </Popover>
@@ -42,7 +38,7 @@ const Action = ({ id, actionName }) => {
                 actionName === 'Delete' &&
                 <>
 
-                    <DeleteModal title={"Do You Want To Remove Chalan"} property={id} id={id} setOpen={setOpen} isLoading={isLoading}  deleteQueryFn={deleteDelivery}/>
+                    <DeleteModal title={"Do You Want To Remove Chalan"} property={id} id={id} setOpen={setOpen} isLoading={isLoading}  deleteQueryFn={deleteSingleProformaInvoice}/>
 
                 </>
             }

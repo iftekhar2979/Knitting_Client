@@ -1,7 +1,10 @@
 import AddProduct from "@/components/dashboard/Product/AddProduct";
 import Products from "@/components/dashboard/Product/Products";
 import { data } from "autoprefixer";
-
+export const metadata = {
+   title: "Product of Teritiary Colour Knit",
+   description: "Product of Teritiary Colour Knit",
+ };
 const page = () => {
    
     return (
