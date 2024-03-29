@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap');
+
 
 @layer base {
   :root {
@@ -78,4 +80,37 @@
 
 divside.flex.flex-col.w-44.h-screen.left-10.hidden.md\:block.overflow-y-auto.bg-white.dark\:bg-gray-900 {
   margin-left: 2rem;
+}
+
+span.ml-2.widthHeading {
+  width: 100px;
+  display: inline-block;
+}
+.piHeading{
+  color:#0F1141
+}
+
+.backgroundWaterMark{
+  /* background-image: url('./Assets/backgroundImg.png'); */
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+ 
+  background-position: center;
+}
+.calibri{
+  font-family: Calibri, Helvetica, sans-serif;
+}
+.timesNewRoman{
+  font-family: 'Times New Roman', Times, serif;
+}
+.bg-wholebg{
+  background-color: #F3F6F9;
+}
+
+.bg-wholebg {
+  background-color: #F3F6F9;
+}
+.b_b {
+  border: 1px solid black;
 }
