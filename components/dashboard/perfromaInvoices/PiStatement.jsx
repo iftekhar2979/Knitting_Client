@@ -10,22 +10,22 @@ const { useGetSinglePerformaInvoiceListQuery } = require("@/lib/features/Invoice
 const { useState, useEffect } = require("react")
 
 const headings = [
-    { heading: 'S.L.', class: "w-12 text-center b_b text-[9pt] text-black mx-2" },
-    { heading: "Description", class: "w-66 text-center b_b text-[9pt] text-black mx-2" },
-    { heading: "Finish Dia", class: "w-60 text-center b_b text-[9pt] text-black mx-2" },
-    { heading: 'Style', class: "w-24 text-center b_b text-[9pt] text-black mx-2" },
-    { heading: 'Quantity', class: "w-32 text-right b_b text-[9pt] text-black px-2" },
-    { heading: 'Unit Price', class: "w-28 text-center b_b text-[9pt] text-black " },
-    { heading: 'Total Amount', class: "w-44 text-center b_b text-[9pt] text-black mx-2" },
+    { heading: 'S.L.', class: "w-12 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: "Description", class: "w-66 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: "Finish Dia", class: "w-60 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: 'Style', class: "w-24 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: 'Quantity', class: "w-32 text-right b_b text-[11pt] text-black px-2" },
+    { heading: 'Unit Price', class: "w-28 text-center b_b text-[11pt] text-black " },
+    { heading: 'Total Amount', class: "w-44 text-center b_b text-[11pt] text-black mx-2" },
 ]
 const lastBorder = [
-    { heading: '', class: "w-16 text-center b_b text-[9pt] text-black mx-2" },
-    { heading: "Total", class: "w-60 text-center b_b text-[9pt] text-black mx-2" },
-    { heading: "", class: "w-56 text-center b_b text-[9pt] text-black mx-2" },
-    { heading: '', class: "w-24 text-center b_b text-[9pt] text-black mx-2" },
-    { heading: 'Quantity', class: "w-32 text-right b_b text-[9pt] text-black px-2" },
-    { heading: '', class: "w-28 text-center b_b text-[9pt] text-black mx-2" },
-    { heading: 'Total Amount', class: "w-44 text-center b_b text-[9pt] text-black mx-2" },
+    { heading: '', class: "w-16 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: "Total", class: "w-60 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: "", class: "w-56 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: '', class: "w-24 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: 'Quantity', class: "w-32 text-right b_b text-[11pt] text-black px-2" },
+    { heading: '', class: "w-28 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: 'Total Amount', class: "w-44 text-center b_b text-[11pt] text-black mx-2" },
 ]
 export const PiStatement = ({ id }) => {
 
@@ -54,18 +54,18 @@ export const PiStatement = ({ id }) => {
         let item = state.filter((item, i) => i !== index)
         let itemSecond = lastBordered.filter((item, i) => i !== index)
         if (index == 2) {
-            item[1].class = 'w-[448px] text-center b_b text-[9pt] text-black mx-2'
+            item[1].class = 'w-[448px] text-center b_b text-[11pt] text-black mx-2'
         }
         if (index == 3) {
-            item[1].class = `w-[368px] text-center b_b text-[9pt] text-black mx-2`
+            item[1].class = `w-[368px] text-center b_b text-[11pt] text-black mx-2`
         } if (index == 4) {
-            item[1].class = `w-[368px] text-center b_b text-[9pt] text-black mx-2`
+            item[1].class = `w-[368px] text-center b_b text-[11pt] text-black mx-2`
         }
         if (item.length === 6) {
-            item[1].class = 'w-[496px] text-center b_b text-[9pt] text-black mx-2'
+            item[1].class = 'w-[496px] text-center b_b text-[11pt] text-black mx-2'
         }
         if (item.length === 5) {
-            item[1].class = 'w-[704px] text-center b_b text-[9pt] text-black mx-2'
+            item[1].class = 'w-[704px] text-center b_b text-[11pt] text-black mx-2'
         }
         setState(item)
         setlastBordered(itemSecond)
@@ -78,13 +78,14 @@ export const PiStatement = ({ id }) => {
             window.print()
         }, 10);
     }
-    // const handleEditChange = (e) => {
-    //     setTimeout(() => {
-    //         axios.patch(`${process.env.REACT_APP_DEVELOPMENT_URL}/piName/${_id}`, { piNumber: e.target.value },{withCredentials:true})
-    //             .then(res => console.log(res.json))
-    //             .catch(err => console.log(err))
-    //     }, 800)
-    // }
+    const handleEditChange = (e) => {
+        console.log(e.target.value)
+        // setTimeout(() => {
+        //     axios.patch(`${process.env.REACT_APP_DEVELOPMENT_URL}/piName/${_id}`, { piNumber: e.target.value },{withCredentials:true})
+        //         .then(res => console.log(res.json))
+        //         .catch(err => console.log(err))
+        // }, 800)
+    }
     const handleSeason = (e) => {
         console.log(e.target.value)
     }
@@ -92,24 +93,20 @@ export const PiStatement = ({ id }) => {
     return (
         <>
             {/* <section className='backgroundWaterMark'> */}
-            <section className='backgroundWaterMark'>
-                {!block && <>
-                    {/* <input type="checkbox" className="toggle toggle-warning mt-4 ml-6" onClick={handleDeliveryStatement} />  */}
-                    <span className={`relative bottom-2 left-2 rounded-md ${deliveryStatement ? 'bg-green-300' : 'bg-red-300'}`}>{deliveryStatement ? 'Delivery Statement' : "Proforma Invoice"}</span>
-                </>}
-                {/* {deliveryStatement && <DeliveryStatement deliveryStatement={deliveryStat} buyerName={buyerName} piNumber={singlePi?.piNumber}/>} */}
-                {!deliveryStatement &&
+            <section className='backgroundWaterMark' >
+            
+            
                     <> <div className='leading-4 text-black timesNewRoman'>
                         <div class="mx-2 flex justify-around">
                             {/* <img src={logo} alt="" class="h-20 " /> */}
-                            <div className='flex flex-col justify-center ml-4'>
-                                <h2 className='text-center text-3xl font-bold  font-MonoSerit piHeading' >Tertiray Colour Knit Fabrics</h2>
-                                <h5 className='text-center text-xl italic font-bold piHeading timesNewRoman'>100% Export Oriented Knit Fabrics Manufacture & Supplier</h5>
-                            </div>
+                            <nav className='flex flex-col justify-center '>
+                                <h2 className='text-center text-4xl font-bold  timesNewRoman piHeading ' >Tertiray Colour Knit Fabrics</h2>
+                                <h5 className='text-center text-md italic piHeading timesNewRoman mt-1'>100% Export Oriented Knit Fabrics Manufacture & Supplier</h5>
+                            </nav>
                         </div>
-                        <div style={{ width: '100%', height: '1px', backgroundColor: 'black', marginBottom: '2px' }}></div>
-                        <div style={{ width: '100%', height: '1px', backgroundColor: 'black' }}></div>
-                        <div className='text-center text-xl  italic font-semibold  underline underLineOffset calibri'>Proforma Invoice <span style={{ width: '153px', height: '1px', backgroundColor: 'black' }}></span></div>
+                        <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black',margin:"2px", marginBottom: '4px' }}></h1>
+                        <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black' }}></h1>
+                        <div className='text-center text-xl  italic font-semibold leading-2  underline underLineOffset calibri'>Proforma Invoice <span style={{ width: '153px', height: '1px', backgroundColor: 'black' }}></span></div>
                         <div className='flex justify-between mt-2 '>
                             <div className="flex ml-[2px"> <span class="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(createdAt), 'dd-MM-yyyy')}</span></div>
                             {!edit ? <span class="" onClick={() => setEdit(true)}>PI Number : {piNumber}</span> : <div className=''>PI Number : <input type='text' defaultValue={piNumber} onBlur={handleEditChange} /></div>}
@@ -138,7 +135,7 @@ export const PiStatement = ({ id }) => {
 
                                     {
                                         singlePi?.map((item, i) => {
-                                            const { fabricsName, style, totalQuantity, amount, unitPrice, finishDia } = item
+                                            const { fabricsName,description, style, totalQuantity, amount, unitPrice, finishDia } = item
                                             return (
                                                 <>
                                                     <tr class="border text-black"  >
@@ -149,7 +146,7 @@ export const PiStatement = ({ id }) => {
                                                                     case 'S.L.':
                                                                         return <td className={itemName.class} >{i + 1}</td>
                                                                         break;
-                                                                    case 'Description Of Goods':
+                                                                    case 'Description':
 
                                                                         return <td className={itemName.class} >{description}</td>
                                                                         break;
@@ -210,12 +207,12 @@ export const PiStatement = ({ id }) => {
 
                         <TermsAndCondition />
                     </>
-                }
+            
                 <div className='text-right'>
                     <Button className={`${block && 'hidden'}`} onClick={handlePrint}>Print this out!</Button>
                 </div>
             </section>
-            {!deliveryStatement && <footer class="w-full pt-4">
+        <footer class="w-full pt-4">
                 <div className='flex justify-between '>
                     <div >
                         <p className='text-[8pt] text-black'>Client Acceptance</p>
@@ -235,7 +232,7 @@ export const PiStatement = ({ id }) => {
                     <p className='text-center piHeading  font-semibold '>Mobile : 01711-344139 , 017160-19843 Mail : kamrul@tertiaryckf.com</p>
                     <p className='text-center piHeading font-semibold'>Near Rubel Pump ,Rajabari , Konabari , Gazipur</p>
                 </div>
-            </footer>}
+            </footer>
         </>
     )
 }
