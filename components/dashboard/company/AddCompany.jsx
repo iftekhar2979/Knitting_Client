@@ -16,7 +16,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useAddCompanyMutation } from "@/lib/features/company/companyApi"
-import { toast, useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/components/ui/use-toast"
+import { useEffect } from "react"
+import Error from "@/components/utils/Error"
 
 const FormSchema = z.object({
   companyName: z.string().min(2, {
@@ -60,6 +62,13 @@ const info=[
     placeholder:"Contact...",
     type:"Number"
   },
+  {
+    id:5,
+    name:'shortForm',
+    header:"Short Form",
+    placeholder:"Short Form...",
+    type:"String"
+  },
 ]
 
 export function AddCompany() {
@@ -72,17 +81,14 @@ export function AddCompany() {
       companyName: "",
       email:"",
       location:"",
-      contact:""
+      contact:"",
+      shortForm:""
     },
   })
 
   async function onSubmit(data) {
     addCompany(data)
-    if(isSuccess){
-      toast({
-        title: "Added Company Succesfully",
-      })
-    }
+
   }
 
   return (
@@ -113,6 +119,8 @@ export function AddCompany() {
         <Button type="submit" className="">{isLoading ? "Submitting" :"Submit"}</Button>
       </form>
     </Form>
+
+    {isError && <Error error={"New Company did not Created yet, Please Try again Later !!!"}/>}
     </div>
   )
 }

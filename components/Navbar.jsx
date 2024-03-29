@@ -8,7 +8,7 @@ import '../app/globals.css'
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const pathName = usePathname()
-    const path = ["home", 'about', 'service', 'contact', 'dashboard']
+    const path = [ 'about', 'service', 'contact', 'dashboard']
     const [selectedRoute, setSelectedRoute] = useState()
 
     useEffect(() => {
@@ -39,7 +39,12 @@ const Navbar = () => {
                     style={{ animation: isMenuOpen ? 'slideDown 0.5s ease-out' : '' }}
                 >
                     <ul className="flex flex-col items-center justify-center space-y-2 text-black border">
-                      
+                    <li ><Link href={`/`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${!selectedRoute  && "text-white py-4 px-2  bg-purple-700"}`}>HOME</Link></li>
+                    {path?.map((item ,i)=> {
+                            return (
+                                <li key={i}><Link href={`/${item}`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${selectedRoute === item && "text-white py-4 px-2  bg-purple-700"}`}>{item.toUpperCase()}</Link></li>
+                            )
+                        })}
                         {/* <li><Link href="/"  className="text-black hover:text-purple-700 cursor-pointer">Home</Link></li>
                          <li><Link href="/service" className="text-black hover:text-purple-700 cursor-pointer ">Services</Link></li>
                         <li><Link href="/about" className="text-black hover:text-purple-700 cursor-pointer">About</Link></li>
@@ -55,7 +60,10 @@ const Navbar = () => {
                         <li><Link href="/about" className="text-black hover:text-purple-700 cursor-pointer">About</Link></li>
                         <li><Link href="/contact" className="text-black hover:text-purple-700 cursor-pointer">Contact</Link></li>
                         <li><Link href="/dashboard" className="text-black hover:text-purple-700 cursor-pointer">Dashboard</Link></li> */}
+                         <li ><Link href={`/`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${!selectedRoute  && "text-white py-4 px-2  bg-purple-700"}`}>HOME</Link></li>
                         {path?.map((item ,i)=> {
+                            
+                            
                             return (
                                 <li key={i}><Link href={`/${item}`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${selectedRoute === item && "text-white py-4 px-2  bg-purple-700"}`}>{item.toUpperCase()}</Link></li>
                             )

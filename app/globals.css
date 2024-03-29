@@ -128,3 +128,9 @@ span.ml-2.widthHeading {
 .b_b {
   border: 1px solid black;
 }
+
+@media (min-width: 992px) {
+  .rotate-lg-6 {
+    transform: rotate(6deg);
+  }
+}
