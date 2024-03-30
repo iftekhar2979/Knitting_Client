@@ -46,7 +46,7 @@ export const yarnDetailsApi = apiSlice.injectEndpoints({
         }),
         deleteYarnDetails:builder.mutation({
             query:(id)=>({
-                url: `/order/details/${id}`,
+                url: `/order/yarn/details/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['Yarn']

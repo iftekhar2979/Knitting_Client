@@ -122,7 +122,7 @@ export const columns = [
         },
         cell: ({ row }) => {
             const { piNumber} = row.original
-            return <Link href={`/pi/${piNumber}`} className="text-blue-300">{piNumber}</Link>
+            return <Link href={`/dashboard/pi/${piNumber}`} className="text-blue-300">{piNumber}</Link>
         }
 
     },

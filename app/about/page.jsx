@@ -1,7 +1,10 @@
+import About from "@/components/About/About";
 
 
 export default function about() {
   return (
-    <div className="px-8">about</div>
+    <>
+    <About/>
+    </>
   )
 }

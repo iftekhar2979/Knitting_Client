@@ -304,7 +304,7 @@ export const columns = [
         accessorKey: "Action",
         header: "Action",
         cell: ({ row }) => {
-            return (<Action id={row.original.id} orderNumber={row.original.orderNumber} actionName={"Delete"} />)
+            return (<Action id={row.original.id} row={row.original} orderNumber={row.original.orderNumber} actionName={"Delete"} />)
         }
     }
 

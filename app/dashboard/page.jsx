@@ -6,7 +6,7 @@ const dashboard = (props) => {
 
     return (
         <div>
-            {/* <Counter/> */}
+            
         </div>
 
     )

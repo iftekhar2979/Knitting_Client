@@ -4,6 +4,7 @@ import MakingDollarConvert from "@/hooksAndFunctions/numberToWord"
 import { format } from "date-fns"
 import TermsAndCondition from "./TermsAndCondition"
 import { Button } from "@/components/ui/button"
+import useDocumentTitle from "@/hooksAndFunctions/useDocumentTitle"
 
 const { default: Loading } = require("@/components/utils/Loading")
 const { useGetSinglePerformaInvoiceListQuery } = require("@/lib/features/Invoice/invoiceApi")
@@ -37,12 +38,16 @@ export const PiStatement = ({ id }) => {
     const { data: singlePi, isLoading, isError } = useGetSinglePerformaInvoiceListQuery(id, {
         refetchOnMountOrArgChange: true
     })
+    useDocumentTitle(`PI Number ${id}`)
     useEffect(() => {
         if (block) {
             let nav = document.getElementsByClassName("bg-white border-gray-200  dark:bg-gray-900  relative")[0]
+            let footer = document.getElementsByClassName("px-4 py-8 dark:bg-gray-100 dark:text-gray-600")[0]
             nav.classList.add("hidden")
+            footer.classList.add("hidden")
             return () => {
                 nav.classList.remove("hidden")
+                footer.classList.remove("hidden")
             }
         }
     }, [block])

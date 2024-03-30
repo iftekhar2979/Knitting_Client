@@ -9,10 +9,11 @@ import DeleteModal from "@/components/dashboard/company/Modal/DeleteModal";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { useDeleteOrderMutation } from "@/lib/features/order/orderApi";
 import { useState } from "react";
-const Action = ({ id, actionName,orderNumber }) => {
+import Link from "next/link";
+const Action = ({ id, actionName,row,orderNumber }) => {
     const [open, setOpen] = useState(false)
     const [deleteOrder,{isLoading,isError}] = useDeleteOrderMutation()
-    
+   
  
     return (
         <div >   <Dialog open={open} onOpenChange={setOpen}>
@@ -21,7 +22,7 @@ const Action = ({ id, actionName,orderNumber }) => {
                     <Button variant="outline" className={"border-none"}><BsThreeDots size={22} /></Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-44">
-                    <div className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer"  ><FaEdit size={24} color={"green"} className="cursor-pointer" /> <span className="mx-2">Edit</span></div>
+                   <Link href={`/dashboard/order/${id}/edit`}> <div className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer"  ><FaEdit size={24} color={"green"} className="cursor-pointer" /> <span className="mx-2">Edit</span></div></Link>
 
                     <DialogTrigger>  <div className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer"><MdDelete size={24} color={"red"} className="cursor-pointer" /> <span className="mx-2">Delete</span></div></DialogTrigger>
                 </PopoverContent>

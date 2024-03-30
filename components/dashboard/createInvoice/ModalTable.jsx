@@ -17,6 +17,7 @@ const ModalTable = ({ detail }) => {
     const handleChange = (e) => {
         setValue(parseFloat(e.target.value))
     }
+    console.log(detail)
     // let count = 0
     const amount = isNaN(orderQuantity * value) ? 0 : (orderQuantity * value)
     useEffect(() => {
@@ -30,7 +31,7 @@ const ModalTable = ({ detail }) => {
             fabricsId,
             containOrders: selectedValues.join("_"),
             piName: `${companyId}_${selectedValues.join("_")}`,
-            piNumber: `${companyId}_${selectedValues.join("_")}`,
+            piNumber: `TKCF-${companyId}-${selectedValues.join("_")}`,
             description,
             unitPrice: value,
             amount: parseFloat(amount.toFixed(4)),
