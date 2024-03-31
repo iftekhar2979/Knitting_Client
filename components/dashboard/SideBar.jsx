@@ -15,6 +15,7 @@ import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { BiCreditCard } from "react-icons/bi";
 import SingleLink from './Product/SingleLink';
 import dashboard from '@/app/dashboard/page';
+import { useAppSelector } from '@/lib/hooks';
 const companySection = [
     {
 
@@ -103,7 +104,7 @@ const dashboardSection = [
 const SideBar = (props) => {
     const pathName = usePathname()
     const [selectedRoute, setSelectedRoute] = useState()
-
+    const { userInfo} = useAppSelector((state) => state.user);
     useEffect(() => {
         setSelectedRoute(pathName.split("/")[2])
     }, [pathName])
@@ -142,14 +143,17 @@ const SideBar = (props) => {
 
                     </div>
 
-                    <div className="space-y-3 ">
-                        <label className="px-3 text-xs text-black uppercase font-bold dark:text-gray-400">Invoice</label>
+                    {userInfo?.data?.isAdmin &&
+                        <div className="space-y-3 ">
+                            <label className="px-3 text-xs text-black uppercase font-bold dark:text-gray-400">Invoice</label>
 
-                        {
-                            billSection?.map((item, index) => <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} />
-                            )}
+                            {
+                                billSection?.map((item, index) => <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} />
+                                )}
 
-                    </div>
+
+                        </div>
+                    }
                 </nav>
             </div>
         </divside>

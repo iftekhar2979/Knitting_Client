@@ -160,7 +160,7 @@ export function AddOrder() {
             <div className="grid grid-cols-2 gap-6 mx-6 ">
                 <InputDropDown
                     label={'Company'}
-                    divclass={'my-2'}
+                    divclassName={'my-2'}
                     handleInputDropdown={handleInputDropdown}
                     className={`py-3 px-4 pe-9 block w-full bg-gray-50 border rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600 `}
                     options={companyNames}
@@ -170,7 +170,7 @@ export function AddOrder() {
                 />
                 <InputDropDown
                     label={'Buyer'}
-                    divclass={'my-2'}
+                    divclassName={'my-2'}
                     handleInputDropdown={(e) => handleBuyerDropDown(e)}
                     className={`py-3 px-4 pe-9 block w-full bg-gray-50 border rounded-lg text-sm  disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600 `}
                     options={buyers}
@@ -180,7 +180,7 @@ export function AddOrder() {
                 />
                 <InputDropDown
                     label={'Fabrics Type'}
-                    divclass={'my-2'}
+                    divclassName={'my-2'}
                     handleInputDropdown={productDropDown}
                     className={`py-3 px-4 pe-9 block w-full bg-gray-50 border rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600 `}
                     options={products}

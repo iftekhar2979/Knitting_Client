@@ -83,7 +83,7 @@ const AddYarnDetails = ({ id }) => {
                 <h1 className="text-center text-2xl ">Add New Yarn Details For This Order</h1>
                 <InputDropDown
                     label={'Company'}
-                    divclass={'my-2'}
+                    divclassName={'my-2'}
                     handleInputDropdown={handleInputDropdown}
                     className={`py-3 px-4 pe-9 block w-full bg-gray-50 border rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600 `}
                     options={companyNames}

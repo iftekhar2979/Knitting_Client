@@ -63,7 +63,7 @@ const QuantityInfo = ({ id }) => {
                 <h2 className="py-2 px-4">Total Order Quantity: <span className="border-b py-2 px-4 text-bold">{orderQuantity}</span> KG</h2>
                 <InputDropDown
                     label={''}
-                    divclass={'my-2'}
+                    divclassName={'my-2'}
                     handleInputDropdown={handleInputDropdown}
                     className={`py-3 px-4 pe-9 block w-1/2 bg-gray-50 border rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600 `}
                     options={deliveryMen}

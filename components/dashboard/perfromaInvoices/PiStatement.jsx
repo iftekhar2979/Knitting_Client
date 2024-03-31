@@ -102,8 +102,8 @@ export const PiStatement = ({ id }) => {
             
             
                     <> <div className='leading-4 text-black timesNewRoman'>
-                        <div class="mx-2 flex justify-around">
-                            {/* <img src={logo} alt="" class="h-20 " /> */}
+                        <div className="mx-2 flex justify-around">
+                            {/* <img src={logo} alt="" className="h-20 " /> */}
                             <nav className='flex flex-col justify-center '>
                                 <h2 className='text-center text-4xl font-bold  timesNewRoman piHeading ' >Tertiray Colour Knit Fabrics</h2>
                                 <h5 className='text-center text-md italic piHeading timesNewRoman mt-1'>100% Export Oriented Knit Fabrics Manufacture & Supplier</h5>
@@ -113,21 +113,21 @@ export const PiStatement = ({ id }) => {
                         <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black' }}></h1>
                         <div className='text-center text-xl  italic font-semibold leading-2  underline underLineOffset calibri'>Proforma Invoice <span style={{ width: '153px', height: '1px', backgroundColor: 'black' }}></span></div>
                         <div className='flex justify-between mt-2 '>
-                            <div className="flex ml-[2px"> <span class="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(createdAt), 'dd-MM-yyyy')}</span></div>
-                            {!edit ? <span class="" onClick={() => setEdit(true)}>PI Number : {piNumber}</span> : <div className=''>PI Number : <input type='text' defaultValue={piNumber} onBlur={handleEditChange} /></div>}
+                            <div className="flex ml-[2px"> <span className="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(createdAt), 'dd-MM-yyyy')}</span></div>
+                            {!edit ? <span className="" onClick={() => setEdit(true)}>PI Number : {piNumber}</span> : <div className=''>PI Number : <input type='text' defaultValue={piNumber} onBlur={handleEditChange} /></div>}
                         </div>
-                        <div ><span class="ml-2 widthHeading">To</span> <span className=''>: {company?.companyName}</span>
+                        <div ><span className="ml-2 widthHeading">To</span> <span className=''>: {company?.companyName}</span>
                         </div>
-                        <div ><span class="ml-2 widthHeading">Address</span>  <span className=''>: {company?.location}</span>
+                        <div ><span className="ml-2 widthHeading">Address</span>  <span className=''>: {company?.location}</span>
                         </div>
-                        <div ><span class="ml-2 widthHeading">Buyer</span>  <span className=''>: {buyer?.buyerName}</span>
+                        <div ><span className="ml-2 widthHeading">Buyer</span>  <span className=''>: {buyer?.buyerName}</span>
                         </div>
-                        <div ><span class="ml-2 widthHeading">Season</span> <span className=''>: <input type="text" onBlur={handleSeason} /> </span>
+                        <div ><span className="ml-2 widthHeading">Season</span> <span className=''>: <input type="text" onBlur={handleSeason} /> </span>
                         </div>
                     </div>
                         <div>
-                            <table class="my-2 mx-2 b_b calibri" contentEditable='true' >
-                                <thead class="border">
+                            <table className="my-2 mx-2 b_b calibri" contentEditable='true' >
+                                <thead className="border">
                                     {
                                         state?.map((itemName, index) => {
                                             return (<th className={itemName.class} >{itemName.heading}
@@ -143,7 +143,7 @@ export const PiStatement = ({ id }) => {
                                             const { fabricsName,description, style, totalQuantity, amount, unitPrice, finishDia } = item
                                             return (
                                                 <>
-                                                    <tr class="border text-black"  >
+                                                    <tr className="border text-black"  >
                                                         {
                                                             state?.map((itemName, index) => {
                                                                 const { heading } = itemName
@@ -189,7 +189,7 @@ export const PiStatement = ({ id }) => {
                                             )
                                         })
                                     }
-                                    <tr class="border">
+                                    <tr className="border">
                                         {
                                             lastBordered?.map(itemName => {
                                                 if (itemName.heading === 'Quantity') {
@@ -207,8 +207,8 @@ export const PiStatement = ({ id }) => {
                                 </tbody>
                             </table>
                         </div>
-                        <h2 class="mx-2 font-semibold text-[8pt] text-black italic">( In Words: US DOLLAR {MakingDollarConvert(totalPIAmount)?.toUpperCase()} ONLY )</h2>
-                        <h2 class="mx-2 font-semibold underline text-[12pt] underLineOffset text-black mx-2">Terms And Condition </h2>
+                        <h2 className="mx-2 font-semibold text-[8pt] text-black italic">( In Words: US DOLLAR {MakingDollarConvert(totalPIAmount)?.toUpperCase()} ONLY )</h2>
+                        <h2 className="mx-2 font-semibold underline text-[12pt] underLineOffset text-black mx-2">Terms And Condition </h2>
 
                         <TermsAndCondition />
                     </>
@@ -217,7 +217,7 @@ export const PiStatement = ({ id }) => {
                     <Button className={`${block && 'hidden'}`} onClick={handlePrint}>Print this out!</Button>
                 </div>
             </section>
-        <footer class="w-full pt-4">
+        <footer className="w-full pt-4">
                 <div className='flex justify-between '>
                     <div >
                         <p className='text-[8pt] text-black'>Client Acceptance</p>
@@ -233,7 +233,7 @@ export const PiStatement = ({ id }) => {
                     </div>
                 </div>
                 <div style={{ width: '100%', height: '1px', backgroundColor: 'black' }}></div>
-                <div class="container mx-auto text-center text-black mx-2">
+                <div className="container mx-auto text-center text-black mx-2">
                     <p className='text-center piHeading  font-semibold '>Mobile : 01711-344139 , 017160-19843 Mail : kamrul@tertiaryckf.com</p>
                     <p className='text-center piHeading font-semibold'>Near Rubel Pump ,Rajabari , Konabari , Gazipur</p>
                 </div>

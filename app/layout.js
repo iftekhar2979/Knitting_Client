@@ -6,6 +6,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Providers } from '@/lib/Providers';
 import Footer from '@/components/Home/Footer';
+import UserContext from '@/components/Context/UserContext';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,19 +16,17 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  // console.log('val')
   return (
     <Providers>
-
     <html lang="en">
+
       <body className={inter.className}>
-        
         <Navbar />
         <main className="">
           {children}
         </main>
-        <Footer/>
       </body>
+
     </html>
     </Providers>
   );
