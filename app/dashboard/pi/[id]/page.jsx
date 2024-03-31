@@ -10,7 +10,7 @@ const page = ({ params: { id } }) => {
     return (
         <>
             <PiStatement id={id} />
-            </>
+        </>
     )
 };
 export default page;

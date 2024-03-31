@@ -1,7 +1,7 @@
 'use client'
 import dashboard from '@/app/dashboard/page';
 import Link from 'next/link';
-import { usePathname, } from 'next/navigation';
+import { usePathname, useRouter, } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import '../app/globals.css'
 import { useGetUserByIdQuery, useLogoutMutation } from '@/lib/features/user/userApiSlice';
@@ -11,27 +11,28 @@ import { Button } from './ui/button';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { userInfo } = useAppSelector((state) => state.user);
+    const { userInfo ,path} = useAppSelector((state) => state.user);
     const { data: userInformation, isLoading } = useGetUserByIdQuery()
-    const [path,setPath]=useState(['about', 'service', 'contact', 'login'])
+    // const [path,setPath]=useState(['about', 'service', 'contact', 'login'])
     const [logout] = useLogoutMutation()
     const dispatch = useAppDispatch()
     const pathName = usePathname()
+    const router=useRouter()
     const [selectedRoute, setSelectedRoute] = useState()
 
     const [user, setUser] = useState()
     const [loading, setLoading] = useState(true)
 
+    
     useEffect(() => {
         setLoading(true)
         if (userInformation) {
-            setPath(['about', 'service', 'contact', 'dashboard'])
             dispatch(setCredentials(userInformation))
             setUser(userInformation.data.name)
             setLoading(false)
-
         }
-    }, [userInformation,pathName]);
+
+    }, [userInformation])
     useEffect(() => {
         let pathIndex = path.indexOf(pathName.split("/")[1])
         setSelectedRoute(path[pathIndex])
@@ -39,9 +40,10 @@ const Navbar = () => {
 const handleLogOut=()=>{
         logout().then(res => {
           dispatch(removeCredentials())
-          setPath(['about', 'service', 'contact', 'login'])
+          router.push('/')
         })
 }
+// console.log(selectedRoute)
     return (
 
         <nav className="bg-white border-gray-200  dark:bg-gray-900  relative">
@@ -71,21 +73,13 @@ const handleLogOut=()=>{
                                 <li key={i}><Link href={`/${item}`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${selectedRoute === item && "text-white py-4 px-2  bg-purple-700"}`}>{item.toUpperCase()}</Link></li>
                             )
                         })}
-                        {/* <li><Link href="/"  className="text-black hover:text-purple-700 cursor-pointer">Home</Link></li>
-                         <li><Link href="/service" className="text-black hover:text-purple-700 cursor-pointer ">Services</Link></li>
-                        <li><Link href="/about" className="text-black hover:text-purple-700 cursor-pointer">About</Link></li>
-                         <li><Link href="/contact"  className="text-black hover:text-purple-700 cursor-pointer">Contact</Link></li>
-                        <li><Link href="/dashboard" className="text-black hover:text-purple-700 cursor-pointer">Dashboard</Link></li> */}
+                      
                     </ul>
                 </div>
                 {/* Desktop Menu */}
                 <div className="hidden lg:block ">
                     <ul className="flex flex-row items-center justify-center py-2 space-x-4 text-black ">
-                        {/* <li><Link href="/" className="text-black hover:text-purple-700 cursor-pointer">Home</Link></li>
-                        <li><Link href="/service" className="text-black hover:text-purple-700 cursor-pointer ">Services</Link></li>
-                        <li><Link href="/about" className="text-black hover:text-purple-700 cursor-pointer">About</Link></li>
-                        <li><Link href="/contact" className="text-black hover:text-purple-700 cursor-pointer">Contact</Link></li>
-                        <li><Link href="/dashboard" className="text-black hover:text-purple-700 cursor-pointer">Dashboard</Link></li> */}
+                    
                         <li ><Link href={`/`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${!selectedRoute && "text-white py-4 px-2  bg-purple-700"}`}>HOME</Link></li>
                         {path?.map((item, i) => {
 

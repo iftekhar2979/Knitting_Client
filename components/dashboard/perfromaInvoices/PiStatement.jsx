@@ -40,17 +40,22 @@ export const PiStatement = ({ id }) => {
     })
     useDocumentTitle(`PI Number ${id}`)
     useEffect(() => {
+        // Safely attempt to get the elements
+        const nav = document.getElementsByClassName("bg-white border-gray-200  dark:bg-gray-900  relative")[0];
+        const footer = document.getElementsByClassName("px-4 py-8 dark:bg-gray-100 dark:text-gray-600")[0];
+        
+        // Check if elements exist before trying to modify them
         if (block) {
-            let nav = document.getElementsByClassName("bg-white border-gray-200  dark:bg-gray-900  relative")[0]
-            let footer = document.getElementsByClassName("px-4 py-8 dark:bg-gray-100 dark:text-gray-600")[0]
-            nav.classList.add("hidden")
-            footer.classList.add("hidden")
-            return () => {
-                nav.classList.remove("hidden")
-                footer.classList.remove("hidden")
-            }
+            if (nav) nav.classList.add("hidden");
+            if (footer) footer.classList.add("hidden");
         }
-    }, [block])
+        
+        return () => {
+            // Check again when cleaning up
+            if (nav) nav.classList.remove("hidden");
+            if (footer) footer.classList.remove("hidden");
+        };
+    }, [block]);
     if (isLoading) {
         return <Loading />
     }
@@ -99,8 +104,6 @@ export const PiStatement = ({ id }) => {
         <>
             {/* <section className='backgroundWaterMark'> */}
             <section className='backgroundWaterMark' >
-            
-            
                     <> <div className='leading-4 text-black timesNewRoman'>
                         <div className="mx-2 flex justify-around">
                             {/* <img src={logo} alt="" className="h-20 " /> */}

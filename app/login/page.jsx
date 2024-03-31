@@ -22,7 +22,7 @@ const page = (props) => {
       try {
           const res = await login({ email, password:pass }).unwrap();
           dispatch(setCredentials({ ...res }));
-        router.push('/dashboard')
+        router.push("/")
       } catch (err) {
         setError(err)
       }
