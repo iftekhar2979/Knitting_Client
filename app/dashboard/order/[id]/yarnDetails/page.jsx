@@ -1,6 +1,5 @@
 import AddYarnDetails from '@/components/dashboard/order/SingleOrder/yarnDetails/AddYarnDetails';
-import YarnDetailsInfo from '@/components/dashboard/order/SingleOrder/yarnDetails/YarnDetailsInfo';
-
+import YarnDetailsInfo from "@/components/dashboard/order/SingleOrder/yarnDetails/YarnDetailsInfo.jsx"
 const yarnDetails = ({ params }) => {
 
     return (
@@ -11,3 +10,5 @@ const yarnDetails = ({ params }) => {
     )
 };
 export default yarnDetails;
+
+
