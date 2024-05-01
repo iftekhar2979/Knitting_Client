@@ -138,7 +138,7 @@ return (
 return(
     <Document>
     <Page size="A4" style={styles.page}>
-        <Text style={styles.companyName}>Don't have data !!!</Text>
+        <Text style={styles.companyName}>Don&apos;t have data !!!</Text>
       
     </Page>
   </Document>

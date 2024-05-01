@@ -35,8 +35,9 @@ const Navbar = () => {
     }, [userInformation])
     useEffect(() => {
         let pathIndex = path.indexOf(pathName.split("/")[1])
-        setSelectedRoute(path[pathIndex])
+        setSelectedRoute(pathName.split('/')[1])
     }, [pathName])
+
 const handleLogOut=()=>{
         logout().then(res => {
           dispatch(removeCredentials())
@@ -79,16 +80,12 @@ const handleLogOut=()=>{
                 {/* Desktop Menu */}
                 <div className="hidden lg:block ">
                     <ul className="flex flex-row items-center justify-center py-2 space-x-4 text-black ">
-                    
                         <li ><Link href={`/`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${!selectedRoute && "text-white py-4 px-2  bg-purple-700"}`}>HOME</Link></li>
                         {path?.map((item, i) => {
-
-
                             return (
                                 <li key={i}><Link href={`/${item}`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${selectedRoute === item && "text-white py-4 px-2  bg-purple-700"}`}>{item.toUpperCase()}</Link></li>
                             )
                         })}
-
                         { 
                         userInfo ? <Button onClick={handleLogOut}>Log Out</Button> : ""
                         }

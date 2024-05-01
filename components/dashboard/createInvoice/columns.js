@@ -21,7 +21,7 @@ export const columns = [
                 aria-label="Select all"
             />
         ),
-        cell: ({ row }) => {
+        cell:function Cell ({ row }) {
             const [disabled, setDisabled] = useState(false)
             const [state, setState] = useState("")
             const dispatch = useAppDispatch()

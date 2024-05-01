@@ -133,7 +133,7 @@ export const PiStatement = ({ id }) => {
                                 <thead className="border">
                                     {
                                         state?.map((itemName, index) => {
-                                            return (<th className={itemName.class} >{itemName.heading}
+                                            return (<th className={itemName.class} key={index} >{itemName.heading}
                                                 <span className={`${block && 'hidden'} hover:bg-red-600 ml-6 cursor-pointer `} onClick={() => handleDel(index)}>X</span>
                                             </th>)
                                         })
@@ -194,15 +194,15 @@ export const PiStatement = ({ id }) => {
                                     }
                                     <tr className="border">
                                         {
-                                            lastBordered?.map(itemName => {
+                                            lastBordered?.map((itemName,index) => {
                                                 if (itemName.heading === 'Quantity') {
-                                                    return <th className={itemName.class} style={{ marginLeft: '0.5rem' }}>{totalPIQuantity}</th>
+                                                    return <th className={itemName.class} key={index} style={{ marginLeft: '0.5rem' }}>{totalPIQuantity}</th>
                                                 }
                                                 if (itemName.heading === 'Total Amount') {
-                                                    return <th className={itemName.class}><p className='flex justify-between mx-2'><span className='font-normal'>$</span> <span>{totalPIAmount.toFixed(2)}</span></p></th>
+                                                    return <th className={itemName.class} key={index}><p className='flex justify-between mx-2'><span className='font-normal'>$</span> <span>{totalPIAmount.toFixed(2)}</span></p></th>
 
                                                 }
-                                                return (<th className={itemName.class}>{itemName.heading}</th>)
+                                                return (<th className={itemName.class} key={index}>{itemName.heading}</th>)
                                             })
                                         }
 

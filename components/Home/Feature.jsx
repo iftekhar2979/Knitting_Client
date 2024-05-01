@@ -66,7 +66,7 @@ const Feature = (props) => {
                                 <div className="ml-4 grow">
                                     <p className="mb-3 font-bold">Skilled Workforce</p>
                                     <p className="text-neutral-500 dark:text-neutral-300">
-                                        Bangladesh's rich tradition in textiles has cultivated a highly skilled workforce adept in both traditional and modern knitting techniques, ensuring craftsmanship and quality.
+                                        Bangladesh&apos;s rich tradition in textiles has cultivated a highly skilled workforce adept in both traditional and modern knitting techniques, ensuring craftsmanship and quality.
                                     </p>
                                 </div>
                             </div>

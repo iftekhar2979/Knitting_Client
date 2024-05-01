@@ -1,6 +1,5 @@
 import AddYarnDetails from '@/components/dashboard/order/SingleOrder/yarnDetails/AddYarnDetails';
-import YarnDetailsInfo from '@/components/dashboard/order/SingleOrder/yarnDetails/yarnDetailsInfo';
-import react from 'react';
+import YarnDetailsInfo from '@/components/dashboard/order/SingleOrder/yarnDetails/YarnDetailsInfo';
 
 const yarnDetails = ({ params }) => {
 

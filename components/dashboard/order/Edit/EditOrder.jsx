@@ -31,6 +31,8 @@ import { useGetProductQuery } from "@/lib/features/Product/productApi"
 import { Label } from "@/components/ui/label"
 import Loading from "@/components/utils/Loading"
 import { EditOrderDetails } from "./EditOrderDetails"
+import Error from "@/components/utils/Error"
+
 
 
 const FormSchema = z.object({

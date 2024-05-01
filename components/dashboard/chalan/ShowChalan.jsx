@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { MdDownload, MdDownloadDone, MdFontDownload } from 'react-icons/md';
 import { FaDownload, FaPrint } from 'react-icons/fa';
 import Loading from '@/components/utils/Loading';
-
+import Error from "@/components/utils/Error"
 const ShowChalan = (props) => {
     const state = useAppSelector(state => state.chalanSlice)
     const dispatch = useAppDispatch()
