@@ -4,9 +4,21 @@ import react from 'react';
 const middleware = (req) => {
 
     let verify = req.cookies.get("jwt")
+    console.log(verify)
     let url = req.url
     if (!verify && url.includes("/dashboard")) {
-        return NextResponse.redirect(`${process.env.NEXT_FRONTEND_URL}/login`)
+        let protocol = 'http';
+        if (req.headers['x-forwarded-proto']) {
+            protocol = req.headers['x-forwarded-proto'];
+        }
+        
+        let host = 'localhost:3000'; // Default host for local development
+        if (req.headers['host']) {
+            host = req.headers['host'];
+        }
+        
+        const loginUrl = `${protocol}://${host}/login`; // Construct the full login URL
+        return NextResponse.redirect(loginUrl);
     }
 
 };
