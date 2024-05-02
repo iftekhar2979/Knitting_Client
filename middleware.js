@@ -6,7 +6,7 @@ const middleware = (req) => {
     const verify = cookieStore.get('jwt');
     // console.log(verify.value)
     let url = req.url
-    if (!verify.value && url.includes("/dashboard")) {
+    if (!verify && url.includes("/dashboard")) {
         return NextResponse.redirect(`https://knitting-client-8bq3.vercel.app/login`);
         // return NextResponse.redirect(`http://localhost:3000/login`);
     }
