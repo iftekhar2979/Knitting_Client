@@ -32,4 +32,4 @@ This web application serves as a comprehensive dashboard for managing orders, de
 live URl : https://backendtertiary.theabcsi.com/
 #### Credential
 ##### Email : kamrul@tertiaryckf.com 
-##### Password : kamrul@tertiaryckf
+##### Password : kamrul@tertiary
