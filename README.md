@@ -1,37 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Garments Knitting Company Management
+Overview
+This web application serves as a comprehensive dashboard for managing orders, deliveries, and proforma invoices within a Garments Knitting Company. Designed to streamline operations, it facilitates efficient tracking and management of essential business processes. The application supports two primary roles: Admin and User, each with distinct access levels tailored to their responsibilities.
 
-## Getting Started
+Features
+Order Management : Users can create, update, and track orders throughout their lifecycle, ensuring timely fulfillment.
 
-First, run the development server:
+Delivery Management: The platform allows for meticulous tracking of delivery statuses, helping ensure that goods reach their destinations as scheduled.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Proforma Invoice Management: Exclusive to Admins, this feature enables the creation, modification, and oversight of proforma invoices, crucial for financial planning and record-keeping.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Delivery Statements: Admins also have the capability to generate and manage delivery statements, aiding in comprehensive delivery oversight.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Role-Based Access Control: Two distinct roles (Admin and User) with role-specific functionalities to enhance security and operational efficiency.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Authentication and Authorization: Secured access through JWT tokens, and role-based authorization to ensure data safety and privacy. Technology Stack .
 
-## Learn More
+Frontend
+Next js
+Redux Toolkit
+Redux Toolkit Query
+React-pdf/renderer
+Backend
+Express js
+Prisma ORM
+Json Web Token
+Database
+MySQL
+Demo
+Demo : https://backendtertiary.theabcsi.com/
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# Knitting_Client
+Credential
+Email : kamrul@tertiaryckf.com
+Password : kamrul@tertiaryckf
