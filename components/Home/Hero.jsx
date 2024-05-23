@@ -9,8 +9,8 @@ const Hero = (props) => {
             className="container relative mx-auto overflow-hidden px-4 py-16 lg:px-8 lg:py-32 xl:max-w-6xl"
           >
             <div className="text-center">
-              <h2 className="mb-4 text-3xl font-black md:text-5xl">
-              Knit Beyond <span className="text-blue-600">Imagination</span>
+              <h2 className="mb-4 text-3xl font-black md:text-5xl ">
+              Knit Beyond <span className="text-blue-600 transition ease-in  delay-200 -translate-y-1 scale-110  duration-600">Imagination</span>
               </h2>
               <h3
              

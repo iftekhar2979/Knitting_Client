@@ -31,6 +31,7 @@ import { useState } from "react"
 import { useGetProductQuery } from "@/lib/features/Product/productApi"
 import { Label } from "@/components/ui/label"
 import Error from "@/components/utils/Error"
+import Radio from "@/components/ui/Radio"
 
 const FormSchema = z.object({
 
@@ -38,12 +39,12 @@ const FormSchema = z.object({
         message: "Order Number must be at least 5 characters"
     }),
 
-    invoiceNumber: z.string().min(5, {
+    sbNumber: z.string().min(5, {
         message: "Order Number must be at least 5 characters"
     }),
-    boNumber: z.string(),
-    poNumber: z.string(),
-    pmNumber: z.string(),
+    bookingNumber: z.string(),
+    jobNumber: z.string(),
+    programNumber: z.string(),
     season: z.string().min(2, {
         message: "Order Number must be at least 2 characters"
     }),
@@ -70,39 +71,41 @@ const info = [
     },
     {
         id: 106,
-        name: 'pmNumber',
-        header: "P.M Number",
-        placeholder: "P.M Number...",
+        name: 'programNumber',
+        header: "Program No",
+        placeholder: "Program No...",
         type: "String"
     },
     {
         id: 107,
-        name: 'poNumber',
-        header: "P.O Number",
-        placeholder: "P.O Number...",
+        name: 'jobNumber',
+        header: "Job No",
+        placeholder: "Job No...",
         type: "String"
     },
     {
         id: 108,
-        name: 'boNumber',
-        header: "B.O Number",
-        placeholder: "B.O Number...",
+        name: 'bookingNumber',
+        header: "Booking No",
+        placeholder: "Booking No...",
         type: "String"
     },
     {
         id: 109,
-        name: 'invoiceNumber',
-        header: "Invoice Number",
-        placeholder: "Invoice Number...",
+        name: 'sbNumber',
+        header: "SB No",
+        placeholder: "SB No...",
         type: "String"
     },
 ]
+const units=["Fabric","Knitting"]
 export function AddOrder() {
     const { data, isLoading, error, isError } = useGetCompanyQuery()
     const [addOrder,{isLoading:insertingOrderLoading,isError:insertingOrderError}]=useAddOrderMutation()
     const { data: product, isLoading: productLoading, error: productError, isError: productIsError } = useGetProductQuery()
     const [companyInfo, setCompanyInfo] = useState()
     const [buyerInfo, setBuyerInfo] = useState()
+    const [unit,setUnit]=useState()
     const [fabricsInfo, setFabricsInfo] = useState()
     const [buyers, setBuyers] = useState()
     const [date, setDate] = useState()
@@ -110,10 +113,10 @@ export function AddOrder() {
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            invoiceNumber: "",
-            boNumber: "",
-            poNumber: "",
-            pmNumber: "",
+            sbNumber: "",
+            bookingNumber: "",
+            jobNumber: "",
+            programNumber: "",
             season: "",
             targetDate: new Date(),
             fabricsType: "",
@@ -149,11 +152,15 @@ export function AddOrder() {
         const { id, fabricsName } = product?.find(prod => prod?.fabricsName === selectedProduct)
         setFabricsInfo({ fabricsId: id, fabricsName })
     }
+    const handleRadioChanges=(data)=>{
+       setUnit(data.item)
+    }
 
     async function onSubmit(data) {
         const {companyId, companyName}=companyInfo
-        const body = { companyId,companyName, ...buyerInfo, ...fabricsInfo, orderQuantity: parseFloat(quantity),restQuantity:parseFloat(quantity), targetDate: date, ...data }
+        const body = { companyId,companyName, ...buyerInfo, ...fabricsInfo,unit:unit, orderQuantity: parseFloat(quantity),restQuantity:parseFloat(quantity), targetDate: date, ...data }
         addOrder(body)
+        console.log(body)
     }
 
     return (
@@ -208,7 +215,12 @@ export function AddOrder() {
                         </PopoverContent>
                     </Popover>
                 </div>
-
+                <Radio
+                    label={"Select Unit"}
+                    array={units}
+                    handleRadioChange={handleRadioChanges}
+                    selectedValue={unit}
+                />
                 <div className="my-2">
                     <div className="grid w-full max-w-sm items-center gap-1.5">
                         <Label htmlFor="Quantity">Quantity (KG)</Label>
@@ -254,3 +266,5 @@ export function AddOrder() {
         </div>
     )
 }
+        
+              

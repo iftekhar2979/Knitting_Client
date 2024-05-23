@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import InputDropDown from '@/components/utils/InputDropDown';
 import Action from './Action';
 
+
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 const action = [
@@ -84,7 +85,7 @@ export const columns = [
                 >
                     <div className='flex'>
 
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Fabrics</h2>
+                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Fabric Type</h2>
                         <RiArrowUpDownFill size={22} />
                     </div>
                     <div>
@@ -101,6 +102,7 @@ export const columns = [
             )
         },
     },
+   
     {
         accessorKey: "season",
         header: ({ column }) => {
@@ -129,6 +131,10 @@ export const columns = [
             )
         },
     },
+    // {
+    //     accessorKey: "unit",
+    //     header: "Unit",
+    // },
     {
         accessorKey: "orderNumber",
         header: ({ column }) => {
@@ -149,42 +155,42 @@ export const columns = [
 
     },
     {
-        accessorKey: "invoiceNumber",
+        accessorKey: "sbNumber",
         header: ({ column }) => {
             return (
                 <p
                     className={"flex"}
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Inv. No.
+                    SB No
                     <RiArrowUpDownFill className=" h-4 w-4" size={22} />
                 </p>
             )
         },
     },
     {
-        accessorKey: "pmNumber",
+        accessorKey: "programNumber",
         header: ({ column }) => {
             return (
                 <p
                     className={"flex"}
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    PM No.
+                    Program No
                     <RiArrowUpDownFill className=" h-4 w-4" size={22} />
                 </p>
             )
         },
     },
     {
-        accessorKey: "poNumber",
+        accessorKey: "jobNumber",
         header: ({ column }) => {
             return (
                 <p
                     className={"flex"}
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    PO No.
+                    Job No
                     <RiArrowUpDownFill className=" h-4 w-4" size={22} />
                 </p>
             )
@@ -198,7 +204,7 @@ export const columns = [
                     className={"flex"}
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    BO No.
+                    Booking No
                     <RiArrowUpDownFill className=" h-4 w-4" size={22} />
                 </p>
             )
@@ -240,6 +246,7 @@ export const columns = [
         accessorKey: "restQuantity",
         header: "Rest Qty",
     },
+    
     {
         accessorKey: "targetDate",
         header: ({ column }) => {
@@ -284,18 +291,6 @@ export const columns = [
         },
 
         cell: ({ row }) => {
-            // const { orderQuantity, restQuantity } = row.original
-            // let status = ""
-            // if (orderQuantity - restQuantity > 0) {
-            //     status = "Pending"
-            // }
-            // if (restQuantity === 0) {
-            //     status = "Fullfilled"
-
-            // }
-            // if (orderQuantity === restQuantity) {
-            //     status = "Ordered"
-            // }
             return <div >{row.original.status}</div>
         }
     },

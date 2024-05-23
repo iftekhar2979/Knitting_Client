@@ -19,15 +19,15 @@ const Login = (props) => {
   const router = useRouter()
 
   const handleLogin = async (e) => {
-    e.preventDefault()
+      e.preventDefault();
       try {
-          const res = await login({ email, password:pass }).unwrap();
-          console.log(res)
-          dispatch(setCredentials({ ...res }));
-        router.push("/")
+        const res = await login({ email, password: pass }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        router.push('/');
       } catch (err) {
-        setError(err)
+        setError(err.message);
       }
+ 
 
   }
 

@@ -77,7 +77,6 @@ export function DataTable({
       sorting,
       columnFilters,
       pagination,
-  
     },
  
   })

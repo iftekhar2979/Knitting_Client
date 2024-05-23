@@ -97,22 +97,22 @@ const info = [
   {
     id: 207,
     name: 'polyStarCount',
-    header: "Poly Star Count",
-    placeholder: "Poly Star Count...",
+    header: "Polystar Count",
+    placeholder: "Polystar Count...",
     type: "String"
   },
   {
     id: 208,
     name: 'polyStarBrand',
-    header: "Poly Star Brand",
-    placeholder: "Poly Star Brand...",
+    header: "Polystar Brand",
+    placeholder: "Polystar Brand...",
     type: "String"
   },
   {
     id: 209,
     name: 'polyStarLot',
-    header: "Poly Star Lot",
-    placeholder: "Poly Star Lot...",
+    header: "Polystar Lot",
+    placeholder: "Polystar Lot...",
     type: "String"
   },
   {

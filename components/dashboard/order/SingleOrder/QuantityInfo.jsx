@@ -57,9 +57,7 @@ const QuantityInfo = ({ id }) => {
 
             <div className="my-2 border rounded-md shadow-sm p-10 font-mono flex justify-center flex-col">
                 {deliveryError? <Error data={"You can't Add More Quantity than Rest Quantity . Please Put Valid Quantity"}/>:""}
-
                 <h2 className="py-2 px-4">Status  : <span className="border-b py-2 px-4">{status}</span></h2>
-
                 <h2 className="py-2 px-4">Total Order Quantity: <span className="border-b py-2 px-4 text-bold">{orderQuantity}</span> KG</h2>
                 <InputDropDown
                     label={''}
@@ -71,7 +69,15 @@ const QuantityInfo = ({ id }) => {
                     placeholder={'Select Delivery Man'}
                     required
                 />
-                <h2 className="py-2 px-4">Delivered Quantity  :
+                     <div className="py-2 px-2">
+                        <span>
+                            Role Quantity : 
+                        </span>
+                        <span>
+                        <Input type="number" placeholder="Role Quantity "  className="w-72 inline"  />
+                        </span>
+                        </div> 
+                <h2 className="py-2 px-4">Delivered Quantity  : 
                     <span className="border-b py-2 px-4 text-bold">
                         <Input type="number" placeholder="Quantity.." disabled={restQuantity===0} className="w-72 inline" defaultValue={deliveryQuantity} onChange={(e) => handleDelivery(e)} />
                     </span>
