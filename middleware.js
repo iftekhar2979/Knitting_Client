@@ -7,7 +7,7 @@ const middleware = (req) => {
     const verify = cookieStore.get('jwt');
     let url = req.url
     if (!verify && url.includes("/dashboard")) {
-        return NextResponse.redirect(`${process.env.REDIRECT_URL}/login`);
+        return NextResponse.redirect(`${process.env.NEXT_PUBLIC_REDIRECT_URL}`);
     }
 
 };
