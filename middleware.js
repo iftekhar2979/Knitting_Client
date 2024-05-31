@@ -7,8 +7,7 @@ const middleware = (req) => {
     const verify = cookieStore.get('jwt');
     let url = req.url
     if (!verify && url.includes("/dashboard")) {
-        return NextResponse.redirect(`http://localhost:3000/login`);
-        // return NextResponse.redirect(`https://backendtertiary.theabcsi.com/login`);
+        return NextResponse.redirect(`${process.env.REDIRECT_URL}/login`);
     }
 
 };
