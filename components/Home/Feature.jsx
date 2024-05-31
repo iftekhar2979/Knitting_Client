@@ -4,9 +4,9 @@ import { GrTechnology } from "react-icons/gr";
 import { LiaCertificateSolid } from "react-icons/lia";
 const Feature = (props) => {
     return (
-        <section className="my-16">
+        <section className="my-16 px-16">
             <div className="flex flex-wrap">
-                <div className="mb-6 w-full shrink-0 grow-0 basis-auto px-3 lg:mb-0 lg:w-4/12" >
+                <div className="mb-6 w-full shrink-0 grow-0 basis-auto px-3 lg:mb-0 lg:w-4/12 fadeInLeftBig" >
                     <p className="mb-6 font-bold uppercase text-primary dark:text-primary-400">
                         Features
                     </p>
@@ -21,8 +21,8 @@ const Feature = (props) => {
                     </p>
                 </div>
 
-                <div className="mb-md-0 mb-6 w-full shrink-0 grow-0 basis-auto px-3 lg:w-8/12">
-                    <div className="flex flex-wrap">
+                <div className="mb-md-0 mb-6 w-full shrink-0 grow-0 basis-auto px-3 lg:w-8/12" >
+                    <div className="flex flex-wrap fadeInLeftBig">
                         <div className="mb-12 w-full shrink-0 grow-0 basis-auto lg:w-6/12 lg:px-3">
                             <div className="flex">
                                 <div className="shrink-0">
@@ -41,7 +41,7 @@ const Feature = (props) => {
                         </div>
 
                         <div className="mb-12 w-full shrink-0 grow-0 basis-auto lg:w-6/12 lg:px-3">
-                            <div className="flex">
+                            <div className="flex fadeInRight">
                                 <div className="shrink-0">
                                     <div className="mb-6 inline-block rounded-md bg-primary-100 p-4 text-primary">
                                     <GrTechnology color={"indigo"}  size={30}/>
@@ -56,8 +56,8 @@ const Feature = (props) => {
                             </div>
                         </div>
 
-                        <div className="mb-12 w-full shrink-0 grow-0 basis-auto lg:w-6/12 lg:px-3">
-                            <div className="flex">
+                        <div className="mb-12 w-full shrink-0 grow-0 basis-auto lg:w-6/12 lg:px-3 ">
+                            <div className="flex fadeInRight">
                                 <div className="shrink-0">
                                     <div className="mb-6 inline-block rounded-md bg-primary-100 p-4 text-primary">
                                         <GiSkills color={"purple"}  size={30}/>
@@ -72,8 +72,8 @@ const Feature = (props) => {
                             </div>
                         </div>
 
-                        <div className="mb-12 w-full shrink-0 grow-0 basis-auto lg:w-6/12 lg:px-3">
-                            <div className="flex">
+                        <div className="mb-12 w-full shrink-0 grow-0 basis-auto lg:w-6/12 lg:px-3 ">
+                            <div className="flex fadeInRight">
                                 <div className="shrink-0">
                                     <div className="mb-6 inline-block rounded-md bg-primary-100 p-4 text-primary">
                                         <LiaCertificateSolid color={"green"}  size={30}/>

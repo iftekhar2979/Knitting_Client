@@ -38,24 +38,24 @@ export const PiStatement = ({ id }) => {
     const { data: singlePi, isLoading, isError } = useGetSinglePerformaInvoiceListQuery(id, {
         refetchOnMountOrArgChange: true
     })
-    useDocumentTitle(`PI Number ${id}`)
+    useDocumentTitle(`PI Number ${singlePi? singlePi[0]?.piNumber:""}`)
     useEffect(() => {
         // Safely attempt to get the elements
-        const nav = document.getElementsByClassName("bg-white border-gray-200  dark:bg-gray-900  relative")[0];
+        const nav = document.getElementsByClassName("nav-back relative")[0];
         const footer = document.getElementsByClassName("px-4 py-8 dark:bg-gray-100 dark:text-gray-600")[0];
-        
+
         // Check if elements exist before trying to modify them
         if (block) {
             if (nav) nav.classList.add("hidden");
             if (footer) footer.classList.add("hidden");
         }
-        
         return () => {
             // Check again when cleaning up
             if (nav) nav.classList.remove("hidden");
             if (footer) footer.classList.remove("hidden");
         };
     }, [block]);
+    
     if (isLoading) {
         return <Loading />
     }
@@ -90,137 +90,134 @@ export const PiStatement = ({ id }) => {
     }
     const handleEditChange = (e) => {
         console.log(e.target.value)
-        // setTimeout(() => {
-        //     axios.patch(`${process.env.REACT_APP_DEVELOPMENT_URL}/piName/${_id}`, { piNumber: e.target.value },{withCredentials:true})
-        //         .then(res => console.log(res.json))
-        //         .catch(err => console.log(err))
-        // }, 800)
+
     }
     const handleSeason = (e) => {
         console.log(e.target.value)
     }
-
+    let billOrProformaInvoice=(trueValues,falseValues)=>singlePi[0]?.billingWay==="Bill"?trueValues:falseValues
     return (
         <>
             {/* <section className='backgroundWaterMark'> */}
             <section className='backgroundWaterMark' >
-                    <> <div className='leading-4 text-black timesNewRoman'>
-                        <div className="mx-2 flex justify-around">
-                            {/* <img src={logo} alt="" className="h-20 " /> */}
-                            <nav className='flex flex-col justify-center '>
-                                <h2 className='text-center text-4xl font-bold  timesNewRoman piHeading ' >Tertiray Colour Knit Fabrics</h2>
-                                <h5 className='text-center text-md italic piHeading timesNewRoman mt-1'>100% Export Oriented Knit Fabrics Manufacture & Supplier</h5>
-                            </nav>
-                        </div>
-                        <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black',margin:"2px", marginBottom: '4px' }}></h1>
-                        <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black' }}></h1>
-                        <div className='text-center text-xl  italic font-semibold leading-2  underline underLineOffset calibri'>Proforma Invoice <span style={{ width: '153px', height: '1px', backgroundColor: 'black' }}></span></div>
-                        <div className='flex justify-between mt-2 '>
-                            <div className="flex ml-[2px"> <span className="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(createdAt), 'dd-MM-yyyy')}</span></div>
-                            {!edit ? <span className="" onClick={() => setEdit(true)}>PI Number : {piNumber}</span> : <div className=''>PI Number : <input type='text' defaultValue={piNumber} onBlur={handleEditChange} /></div>}
-                        </div>
-                        <div ><span className="ml-2 widthHeading">To</span> <span className=''>: {company?.companyName}</span>
-                        </div>
-                        <div ><span className="ml-2 widthHeading">Address</span>  <span className=''>: {company?.location}</span>
-                        </div>
-                        <div ><span className="ml-2 widthHeading">Buyer</span>  <span className=''>: {buyer?.buyerName}</span>
-                        </div>
-                        <div ><span className="ml-2 widthHeading">Season</span> <span className=''>: <input type="text" onBlur={handleSeason} /> </span>
-                        </div>
+                <> <div className='leading-4 text-black timesNewRoman'>
+                    <div className="mx-2 flex justify-around">
+                        {/* <img src={logo} alt="" className="h-20 " /> */}
+                        <nav className='flex flex-col justify-center '>
+                            <h2 className='text-center text-4xl font-bold  timesNewRoman piHeading ' >Tertiray Colour Knit Fabrics</h2>
+                            <h5 className='text-center text-md italic piHeading timesNewRoman mt-1'>100% Export Oriented Knit Fabrics Manufacture & Supplier</h5>
+                        </nav>
                     </div>
-                        <div>
-                            <table className="my-2 mx-2 b_b calibri" contentEditable='true' >
-                                <thead className="border">
+                    <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black', margin: "2px", marginBottom: '4px' }}></h1>
+                    <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black' }}></h1>
+                    <div className='text-center text-xl my-2 italic font-semibold leading-4  underline underLineOffset calibri'>{billOrProformaInvoice("Bill"," Proforma Invoice ")}<span style={{ width: '153px', height: '1px', backgroundColor: 'black' }}></span></div>
+                    <div className='flex justify-between mt-2 '>
+                        <div className="flex "> <span className="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(createdAt), 'dd-MM-yyyy')}</span></div>
+                        {!edit ? <span className="" onClick={() => setEdit(true)}>{billOrProformaInvoice("Bill Number : "," PI Number : ")}{piNumber}</span> : <div className=''> {billOrProformaInvoice("Bill Number : "," PI Number : ")}<input type='text' defaultValue={piNumber} onBlur={handleEditChange} /></div>}
+                    </div>
+                    <div ><span className="ml-2 widthHeading">To</span> <span className=''>: {company?.companyName}</span>
+                    </div>
+                    <div ><span className="ml-2 widthHeading">Address</span>  <span className=''>: {company?.location}</span>
+                    </div>
+                    <div ><span className="ml-2 widthHeading">Buyer</span>  <span className=''>: {buyer?.buyerName}</span>
+                    </div>
+                    <div ><span className="ml-2 widthHeading">Season</span> <span className=''>: <input type="text" defaultValue={singlePi[0]?.season} onBlur={handleSeason} /> </span>
+                    </div>
+                </div>
+                    <div>
+                        <table className="my-2 mx-2 b_b calibri" contentEditable='true' >
+                            <thead className="border">
+                                {
+                                    state?.map((itemName, index) => {
+                                        return (<th className={itemName.class} key={index} >{itemName.heading}
+                                            <span className={`${block && 'hidden'} hover:bg-red-600 ml-6 cursor-pointer `} onClick={() => handleDel(index)}>X</span>
+                                        </th>)
+                                    })
+                                }
+                            </thead>
+                            <tbody>
+
+                                {
+                                    singlePi?.map((item, i) => {
+                                        const { fabricsName, description, style, totalQuantity, amount, unitPrice, finishDia } = item
+                                        return (
+                                            <>
+                                                <tr className="border text-black"  >
+                                                    {
+                                                        state?.map((itemName, index) => {
+                                                            const { heading } = itemName
+                                                            switch (heading) {
+                                                                case 'S.L.':
+                                                                    return <td className={itemName.class} >{i + 1}</td>
+                                                                    break;
+                                                                case 'Description':
+
+                                                                    return <td className={itemName.class} >{description}</td>
+                                                                    break;
+                                                                case 'Finish Dia':
+                                                                    return <td className={itemName.class} >{finishDia}</td>
+                                                                    break;
+                                                                case 'Style':
+                                                                    return <td className={itemName.class} >{style}</td>
+                                                                    break;
+
+                                                                case 'Quantity':
+                                                                    return <><td className={itemName.class} >
+                                                                        {totalQuantity}
+
+                                                                    </td>
+                                                                    </>
+                                                                    break;
+                                                                case 'Unit Price':
+                                                                    return <td className={itemName.class} ><p className='flex justify-between mx-2'><span >$</span> <span>{unitPrice}</span></p></td>
+                                                                    break;
+                                                                case 'Total Amount':
+                                                                    return <td className={itemName.class} ><p className='flex justify-between mx-2'><span >$</span> <span>{amount}</span></p></td>
+                                                                    break;
+                                                                default:
+                                                                    return <td className={itemName.class} >{itemName.heading}</td>
+                                                                    break;
+                                                            }
+
+
+                                                        })
+                                                    }
+
+                                                </tr>
+                                            </>
+                                        )
+                                    })
+                                }
+                                <tr className="border">
                                     {
-                                        state?.map((itemName, index) => {
-                                            return (<th className={itemName.class} key={index} >{itemName.heading}
-                                                <span className={`${block && 'hidden'} hover:bg-red-600 ml-6 cursor-pointer `} onClick={() => handleDel(index)}>X</span>
-                                            </th>)
+                                        lastBordered?.map((itemName, index) => {
+                                            if (itemName.heading === 'Quantity') {
+                                                return <th className={itemName.class} key={index} style={{ marginLeft: '0.5rem' }}>{totalPIQuantity}</th>
+                                            }
+                                            if (itemName.heading === 'Total Amount') {
+                                                return <th className={itemName.class} key={index}><p className='flex justify-between mx-2'><span className='font-normal'>$</span> <span>{totalPIAmount.toFixed(2)}</span></p></th>
+
+                                            }
+                                            return (<th className={itemName.class} key={index}>{itemName.heading}</th>)
                                         })
                                     }
-                                </thead>
-                                <tbody>
 
-                                    {
-                                        singlePi?.map((item, i) => {
-                                            const { fabricsName,description, style, totalQuantity, amount, unitPrice, finishDia } = item
-                                            return (
-                                                <>
-                                                    <tr className="border text-black"  >
-                                                        {
-                                                            state?.map((itemName, index) => {
-                                                                const { heading } = itemName
-                                                                switch (heading) {
-                                                                    case 'S.L.':
-                                                                        return <td className={itemName.class} >{i + 1}</td>
-                                                                        break;
-                                                                    case 'Description':
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h2 className="mx-2 font-semibold text-[8pt] text-black italic">( In Words: {billOrProformaInvoice(" TAKA "," US DOLLAR ")} {MakingDollarConvert(totalPIAmount)?.toUpperCase()} ONLY )</h2>
+                    <h2 className="mx-2 font-semibold underline text-[12pt] underLineOffset text-black mx-2">{billOrProformaInvoice("","Terms And Condition ")}</h2>
 
-                                                                        return <td className={itemName.class} >{description}</td>
-                                                                        break;
-                                                                    case 'Finish Dia':
-                                                                        return <td className={itemName.class} >{finishDia}</td>
-                                                                        break;
-                                                                    case 'Style':
-                                                                        return <td className={itemName.class} >{style}</td>
-                                                                        break;
+                 {/* {singlePi[0]?.billingWay==="Bill" ?"":  } */}
+                 {billOrProformaInvoice("",<TermsAndCondition />)}
+                </>
 
-                                                                    case 'Quantity':
-                                                                        return <><td className={itemName.class} >
-                                                                            {totalQuantity}
-
-                                                                        </td>
-                                                                        </>
-                                                                        break;
-                                                                    case 'Unit Price':
-                                                                        return <td className={itemName.class} ><p className='flex justify-between mx-2'><span >$</span> <span>{unitPrice}</span></p></td>
-                                                                        break;
-                                                                    case 'Total Amount':
-                                                                        return <td className={itemName.class} ><p className='flex justify-between mx-2'><span >$</span> <span>{amount}</span></p></td>
-                                                                        break;
-                                                                    default:
-                                                                        return <td className={itemName.class} >{itemName.heading}</td>
-                                                                        break;
-                                                                }
-
-
-                                                            })
-                                                        }
-
-                                                    </tr>
-                                                </>
-                                            )
-                                        })
-                                    }
-                                    <tr className="border">
-                                        {
-                                            lastBordered?.map((itemName,index) => {
-                                                if (itemName.heading === 'Quantity') {
-                                                    return <th className={itemName.class} key={index} style={{ marginLeft: '0.5rem' }}>{totalPIQuantity}</th>
-                                                }
-                                                if (itemName.heading === 'Total Amount') {
-                                                    return <th className={itemName.class} key={index}><p className='flex justify-between mx-2'><span className='font-normal'>$</span> <span>{totalPIAmount.toFixed(2)}</span></p></th>
-
-                                                }
-                                                return (<th className={itemName.class} key={index}>{itemName.heading}</th>)
-                                            })
-                                        }
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <h2 className="mx-2 font-semibold text-[8pt] text-black italic">( In Words: US DOLLAR {MakingDollarConvert(totalPIAmount)?.toUpperCase()} ONLY )</h2>
-                        <h2 className="mx-2 font-semibold underline text-[12pt] underLineOffset text-black mx-2">Terms And Condition </h2>
-
-                        <TermsAndCondition />
-                    </>
-            
                 <div className='text-right'>
                     <Button className={`${block && 'hidden'}`} onClick={handlePrint}>Print this out!</Button>
                 </div>
             </section>
-        <footer className="w-full pt-4">
+            <footer className="w-full pt-4">
                 <div className='flex justify-between '>
                     <div >
                         <p className='text-[8pt] text-black'>Client Acceptance</p>

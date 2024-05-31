@@ -106,6 +106,42 @@ export const columns = [
             )
         },
     },
+    {
+        accessorKey: "billingWay",
+        header: ({ column }) => {
+            let billingSystem = ["Proforma Invoice", "Bill"]
+            return (
+                <div className={"flex flex-col"} >
+                    <div className='flex'>
+                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Invoice Type</h2>
+                        <RiArrowUpDownFill size={22} />
+                    </div>
+                    <div >
+                        <select
+                            className={""}
+                            onChange={(event) => { column?.setFilterValue(event.target.value) }}
+                        >
+                            <option disabled selected>Filter Invoice type</option>
+                            <option className='cursor-pointer' value={""} >{"ALL"}</option>
+                            <option className='cursor-pointer' value={"Proforma Invoice"} >{"Proforma Invoice"}</option>
+                            <option className='cursor-pointer' value={"Bill"} >{"Bill"}</option>
+
+                        </select>
+                    </div>
+                </div>
+            )
+        },
+
+        cell: ({ row }) => {
+            let classlist;
+            if (row.original.billingWay === "Bill") {
+                classlist = `bg-green-600 rounded-md text-white text-md text-center px-2`
+            } else{
+                classlist = `bg-blue-600 rounded-md text-white text-md text-center px-2`
+            }
+            return <span className={classlist}>{row.original.billingWay}</span>
+        }
+    },
 
     {
         accessorKey: "piNumber",
@@ -115,18 +151,19 @@ export const columns = [
                     className={"flex"}
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                   PI Number
+                    PI Number
                     <RiArrowUpDownFill className=" h-4 w-4" size={22} />
                 </p>
             )
         },
         cell: ({ row }) => {
-            const { piNumber} = row.original
-            return <Link href={`/dashboard/pi/${piNumber}`} className="text-blue-300">{piNumber}</Link>
+            const { id, piNumber, containOrders } = row.original
+
+            return <Link href={`/dashboard/pi/${containOrders}`} className="text-blue-300">{piNumber}</Link>
         }
 
     },
-  
+
     {
         accessorKey: "totalPIQuantity",
         header: ({ column }) => {
@@ -154,16 +191,16 @@ export const columns = [
                 </p>
             )
         },
-    },{
+    }, {
         accessorKey: "Action",
         header: "Action",
         cell: ({ row }) => {
-            
-            return(<Action id={row.original.containOrders} actionName={"Delete"}/>)
+
+            return (<Action id={row.original.containOrders} actionName={"Delete"} />)
         }
     }
 
-  
+
 
 
 ]

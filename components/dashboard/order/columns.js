@@ -131,10 +131,10 @@ export const columns = [
             )
         },
     },
-    // {
-    //     accessorKey: "unit",
-    //     header: "Unit",
-    // },
+    {
+        accessorKey: "unit",
+        header: "Unit",
+    },
     {
         accessorKey: "orderNumber",
         header: ({ column }) => {
@@ -197,7 +197,7 @@ export const columns = [
         },
     },
     {
-        accessorKey: "boNumber",
+        accessorKey: "bookingNumber",
         header: ({ column }) => {
             return (
                 <p

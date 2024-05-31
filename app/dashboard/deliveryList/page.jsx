@@ -7,7 +7,7 @@ export const metadata = {
   };
 const page = (props) => {
     return (
-        <div>
+        <div className='pl-8 py-4'>
             <AllDeliveryLists/>
         </div>
     )

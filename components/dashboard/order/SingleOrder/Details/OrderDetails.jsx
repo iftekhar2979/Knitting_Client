@@ -139,8 +139,8 @@ const info = [
   {
     id: 213,
     name: 'sl',
-    header: "Serial Number",
-    placeholder: "Serial Number...",
+    header: "Stitch Length",
+    placeholder: "Stitch Length...",
     type: "String"
   },
 

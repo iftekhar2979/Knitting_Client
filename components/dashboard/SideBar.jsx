@@ -96,11 +96,7 @@ const dashboardSection = [
         value: "Dashboard",
         icon: <MdDashboardCustomize />
     },
-
-
 ]
-
-
 const SideBar = (props) => {
     const pathName = usePathname()
     const [selectedRoute, setSelectedRoute] = useState()

@@ -1,11 +1,11 @@
 "use client"
-import { addPi, totalQuantityCounting } from '@/lib/features/Invoice/piSlice';
+import { addPi, clearingState, totalQuantityCounting } from '@/lib/features/Invoice/piSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import react, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-const ModalTable = ({ detail }) => {
+const ModalTable = ({ detail ,billingWays}) => {
     const [value, setValue] = useState(0)
     const [finishDia, setfinishDia] = useState('')
     const [style, setStyle] = useState('')
@@ -14,10 +14,11 @@ const ModalTable = ({ detail }) => {
     const { cleared, totalQuantity, totalAmount } = useAppSelector(state => state.pI)
     const { _sum: { orderQuantity }, companyId, fabricsName, buyerId, fabricsId } = detail
     const dispatch = useAppDispatch()
+
+ 
     const handleChange = (e) => {
         setValue(parseFloat(e.target.value))
     }
-    console.log(detail)
     // let count = 0
     const amount = isNaN(orderQuantity * value) ? 0 : (orderQuantity * value)
     useEffect(() => {
@@ -37,11 +38,12 @@ const ModalTable = ({ detail }) => {
             amount: parseFloat(amount.toFixed(4)),
             totalPIQuantity: totalQuantity,
             totalPIAmount: totalAmount,
+            billingWay:billingWays
         }
         dispatch(addPi(object))
         dispatch(totalQuantityCounting())
 
-    }, [value, finishDia, description, style, totalAmount, totalQuantity])
+    }, [value, finishDia, description, style, totalAmount, totalQuantity,billingWays])
 
     useEffect(() => {
         if (cleared) {

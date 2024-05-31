@@ -33,7 +33,7 @@ const TermsAndCondition = (props) => {
                     
                     <tr>
                         <td className="w-36 font-bold flex items-start text-[10pt]">Validity </td>
-                        <td><span className="font-semibold text-md">:</span><span className="text-[10pt] ml-[5px] "> 15 days from date issue</span></td>
+                        <td><span className="font-semibold text-md">:</span><span className="text-[10pt] ml-[5px] "> 30 days from date issue</span></td>
                     </tr>
                     <tr>
                         <td className="w-36 font-bold flex items-start text-[10pt]">Currency for Payment</td>

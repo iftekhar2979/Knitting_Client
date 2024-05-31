@@ -6,7 +6,7 @@ export const metadata = {
   };
 const page = () => {
     return (
-        <div className='basis-1 '> 
+        <div className='basis-1'> 
             <ViewOrder/>
         </div>
     )

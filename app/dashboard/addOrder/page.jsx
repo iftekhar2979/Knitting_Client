@@ -6,7 +6,7 @@ export const metadata = {
   };
 const page = (props) => {
     return (
-        <section className='flex justify-center flex-col'>
+        <section className='flex justify-center flex-col pl-8 py-4'>
             <div className='text-3xl font-semibold '>
                 <h2>Add New Order Here</h2>
             </div>

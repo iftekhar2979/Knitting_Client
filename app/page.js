@@ -4,15 +4,15 @@ import Feature from "@/components/Home/Feature";
 import Footer from "@/components/Home/Footer";
 import Hero from "@/components/Home/Hero";
 import Services from "@/components/Home/Services";
-import Animate from "@/components/Home/animate";
+
 
 export default function Home() {
   return (
-    <main className="px-16">
+    
+    <main className="">
       <Hero />
       <Feature />
       <Services />
-      <Animate/>
       <Clients />
       <section className="mb-32">
         <div className="relative h-[300px] overflow-hidden bg-cover bg-[50%] bg-no-repeat bg-[url('https://mdbcdn.b-cdn.net/img/new/textures/full/284.jpg')]"></div>

@@ -19,10 +19,11 @@ import { useAddCompanyMutation } from "@/lib/features/company/companyApi"
 import { useToast } from "@/components/ui/use-toast"
 import { useEffect } from "react"
 import Error from "@/components/utils/Error"
+import { data } from "autoprefixer"
 
 const FormSchema = z.object({
   companyName: z.string().min(2, {
-    message: "Company Name must be at least 2 characters.",
+    message: "Company Name must be at least 3 characters.",
   }),
   email:z.string().email({message:"Email Not Valid"}),
   location:z.string().min(3,{
@@ -30,6 +31,9 @@ const FormSchema = z.object({
   }),
   contact:z.string().min(10,{
     message: "Contact Number must be at least 10 characters.",
+  }),
+  shortForm:z.string().max(7,{
+    message: "Short Form must Not contains 7 characters.",
   })
 })
 
@@ -72,7 +76,7 @@ const info=[
 ]
 
 export function AddCompany() {
-  const [addCompany,{isLoading,isError,isSuccess}]=useAddCompanyMutation()
+  const [addCompany,{isLoading,isError,isSuccess,error}]=useAddCompanyMutation()
   const { toast } = useToast()
 
   const form = useForm({
@@ -87,9 +91,11 @@ export function AddCompany() {
   })
 
   async function onSubmit(data) {
+    console.log(data)
     addCompany(data)
 
   }
+  console.log(error?.data)
 
   return (
     <div className="w-full my-4 flex justify-center">  
@@ -116,11 +122,11 @@ export function AddCompany() {
             )
           })
         }
+    {isError && <Error data={error?.data}/>}
         <Button type="submit" className="">{isLoading ? "Submitting" :"Submit"}</Button>
       </form>
     </Form>
 
-    {isError && <Error error={"New Company did not Created yet, Please Try again Later !!!"}/>}
     </div>
   )
 }

@@ -257,7 +257,6 @@ export function AddOrder() {
                     }
                     </div>
                     <div className="flex justify-center my-4">
-
                     <Button type="submit" className="mx-auto p-auto">{insertingOrderLoading?"Inserting Order":"Insert Order"}</Button>
                     </div>
                 </form>
