@@ -7,21 +7,16 @@ import Loading from "@/components/utils/Loading";
 import Error from "@/components/utils/Error";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
-import { PopoverContent } from "@/components/ui/popover";
 import { Dialog } from "@/components/ui/dialog";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import Table from "@/components/utils/Table/Table";
-import { useCreateProformaInvoiceMutation, useGetOrdersInvoiceMutation } from "@/lib/features/Invoice/invoiceApi";
+import { useCreateBillInformationMutation, useCreateProformaInvoiceMutation, useGetOrdersInvoiceMutation } from "@/lib/features/Invoice/invoiceApi";
 import ModalTable from "./ModalTable";
 import { addBillingSystem, clearingState } from "@/lib/features/Invoice/piSlice";
 import { clearingSelectedValue } from "@/lib/features/Invoice/invoiceSlice";
-import InputDropDown from "@/components/utils/InputDropDown";
 import Radio from "@/components/ui/Radio";
 import { GrNext, GrPrevious } from "react-icons/gr";
-
-
 const tableHeadings = [
     {
         id: 601,
@@ -56,6 +51,7 @@ let billingSystem = ["Proforma Invoice", "Bill"]
 const CreateInvoice = (props) => {
     const { data, isLoading, isError, error } = useGetInvoiceOrdersQuery()
     const [createProformaInvoice, { data: invoiceData, isLoading: isInvoiceCreatingLoading, isError: isInvoiceCreatingError, error: invoiceCreatingError }] = useCreateProformaInvoiceMutation()
+    const [createBillInfromation, { data: billData, isLoading: isBillCreatingLoading, isError: isBillCreatingError }] = useCreateBillInformationMutation()
     const [getOrdersInvoice, { data: piOrders, isLoading: piOrderLoading, isError: isPiOrderError, error: piOrderError }] = useGetOrdersInvoiceMutation()
     const [open, setOpen] = useState(false)
     const { selectedValues, } = useAppSelector(state => state.invoiceSlice)
@@ -80,7 +76,11 @@ const CreateInvoice = (props) => {
         setBillSteps(2)
     }
     const handleSubmit = () => {
-        createProformaInvoice(piValue)
+        if (billingWay === "Proforma Invoice") {
+            createProformaInvoice(piValue)
+        } else {
+            createBillInfromation(piValue)
+        }
         dispatch(clearingSelectedValue())
         dispatch(clearingState())
         setOpen(false)
@@ -103,11 +103,10 @@ const CreateInvoice = (props) => {
                                         <>
                                             <DialogHeader>
                                                 <DialogTitle> Do You Want to Create PI for Order : {selectedValues.join(", ")}</DialogTitle>
-
                                             </DialogHeader>
                                             <Table tableHeadings={tableHeadings} >
                                                 {piOrders?.map((item, index) => <>
-                                                    <ModalTable key={index} detail={item} billingWays={billingWay}/>
+                                                    <ModalTable key={index} detail={item} billingWays={billingWay} />
                                                 </>)}
                                                 <tr>
                                                     <td></td>
@@ -120,10 +119,8 @@ const CreateInvoice = (props) => {
                                                 </tr>
                                             </Table>
                                         </>
-
                                     }
-                                     <span className="text-center" onClick={() => setBillSteps(1)}><GrPrevious size={25} color="green" /></span>
-                                    
+                                    <span className="text-center" onClick={() => setBillSteps(1)}><GrPrevious size={25} color="green" /></span>
                                     <Button onClick={handleSubmit} className={'mx-auto w-24'}>Submit</Button>
                                 </>
                                 :
@@ -137,10 +134,10 @@ const CreateInvoice = (props) => {
                                         handleRadioChange={handleRadioChanges}
                                         selectedValue={billingWay}
                                     />
-                                 <div className="flex justify-rig">
+                                    <div className="flex justify-rig">
 
-                                     <span onClick={() => setBillSteps(2)}><GrNext size={25} color="green"/></span>
-                                 </div>
+                                        <span onClick={() => setBillSteps(2)}><GrNext size={25} color="green" /></span>
+                                    </div>
                                 </>
                                 : ""
                             }

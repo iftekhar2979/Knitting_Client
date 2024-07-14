@@ -12,7 +12,7 @@ const FormSchema = z.object({
     fabricsName: z.string().min(2, {
       message: "Fabrics Name must be at least 2 characters.",
     }),
-    description:z.string().min(3,{message:"Description Not Valid"}),
+    description:z.string(),
   })
   
   const info=[

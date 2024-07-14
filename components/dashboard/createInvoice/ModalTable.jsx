@@ -12,7 +12,7 @@ const ModalTable = ({ detail ,billingWays}) => {
     const [description, setDescription] = useState('')
     const { selectedValues, selectedCompany } = useAppSelector(state => state.invoiceSlice)
     const { cleared, totalQuantity, totalAmount } = useAppSelector(state => state.pI)
-    const { _sum: { orderQuantity }, companyId, fabricsName, buyerId, fabricsId } = detail
+    const { _sum: { deliveredQuantity }, companyId, fabricsName, buyerId, fabricsId } = detail
     const dispatch = useAppDispatch()
 
  
@@ -20,12 +20,12 @@ const ModalTable = ({ detail ,billingWays}) => {
         setValue(parseFloat(e.target.value))
     }
     // let count = 0
-    const amount = isNaN(orderQuantity * value) ? 0 : (orderQuantity * value)
+    const amount = isNaN(deliveredQuantity * value) ? 0 : (deliveredQuantity * value)
     useEffect(() => {
         const object = {
             fabricsName,
             finishDia: finishDia,
-            totalQuantity: orderQuantity,
+            totalQuantity: deliveredQuantity,
             companyId,
             style,
             buyerId,
@@ -36,8 +36,8 @@ const ModalTable = ({ detail ,billingWays}) => {
             description,
             unitPrice: value,
             amount: parseFloat(amount.toFixed(4)),
-            totalPIQuantity: totalQuantity,
-            totalPIAmount: totalAmount,
+            invoiceQuantity: totalQuantity,
+            invoiceAmount: totalAmount,
             billingWay:billingWays
         }
         dispatch(addPi(object))
@@ -60,7 +60,7 @@ const ModalTable = ({ detail ,billingWays}) => {
                 <td className='text-md '><textarea type='text' onChange={(e) => setDescription(e.target.value)} className='w-36 border' /></td>
                 <td className='text-md '><textarea type='text' onChange={(e) => setfinishDia(e.target.value)} className='w-24 border' /></td>
                 <td className='text-md '><textarea type='text' onChange={(e) => setStyle(e.target.value)} className='w-24 border' /></td>
-                <td className='text-md '>{orderQuantity}</td>
+                <td className='text-md '>{deliveredQuantity}</td>
                 <td className='text-md '>{<input type='number' onChange={(e) => handleChange(e)} className='w-24' />}</td>
                 <td className='text-md '>$ {amount.toLocaleString()}</td>
             </tr>

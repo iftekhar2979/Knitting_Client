@@ -5,10 +5,12 @@ import { format } from "date-fns"
 import TermsAndCondition from "./TermsAndCondition"
 import { Button } from "@/components/ui/button"
 import useDocumentTitle from "@/hooksAndFunctions/useDocumentTitle"
-
+import { companyInformation } from "@/contents/companyInformation"
 const { default: Loading } = require("@/components/utils/Loading")
 const { useGetSinglePerformaInvoiceListQuery } = require("@/lib/features/Invoice/invoiceApi")
 const { useState, useEffect } = require("react")
+import { logo } from "../../../public/assets/tertiary.jpg"
+
 
 const headings = [
     { heading: 'S.L.', class: "w-12 text-center b_b text-[11pt] text-black mx-2" },
@@ -17,6 +19,15 @@ const headings = [
     { heading: 'Style', class: "w-24 text-center b_b text-[11pt] text-black mx-2" },
     { heading: 'Quantity', class: "w-32 text-right b_b text-[11pt] text-black px-2" },
     { heading: 'Unit Price', class: "w-28 text-center b_b text-[11pt] text-black " },
+    { heading: 'Total Amount', class: "w-44 text-center b_b text-[11pt] text-black mx-2" },
+]
+const billHeadings = [
+    { heading: 'S.L.', class: "w-12 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: "Description", class: "w-66 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: "Finish Dia", class: "w-60 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: 'Style', class: "w-24 text-center b_b text-[11pt] text-black mx-2" },
+    { heading: 'Quantity', class: "w-32 text-right b_b text-[11pt] text-black px-2" },
+    { heading: 'Unit Price (BDT)', class: "w-28 text-center b_b text-[11pt] text-black " },
     { heading: 'Total Amount', class: "w-44 text-center b_b text-[11pt] text-black mx-2" },
 ]
 const lastBorder = [
@@ -28,6 +39,7 @@ const lastBorder = [
     { heading: '', class: "w-28 text-center b_b text-[11pt] text-black mx-2" },
     { heading: 'Total Amount', class: "w-44 text-center b_b text-[11pt] text-black mx-2" },
 ]
+
 export const PiStatement = ({ id }) => {
 
     const [edit, setEdit] = useState(false)
@@ -38,7 +50,7 @@ export const PiStatement = ({ id }) => {
     const { data: singlePi, isLoading, isError } = useGetSinglePerformaInvoiceListQuery(id, {
         refetchOnMountOrArgChange: true
     })
-    useDocumentTitle(`PI Number ${singlePi? singlePi[0]?.piNumber:""}`)
+    useDocumentTitle(`PI Number ${singlePi ? singlePi[0]?.piNumber : ""}`)
     useEffect(() => {
         // Safely attempt to get the elements
         const nav = document.getElementsByClassName("nav-back relative")[0];
@@ -54,8 +66,8 @@ export const PiStatement = ({ id }) => {
             if (nav) nav.classList.remove("hidden");
             if (footer) footer.classList.remove("hidden");
         };
-    }, [block]);
-    
+    }, [block,]);
+
     if (isLoading) {
         return <Loading />
     }
@@ -95,33 +107,36 @@ export const PiStatement = ({ id }) => {
     const handleSeason = (e) => {
         console.log(e.target.value)
     }
-    let billOrProformaInvoice=(trueValues,falseValues)=>singlePi[0]?.billingWay==="Bill"?trueValues:falseValues
+    let billOrProformaInvoice = (trueValues, falseValues) => singlePi[0]?.billingWay === "Bill" ? trueValues : falseValues
+
     return (
         <>
             {/* <section className='backgroundWaterMark'> */}
             <section className='backgroundWaterMark' >
                 <> <div className='leading-4 text-black timesNewRoman'>
                     <div className="mx-2 flex justify-around">
-                        {/* <img src={logo} alt="" className="h-20 " /> */}
                         <nav className='flex flex-col justify-center '>
-                            <h2 className='text-center text-4xl font-bold  timesNewRoman piHeading ' >Tertiray Colour Knit Fabrics</h2>
-                            <h5 className='text-center text-md italic piHeading timesNewRoman mt-1'>100% Export Oriented Knit Fabrics Manufacture & Supplier</h5>
+                            <div  className="flex justify-center items-center">
+                                <img src="https://i.postimg.cc/FKc8pPqQ/tertiary.jpg" alt="" className="h-[68px] w-[65px] pt-[7px] " />
+                                <h2 className='text-center text-4xl font-bold  timesNewRoman piHeading '>{companyInformation?.name}</h2>
+                            </div>
+                            <h5 className='text-center text-md italic piHeading timesNewRoman mt-1'>{companyInformation?.intro}</h5>
                         </nav>
                     </div>
-                    <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black', margin: "2px", marginBottom: '4px' }}></h1>
+                    <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black', margin: "2px", marginBottom: '4px' }} className="mt-2"></h1>
                     <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black' }}></h1>
-                    <div className='text-center text-xl my-2 italic font-semibold leading-4  underline underLineOffset calibri'>{billOrProformaInvoice("Bill"," Proforma Invoice ")}<span style={{ width: '153px', height: '1px', backgroundColor: 'black' }}></span></div>
+                    <div className='text-center text-xl my-2 italic font-semibold leading-4  underline underLineOffset calibri'>{billOrProformaInvoice("Bill", " Proforma Invoice ")}<span style={{ width: '153px', height: '1px', backgroundColor: 'black' }}></span></div>
                     <div className='flex justify-between mt-2 '>
                         <div className="flex "> <span className="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(createdAt), 'dd-MM-yyyy')}</span></div>
-                        {!edit ? <span className="" onClick={() => setEdit(true)}>{billOrProformaInvoice("Bill Number : "," PI Number : ")}{piNumber}</span> : <div className=''> {billOrProformaInvoice("Bill Number : "," PI Number : ")}<input type='text' defaultValue={piNumber} onBlur={handleEditChange} /></div>}
+                        {!edit ? <span className="" onClick={() => setEdit(true)}>{billOrProformaInvoice("Bill Number : ", " PI Number : ")}{piNumber}</span> : <div className=''> {billOrProformaInvoice("Bill Number : ", " PI Number : ")}<input type='text' defaultValue={piNumber} onBlur={handleEditChange} /></div>}
                     </div>
-                    <div ><span className="ml-2 widthHeading">To</span> <span className=''>: {company?.companyName}</span>
+                    <div ><span className="ml-2 widthHeading mt-2">To</span> <span className=''>: {company?.companyName}</span>
                     </div>
-                    <div ><span className="ml-2 widthHeading">Address</span>  <span className=''>: {company?.location}</span>
+                    <div ><span className="ml-2 widthHeading mt-2">Address</span>  <span className=''>: {company?.location}</span>
                     </div>
-                    <div ><span className="ml-2 widthHeading">Buyer</span>  <span className=''>: {buyer?.buyerName}</span>
+                    <div ><span className="ml-2 widthHeading mt-2">Buyer</span>  <span className=''>: {buyer?.buyerName}</span>
                     </div>
-                    <div ><span className="ml-2 widthHeading">Season</span> <span className=''>: <input type="text" defaultValue={singlePi[0]?.season} onBlur={handleSeason} /> </span>
+                    <div ><span className="ml-2 widthHeading mt-2">Season</span> <span className=''>: <input type="text" defaultValue={singlePi[0]?.season} onBlur={handleSeason} /> </span>
                     </div>
                 </div>
                     <div>
@@ -169,10 +184,10 @@ export const PiStatement = ({ id }) => {
                                                                     </>
                                                                     break;
                                                                 case 'Unit Price':
-                                                                    return <td className={itemName.class} ><p className='flex justify-between mx-2'><span >$</span> <span>{unitPrice}</span></p></td>
+                                                                    return <td className={itemName.class} ><p className='flex justify-between mx-2'><span >{billOrProformaInvoice("", "$")}</span> <span>{unitPrice}</span></p></td>
                                                                     break;
                                                                 case 'Total Amount':
-                                                                    return <td className={itemName.class} ><p className='flex justify-between mx-2'><span >$</span> <span>{amount}</span></p></td>
+                                                                    return <td className={itemName.class} ><p className='flex justify-between mx-2'><span >{billOrProformaInvoice("", "$")}</span> <span>{amount}</span></p></td>
                                                                     break;
                                                                 default:
                                                                     return <td className={itemName.class} >{itemName.heading}</td>
@@ -206,11 +221,10 @@ export const PiStatement = ({ id }) => {
                             </tbody>
                         </table>
                     </div>
-                    <h2 className="mx-2 font-semibold text-[8pt] text-black italic">( In Words: {billOrProformaInvoice(" TAKA "," US DOLLAR ")} {MakingDollarConvert(totalPIAmount)?.toUpperCase()} ONLY )</h2>
-                    <h2 className="mx-2 font-semibold underline text-[12pt] underLineOffset text-black mx-2">{billOrProformaInvoice("","Terms And Condition ")}</h2>
+                    <h2 className="mx-2 font-semibold text-[8pt] text-black italic">( In Words: {billOrProformaInvoice(" BDT ", " US DOLLAR ")} {MakingDollarConvert(totalPIAmount)?.toUpperCase()} ONLY )</h2>
+                    <h2 className="mx-2 font-semibold underline text-[12pt] underLineOffset text-black mx-2">{billOrProformaInvoice("", "Terms And Condition ")}</h2>
 
-                 {/* {singlePi[0]?.billingWay==="Bill" ?"":  } */}
-                 {billOrProformaInvoice("",<TermsAndCondition />)}
+                    {billOrProformaInvoice("", <TermsAndCondition />)}
                 </>
 
                 <div className='text-right'>
@@ -227,7 +241,6 @@ export const PiStatement = ({ id }) => {
                     <div className='text-[7pt] m-0'>
                         <p className='text-[8pt] text-black'>Tertiary Colour Knit Fabrics</p>
                         <ul>
-                            {/* <img src={signature} alt="" className=' relative right-8' /> */}
                             <li className='text-center text-black'>Authorised Signature</li>
                         </ul>
                     </div>
@@ -235,7 +248,7 @@ export const PiStatement = ({ id }) => {
                 <div style={{ width: '100%', height: '1px', backgroundColor: 'black' }}></div>
                 <div className="container mx-auto text-center text-black mx-2">
                     <p className='text-center piHeading  font-semibold '>Mobile : 01711-344139 , 017160-19843 Mail : kamrul@tertiaryckf.com</p>
-                    <p className='text-center piHeading font-semibold'>Near Rubel Pump ,Rajabari , Konabari , Gazipur</p>
+                    <p className='text-center piHeading font-semibold'>Near Rubel Pump ,Rajabari road, Konabari , Gazipur</p>
                 </div>
             </footer>
         </>

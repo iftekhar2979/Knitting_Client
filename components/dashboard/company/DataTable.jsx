@@ -92,10 +92,10 @@ export function DataTable({
           className="max-w-sm"
         />
       </div>
-      <Table>
-        <TableHeader>
+      <Table className="text-[9pt]">
+        <TableHeader className="text-[9pt]">
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow key={headerGroup.id} className="">
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead key={header.id}>
@@ -113,7 +113,7 @@ export function DataTable({
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody>
+        <TableBody className="">
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
@@ -154,7 +154,7 @@ export function DataTable({
                 <SelectValue placeholder={table.getState().pagination.pageSize} />
               </SelectTrigger>
               <SelectContent side="top">
-                {[10,15, 20, 30, 40, 50].map((pageSize) => (
+                {[20, 30, 40, 50].map((pageSize) => (
                   <SelectItem key={pageSize} value={`${pageSize}`}>
                     {pageSize}
                   </SelectItem>

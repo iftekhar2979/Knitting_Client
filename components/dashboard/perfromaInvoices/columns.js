@@ -52,7 +52,12 @@ export const columns = [
     {
         accessorKey: "buyerName",
         accessorFn: (originalRow, index) => {
-            return String(originalRow.buyer.buyerName)
+            if (!originalRow.buyer) {
+                return "N/A"
+            } else {
+
+                return String(originalRow.buyer.buyerName)
+            }
         },
         header: ({ column }) => {
             return (
@@ -105,67 +110,72 @@ export const columns = [
                 </div>
             )
         },
-    },
-    {
-        accessorKey: "billingWay",
-        header: ({ column }) => {
-            let billingSystem = ["Proforma Invoice", "Bill"]
-            return (
-                <div className={"flex flex-col"} >
-                    <div className='flex'>
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Invoice Type</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div >
-                        <select
-                            className={""}
-                            onChange={(event) => { column?.setFilterValue(event.target.value) }}
-                        >
-                            <option disabled selected>Filter Invoice type</option>
-                            <option className='cursor-pointer' value={""} >{"ALL"}</option>
-                            <option className='cursor-pointer' value={"Proforma Invoice"} >{"Proforma Invoice"}</option>
-                            <option className='cursor-pointer' value={"Bill"} >{"Bill"}</option>
-
-                        </select>
-                    </div>
-                </div>
-            )
-        },
-
         cell: ({ row }) => {
-            let classlist;
-            if (row.original.billingWay === "Bill") {
-                classlist = `bg-green-600 rounded-md text-white text-md text-center px-2`
-            } else{
-                classlist = `bg-blue-600 rounded-md text-white text-md text-center px-2`
-            }
-            return <span className={classlist}>{row.original.billingWay}</span>
-        }
-    },
+                 
+                    return <span >{row.original.fabricsType.fabricsName}</span>
+                }
+            },
+    
+    // {
+    //     accessorKey: "billingWay",
+    //     header: ({ column }) => {
+    //         let billingSystem = ["Proforma Invoice", "Bill"]
+    //         return (
+    //             <div className={"flex flex-col"} >
+    //                 <div className='flex'>
+    //                     <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Invoice Type</h2>
+    //                     <RiArrowUpDownFill size={22} />
+    //                 </div>
+    //                 <div >
+    //                     <select
+    //                         className={""}
+    //                         onChange={(event) => { column?.setFilterValue(event.target.value) }}
+    //                     >
+    //                         <option disabled selected>Filter Invoice type</option>
+    //                         <option className='cursor-pointer' value={""} >{"ALL"}</option>
+    //                         <option className='cursor-pointer' value={"Proforma Invoice"} >{"Proforma Invoice"}</option>
+    //                         <option className='cursor-pointer' value={"Bill"} >{"Bill"}</option>
+
+    //                     </select>
+    //                 </div>
+    //             </div>
+    //         )
+    //     },
+
+    //     cell: ({ row }) => {
+    //         let classlist;
+    //         if (row.original.billingWay === "Bill") {
+    //             classlist = `bg-green-600 rounded-md text-white text-md text-center px-2`
+    //         } else {
+    //             classlist = `bg-blue-600 rounded-md text-white text-md text-center px-2`
+    //         }
+    //         return <span className={classlist}>{row.original.billingWay}</span>
+    //     }
+    // },
 
     {
-        accessorKey: "piNumber",
+        accessorKey: "billNumber",
         header: ({ column }) => {
             return (
                 <p
                     className={"flex"}
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    PI Number
+                    Bill Number
                     <RiArrowUpDownFill className=" h-4 w-4" size={22} />
                 </p>
             )
         },
         cell: ({ row }) => {
-            const { id, piNumber, containOrders } = row.original
+            const { id, billNumber, containOrders } = row.original
 
-            return <Link href={`/dashboard/pi/${containOrders}`} className="text-blue-300">{piNumber}</Link>
+            return <Link href={`/dashboard/pi/${containOrders}`} className="text-blue-300">{billNumber}</Link>
         }
 
     },
 
     {
-        accessorKey: "totalPIQuantity",
+        accessorKey: "invoiceQuantity",
         header: ({ column }) => {
             return (
                 <p
@@ -179,7 +189,7 @@ export const columns = [
         },
     },
     {
-        accessorKey: "totalPIAmount",
+        accessorKey: "invoiceAmount",
         header: ({ column }) => {
             return (
                 <p

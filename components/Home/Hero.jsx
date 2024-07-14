@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import react from 'react';
-import knittingHero from '@/assets/knittingHero.png'
+import knittingHero from '@/public/assets/knittingHero.png'
 import Navbar from '../Navbar';
 
 const Hero = (props) => {
@@ -52,7 +52,7 @@ const Hero = (props) => {
         <div
           className="relative rounded-xl bg-white p-2 shadow-lg ring-1 ring-blue-100 lg:mx-40 lg:flex lg:items-center lg:justify-center"
         >
-          {/* <div
+          <div
             className="absolute  left-0 top-0 -ml-20 -mt-12 h-48 w-48 rounded-full bg-blue-200 bg-opacity-50"
           ></div>
       
@@ -64,9 +64,11 @@ const Hero = (props) => {
           ></div>
           <div
             className="absolute bottom-0 left-0 -mb-16 -ml-12 h-20 w-20 -rotate-12 rounded-xl bg-red-200 bg-opacity-50"
-          ></div> */}
+          ></div>
           <div className="aspect-w-16 aspect-h-10 w-full fadeInLeftBig" data-aos="fade-right">
             <Image src={knittingHero} alt='Knitting Machine' loading='lazy' quality={80} />
+            
+             {/* <img src={knittingHero}  alt='Knitting Machine' /> */}
           </div>
         </div>
       </div>

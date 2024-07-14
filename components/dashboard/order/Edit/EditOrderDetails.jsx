@@ -37,6 +37,7 @@ const FormSchema = z.object({
   sl: z.string()
 })
 
+
 const info = [
   {
     id: 201,
@@ -97,29 +98,29 @@ const info = [
   {
     id: 207,
     name: 'polyStarCount',
-    header: "Poly Star Count",
-    placeholder: "Poly Star Count...",
+    header: "Polyster Count",
+    placeholder: "Polyster Count...",
     type: "String"
   },
   {
     id: 208,
     name: 'polyStarBrand',
-    header: "Poly Star Brand",
-    placeholder: "Poly Star Brand...",
+    header: "Polyster Brand",
+    placeholder: "Polyster Brand...",
     type: "String"
   },
   {
     id: 209,
     name: 'polyStarLot',
-    header: "Poly Star Lot",
-    placeholder: "Poly Star Lot...",
+    header: "Polyster Lot",
+    placeholder: "Polyster Lot...",
     type: "String"
   },
   {
     id: 210,
     name: 'e_DIA',
-    header: "E DIA",
-    placeholder: "E DIA...",
+    header: "F DIA",
+    placeholder: "F DIA...",
     type: "String"
   },
   {
@@ -139,8 +140,8 @@ const info = [
   {
     id: 213,
     name: 'sl',
-    header: "Serial Number",
-    placeholder: "Serial Number...",
+    header: "Stitch Length",
+    placeholder: "Stitch Length...",
     type: "String"
   },
 

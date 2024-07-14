@@ -39,15 +39,11 @@ const FormSchema = z.object({
         message: "Order Number must be at least 5 characters"
     }),
 
-    sbNumber: z.string().min(5, {
-        message: "Order Number must be at least 5 characters"
-    }),
+    sbNumber: z.string(),
     bookingNumber: z.string(),
     jobNumber: z.string(),
     programNumber: z.string(),
-    season: z.string().min(2, {
-        message: "Order Number must be at least 2 characters"
-    }),
+    season: z.string(),
     status: z.string()
 
 })
@@ -98,14 +94,14 @@ const info = [
         type: "String"
     },
 ]
-const units=["Fabric","Knitting"]
+const units = ["Fabric", "Knitting"]
 export function AddOrder() {
     const { data, isLoading, error, isError } = useGetCompanyQuery()
-    const [addOrder,{isLoading:insertingOrderLoading,isError:insertingOrderError}]=useAddOrderMutation()
+    const [addOrder, { isLoading: insertingOrderLoading, isError: insertingOrderError }] = useAddOrderMutation()
     const { data: product, isLoading: productLoading, error: productError, isError: productIsError } = useGetProductQuery()
     const [companyInfo, setCompanyInfo] = useState()
     const [buyerInfo, setBuyerInfo] = useState()
-    const [unit,setUnit]=useState()
+    const [unit, setUnit] = useState()
     const [fabricsInfo, setFabricsInfo] = useState()
     const [buyers, setBuyers] = useState()
     const [date, setDate] = useState()
@@ -152,13 +148,17 @@ export function AddOrder() {
         const { id, fabricsName } = product?.find(prod => prod?.fabricsName === selectedProduct)
         setFabricsInfo({ fabricsId: id, fabricsName })
     }
-    const handleRadioChanges=(data)=>{
-       setUnit(data.item)
+    const handleRadioChanges = (data) => {
+        setUnit(data.item)
     }
 
     async function onSubmit(data) {
-        const {companyId, companyName}=companyInfo
-        const body = { companyId,companyName, ...buyerInfo, ...fabricsInfo,unit:unit, orderQuantity: parseFloat(quantity),restQuantity:parseFloat(quantity), targetDate: date, ...data }
+        const { companyId, companyName } = companyInfo
+        if (quantity <= 0) {
+            window.alert("Order Can't be place with out booking quantity")
+            return
+        }
+        const body = { companyId, companyName, ...buyerInfo, ...fabricsInfo, unit: unit, orderQuantity: parseFloat(quantity), restQuantity: parseFloat(quantity), targetDate: date, ...data }
         addOrder(body)
         console.log(body)
     }
@@ -224,7 +224,7 @@ export function AddOrder() {
                 <div className="my-2">
                     <div className="grid w-full max-w-sm items-center gap-1.5">
                         <Label htmlFor="Quantity">Quantity (KG)</Label>
-                        <Input type="number" id="Quantity" placeholder="Quantity"  onWheel={() => document.activeElement.blur()} onChange={(e) => setQuantity(e.target.value)} />
+                        <Input type="number" id="Quantity" placeholder="Quantity" onWheel={() => document.activeElement.blur()} onChange={(e) => setQuantity(e.target.value)} />
                     </div>
                 </div>
             </div>
@@ -232,38 +232,37 @@ export function AddOrder() {
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="w-full  rounded-xl  ">
                     <div className="grid grid-cols-2 gap-6 p-6">
-                    {
-                        info.map(item => {
-                            const { name, header, placeholder, id, type } = item
-                            return (
-                                <FormField
-                                    key={id}
-                                    control={form.control}
-                                    name={name}
+                        {
+                            info.map(item => {
+                                const { name, header, placeholder, id, type } = item
+                                return (
+                                    <FormField
+                                        key={id}
+                                        control={form.control}
+                                        name={name}
 
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>{header}</FormLabel>
-                                            <FormControl>
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>{header}</FormLabel>
+                                                <FormControl>
 
-                                                <Input placeholder={placeholder} {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            )
-                        })
-                    }
+                                                    <Input placeholder={placeholder} {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                )
+                            })
+                        }
                     </div>
                     <div className="flex justify-center my-4">
-                    <Button type="submit" className="mx-auto p-auto">{insertingOrderLoading?"Inserting Order":"Insert Order"}</Button>
+                        <Button type="submit" className="mx-auto p-auto">{insertingOrderLoading ? "Inserting Order" : "Insert Order"}</Button>
                     </div>
                 </form>
             </Form>
-            {insertingOrderError && <Error error={"Order did not Created Successfully yet, Please Try again Later !!!"}/>}
+            {insertingOrderError && <Error error={"Order did not Created Successfully yet, Please Try again Later !!!"} />}
         </div>
     )
 }
-        
-              
+

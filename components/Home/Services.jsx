@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { TiTick } from "react-icons/ti";
-import yellow_maching from "@/assets/yellow_maching.png"
+import yellow_maching from "@/public/assets/yellow_maching.png"
 const Services = (props) => {
     return (
         <section className="mb-32 text-center lg:text-left">
@@ -81,6 +81,7 @@ const Services = (props) => {
                         </div>
                         <div className="md:mb-12 lg:mb-0">
                           <Image src={yellow_maching} loading="lazy" alt="Knitting Machine"/>
+                          {/* <img src={yellow_maching} alt="" /> */}
                         </div>
                     </div>
                 </div>

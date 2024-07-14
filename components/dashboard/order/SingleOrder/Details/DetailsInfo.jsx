@@ -23,13 +23,13 @@ const DetailsInfo = ({ data }) => {
                     <h2 className="py-2 px-4">Lycra Lot : <span className="border-b py-2 px-4">{lycraLot}</span></h2>
                 </div>
                 <div className=" shadow  rounded-md  p-10">
-                    <h2 className="py-2 px-4">Poly Star Count : <span className="border-b py-2 px-4 font-extrabold">{polyStarCount}</span></h2>
-                    <h2 className="py-2 px-4">Poly Star Brand : <span className="border-b py-2 px-4">{polyStarBrand}</span></h2>
-                    <h2 className="py-2 px-4">Poly Star Lot : <span className="border-b py-2 px-4">{polyStarLot}</span></h2>
+                    <h2 className="py-2 px-4">Polyster Count : <span className="border-b py-2 px-4 font-extrabold">{polyStarCount}</span></h2>
+                    <h2 className="py-2 px-4">Polyster Brand : <span className="border-b py-2 px-4">{polyStarBrand}</span></h2>
+                    <h2 className="py-2 px-4">Polyster Lot : <span className="border-b py-2 px-4">{polyStarLot}</span></h2>
                 </div>
                 <div className=" shadow  rounded-md  p-10">
                     <h2 className="py-2 px-4">Mechine DIA : <span className="border-b py-2 px-4 font-extrabold">{mc_DIA}</span></h2>
-                    <h2 className="py-2 px-4">E DIA : <span className="border-b py-2 px-4">{e_DIA}</span></h2>
+                    <h2 className="py-2 px-4">F DIA : <span className="border-b py-2 px-4">{e_DIA}</span></h2>
                   
                 </div>
             </div>

@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import InputDropDown from "@/components/utils/InputDropDown";
 import { revalidatePath } from 'next/cache'
 import Error from "@/components/utils/Error";
+import { useGetAllDeliveryManQuery } from "@/lib/features/delivery/deliveryApi";
 
-const deliveryMen = ["Alif", "kalif", "Jalif"]
+
 const QuantityInfo = ({ id }) => {
     const { data, isLoading, isError, error, isSuccess } = useGetOnlyQuantityInfoQuery(id)
     const [createDelivery, { isLoading: deliveryLoading, isError: deliveryError, isSuccess: deliverySuccess }] = useCreateDeliveryMutation()
@@ -17,7 +18,6 @@ const QuantityInfo = ({ id }) => {
     const [role, setRole] = useState("")
     const [deliveryQuantity, setDeliveryQuantity] = useState("")
     const [deliveryMan, setDeliveryMan] = useState("")
-
 
     useEffect(() => {
 
@@ -47,11 +47,6 @@ const QuantityInfo = ({ id }) => {
 
     }
 
-    const handleInputDropdown = (e) => {
-        const val = e.target.value
-        setDeliveryMan(val)
-
-    }
     const handleSendDelivery = () => {
         const query = {
             deliveredBy: deliveryMan,
@@ -61,7 +56,7 @@ const QuantityInfo = ({ id }) => {
             from: parseFloat(id),
             status
         }
-        console.log(query)
+      
         createDelivery(query)
             .then(res => {
                 if (res.data) {
@@ -81,16 +76,7 @@ const QuantityInfo = ({ id }) => {
                 {deliveryError ? <Error data={"You can't Add More Quantity than Rest Quantity . Please Put Valid Quantity"} /> : ""}
                 <h2 className="py-2 px-4">Status  : <span className="border-b py-2 px-4">{status}</span></h2>
                 <h2 className="py-2 px-4">Total Order Quantity: <span className="border-b py-2 px-4 text-bold">{orderQuantity}</span> KG</h2>
-                <InputDropDown
-                    label={''}
-                    divclassName={'my-2'}
-                    handleInputDropdown={handleInputDropdown}
-                    className={`py-3 px-4 pe-9 block w-1/2 bg-gray-50 border rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600 `}
-                    options={deliveryMen}
-                    sectionName={'companyName'}
-                    placeholder={'Select Delivery Man'}
-                    required
-                />
+             
                 <div className="py-2 px-2">
                     <span>
                         Role Quantity :

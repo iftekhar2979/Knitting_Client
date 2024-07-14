@@ -8,51 +8,75 @@ import { useGetUserByIdQuery, useLogoutMutation } from '@/lib/features/user/user
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { removeCredentials, setCredentials } from '@/lib/features/user/userSlice';
 import { Button } from './ui/button';
+import { IoMenu } from "react-icons/io5";
 
-const Navbar = ({bg}) => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { userInfo ,path} = useAppSelector((state) => state.user);
+const Navbar = ({ bg }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(true);
+    const { userInfo, path } = useAppSelector((state) => state.user);
     const { data: userInformation, isLoading } = useGetUserByIdQuery()
     // const [path,setPath]=useState(['about', 'service', 'contact', 'login'])
     const [logout] = useLogoutMutation()
     const dispatch = useAppDispatch()
     const pathName = usePathname()
-    const router=useRouter()
+    const router = useRouter()
     const [selectedRoute, setSelectedRoute] = useState()
-
     const [user, setUser] = useState()
     const [loading, setLoading] = useState(true)
 
-    
+
     useEffect(() => {
-        setLoading(true)
+        setLoading(true);
         if (userInformation) {
-            dispatch(setCredentials(userInformation))
-            setUser(userInformation.data.name)
-            setLoading(false)
+            dispatch(setCredentials(userInformation));
+            setUser(userInformation.data.name);
+            setLoading(false);
         }
 
-    }, [userInformation])
+        let sidemenu = document.getElementsByClassName("flex flex-col h-screen hidden md:block bg-white dark:bg-gray-900 w-44 pl-8")[0];
+        if (sidemenu) {
+            if (!isMenuOpen) {
+                sidemenu.classList.add("md:hidden");
+            } else {
+                sidemenu.classList.remove("md:hidden");
+            }
+        }
+
+        // Cleanup function
+        return () => {
+            if (sidemenu) {
+                sidemenu.classList.remove("md:hidden");
+            }
+        };
+    }, [userInformation, isMenuOpen]);
+
     useEffect(() => {
         let pathIndex = path.indexOf(pathName.split("/")[1])
         setSelectedRoute(pathName.split('/')[1])
     }, [pathName])
 
-const handleLogOut=()=>{
+    const handleSideBar = () => {
+        setIsMenuOpen(!isMenuOpen)
+    }
+    const handleLogOut = () => {
         logout().then(res => {
-          dispatch(removeCredentials())
-          router.push('/')
+            dispatch(removeCredentials())
+            router.push('/')
         })
-}
-// console.log(selectedRoute)
+    }
+
     return (
 
         <nav className={`${bg} relative`}>
             <div className="container flex flex-wrap justify-between items-center mx-auto shadow-sm py-4">
-                <Link href={"/"} className="flex items-center">
-                    {/* <Image src={tertiary} alt='Tertiary Color Knit '/> */}
-                    <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white text-white">Tertiary Colour Knit Fabrics</span>
-                </Link>
+                <div className='flex items-center '>
+                    <IoMenu size={24} color='white' className='' onClick={handleSideBar} />
+                    {/* <IoMenu size={20} color='white'/> */}
+                    <Link href={"/"} className="flex items-center ml-2">
+                        {/* <Image src={tertiary} alt='Tertiary Color Knit '/> */}
+                        <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white text-white">Tertiary Colour Knit Fabrics</span>
+                    </Link>
+
+                </div>
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg lg:hidden focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:focus:ring-gray-600"
@@ -75,7 +99,7 @@ const handleLogOut=()=>{
                                 <li key={i}><Link href={`/${item}`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${selectedRoute === item && "text-white"}`}>{item.toUpperCase()}</Link></li>
                             )
                         })}
-                      
+
                     </ul>
                 </div>
                 {/* Desktop Menu */}
@@ -87,8 +111,8 @@ const handleLogOut=()=>{
                                 <li key={i}><Link href={`/${item}`} className={` hover:px-2 hover:text-white hover:border-b cursor-pointer py-4 ${selectedRoute === item && "text-white border-b"}`}>{item.toUpperCase()}</Link></li>
                             )
                         })}
-                        { 
-                        userInfo ? <Button onClick={handleLogOut}>Log Out</Button> : ""
+                        {
+                            userInfo ? <Button onClick={handleLogOut}>Log Out</Button> : ""
                         }
                     </ul>
                 </div>

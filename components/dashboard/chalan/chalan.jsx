@@ -1,10 +1,13 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet, Font } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Font,Image } from '@react-pdf/renderer';
 import { useAppSelector } from '@/lib/hooks';
 import { format } from 'date-fns';
-
+import { companyInformation } from '@/contents/companyInformation';
+// import {logo} from "../../../public/assets/logo.jpg"
 // Create styles
 const styles = StyleSheet.create({
+
+
 
   page: { fontFamily: "Times-Roman" },
   companyName: { fontFamily: "Times-Roman", textAlign: "center", fontSize: 35, marginTop: 5, fontWeight: 'bold' },
@@ -30,9 +33,12 @@ const Chalan = ({ id, data }) => {
 
       <Document>
         <Page size="A4" style={styles.page}>
-          <Text style={styles.companyName}>Tertiary Colour Knit Fabrics</Text>
-          <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>Near Rubel Pump,Rajabar,Konabari, Gazipur</Text>
-          <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>100% Export Oriented Knit Fabrics Manufacture & Sufflier</Text>
+          <View style={{display:"flex", justifyContent:"center"}}>
+            <Image src="https://i.postimg.cc/FKc8pPqQ/tertiary.jpg" style={{width:"58px",height:"68px" ,paddingTop:"7px" }}/>
+          <Text style={styles.companyName}>{companyInformation?.name}</Text>
+          </View>
+          <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.location}</Text>
+          <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.intro}</Text>
           <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>Mobile : 01711-344139, 01716-019843 , Email:kamrul@tertiaryckf.com</Text>
           <View style={styles.section}>
             <Text style={styles.chalanHeading}>C</Text>
@@ -103,7 +109,7 @@ const Chalan = ({ id, data }) => {
               {order?.details?.polyStarBrand ? <Text style={styles.descOfGoods}>Polyster Brand : {order?.details?.polyStarBrand}</Text> : ""}
               {order?.details?.polyStarLot ? <Text style={styles.descOfGoods}>Polyster Lot : {order?.details?.polyStarLot}</Text> : ""}
               {order?.details?.mc_DIA ? <Text style={styles.descOfGoods}>M/C DIA : {order?.details?.mc_DIA}</Text> : ""}
-              {order?.details?.e_DIA ? <Text style={styles.descOfGoods}>E DIA : {order?.details?.e_DIA}</Text> : ""}
+              {order?.details?.e_DIA ? <Text style={styles.descOfGoods}>F DIA : {order?.details?.e_DIA}</Text> : ""}
               <Text style={{textAlign:'left',height:"5%",width:240,position:'absolute',paddingTop:7,top:400,fontSize:12,textAlign:'center',borderTop:"1px solid black"}}>Total</Text>
             </View>
             <View style={{ width: "7%", height: "100%", borderRight: "1px solid black" }}>

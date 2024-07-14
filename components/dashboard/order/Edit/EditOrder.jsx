@@ -41,15 +41,11 @@ const FormSchema = z.object({
         message: "Order Number must be at least 5 characters"
     }),
 
-    invoiceNumber: z.string().min(5, {
-        message: "Order Number must be at least 5 characters"
-    }),
-    boNumber: z.string(),
-    poNumber: z.string(),
-    pmNumber: z.string(),
-    season: z.string().min(2, {
-        message: "Order Number must be at least 2 characters"
-    }),
+    programNumber: z.string(),
+    jobNumber: z.string(),
+    bookingNumber: z.string(),
+    sbNumber: z.string(),
+    season: z.string(),
     status: z.string()
 
 })
@@ -73,30 +69,30 @@ const info = [
     },
     {
         id: 106,
-        name: 'pmNumber',
-        header: "P.M Number",
-        placeholder: "P.M Number...",
+        name: 'programNumber',
+        header: "Program No",
+        placeholder: "Program No...",
         type: "String"
     },
     {
         id: 107,
-        name: 'poNumber',
-        header: "P.O Number",
-        placeholder: "P.O Number...",
+        name: 'jobNumber',
+        header: "Job No",
+        placeholder: "Job No...",
         type: "String"
     },
     {
         id: 108,
-        name: 'boNumber',
-        header: "B.O Number",
-        placeholder: "B.O Number...",
+        name: 'bookingNumber',
+        header: "Booking No",
+        placeholder: "Booking No...",
         type: "String"
     },
     {
         id: 109,
-        name: 'invoiceNumber',
-        header: "Invoice Number",
-        placeholder: "Invoice Number...",
+        name: 'sbNumber',
+        header: "SB No",
+        placeholder: "SB No...",
         type: "String"
     },
     
@@ -116,11 +112,11 @@ const { data: product, isLoading: productLoading, error: productError, isError: 
         resolver: zodResolver(FormSchema),
         defaultValues: {
             orderNumber:orderInfo?.orderNumber,
-            invoiceNumber: orderInfo?.invoiceNumber,
-            boNumber: orderInfo?.boNumber,
-            poNumber: orderInfo?.poNumber,
-            pmNumber: orderInfo?.pmNumber,
-            season: orderInfo?.invoiceNumber,
+            sbNumber: orderInfo?.sbNumber,
+            bookingNumber: orderInfo?.bookingNumber,
+            programNumber: orderInfo?.programNumber,
+            jobNumber: orderInfo?.jobNumber,
+            season: orderInfo?.season,
             targetDate: orderInfo?.targetDate,
             fabricsType: orderInfo?.fabricsType,
             status: orderInfo?.status,
@@ -161,6 +157,7 @@ const { data: product, isLoading: productLoading, error: productError, isError: 
     async function onSubmit(data) {
         const {companyId, companyName}=companyInfo
         const body = { companyId,companyName, ...buyerInfo, ...fabricsInfo, orderQuantity: parseFloat(quantity),restQuantity:parseFloat(quantity), targetDate: date, ...data }
+        console.log("body",body)
         editOrder({id,body})
     }
 

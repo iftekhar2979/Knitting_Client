@@ -97,29 +97,29 @@ const info = [
   {
     id: 207,
     name: 'polyStarCount',
-    header: "Polystar Count",
-    placeholder: "Polystar Count...",
+    header: "Polyster Count",
+    placeholder: "Polyster Count...",
     type: "String"
   },
   {
     id: 208,
     name: 'polyStarBrand',
-    header: "Polystar Brand",
-    placeholder: "Polystar Brand...",
+    header: "Polyster Brand",
+    placeholder: "Polyster Brand...",
     type: "String"
   },
   {
     id: 209,
     name: 'polyStarLot',
-    header: "Polystar Lot",
-    placeholder: "Polystar Lot...",
+    header: "Polyster Lot",
+    placeholder: "Polyster Lot...",
     type: "String"
   },
   {
     id: 210,
     name: 'e_DIA',
-    header: "E DIA",
-    placeholder: "E DIA...",
+    header: "F DIA",
+    placeholder: "F DIA...",
     type: "String"
   },
   {
@@ -147,7 +147,6 @@ const info = [
 ]
 
 export function OrderDetails({id}) {
-console.log(id)
   const [addOrderDetails,{isLoading,isError,error}]=useAddOrderDetailsMutation(id)
   
 

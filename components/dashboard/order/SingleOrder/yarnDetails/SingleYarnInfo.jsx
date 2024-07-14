@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -65,9 +66,9 @@ const SingleYarnInfo = ({ item }) => {
                     <Input type="number" placeholder="Received Quantity.." defaultValue={dynamicRestQuantity} className="inline" onChange={(e) => handleDelivery(e)} />
                   </div>
                 </div>
-                <DialogFooter>
+                <DialogClose asChild>
                   <Button type="submit" onClick={handleSave}>Save</Button>
-                </DialogFooter>
+                  </DialogClose>
               </DialogContent>
             </Dialog>
             :
