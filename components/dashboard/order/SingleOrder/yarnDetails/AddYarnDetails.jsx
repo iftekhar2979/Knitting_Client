@@ -33,15 +33,15 @@ const info = [
     {
         id: 221,
         name: 'bookingQuantity',
-        header: "Booking Quantity",
-        placeholder: "Booking Quantity...",
+        header: "Yarn Receiving Quantity",
+        placeholder: "Yarn Receiving Quantity...",
         type: "number"
     },
     {
         id: 222,
         name: 'yarn',
-        header: "Yarn",
-        placeholder: "Yarn...",
+        header: "Yarn Type",
+        placeholder: "Yarn Type...",
         type: "text"
     },
 
@@ -51,6 +51,7 @@ const AddYarnDetails = ({ id }) => {
     const { data, isLoading, error, isError } = useGetCompanyQuery()
     const [addYarnDetails] = useAddYarnDetailsMutation()
     const [companyInfo, setCompanyInfo] = useState()
+    const [descriptionOfYarn,setDescriptionOfYarn]=useState("")
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -72,10 +73,12 @@ const AddYarnDetails = ({ id }) => {
     async function onSubmit(data) {
         const { companyId } = companyInfo
         const { bookingQuantity, yarn } = data
-        const body = { companyId, bookingQuantity: parseFloat(bookingQuantity), orderId: parseFloat(id), restQuantity: parseFloat(bookingQuantity), yarn }
+        const body = { companyId, ReceivingQuantity: parseFloat(bookingQuantity),descriptionOfYarn, orderId: parseFloat(id), restQuantity: parseFloat(bookingQuantity), yarnType:yarn }
         addYarnDetails(body)
+    //    console.log(body)
         form.reset()
         setCompanyInfo({})
+        setDescriptionOfYarn("")
     }
     return (
         <div className="w-full my-4">
@@ -114,6 +117,7 @@ const AddYarnDetails = ({ id }) => {
                                 )
                             })
                         }
+                        <textarea className="border my-4 w-full h-24" placeholder="Description Of Yarn" onChange={(e)=>setDescriptionOfYarn(e.target.value)}/>
                         <Button type="submit" className="my-4 mx-auto">Submit</Button>
                     </form>
                 </Form>

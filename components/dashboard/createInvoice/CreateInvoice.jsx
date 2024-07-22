@@ -79,6 +79,7 @@ const CreateInvoice = (props) => {
         if (billingWay === "Proforma Invoice") {
             createProformaInvoice(piValue)
         } else {
+          
             createBillInfromation(piValue)
         }
         dispatch(clearingSelectedValue())

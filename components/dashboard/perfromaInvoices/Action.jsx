@@ -15,12 +15,10 @@ import { Button } from "@/components/ui/button";
 import { BsThreeDots } from "react-icons/bs";
 import DeleteModal from "@/components/dashboard/company/Modal/DeleteModal";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { useDeleteSingleProformaInvoiceMutation } from "@/lib/features/Invoice/invoiceApi";
+import { useDeleteSingleBillMutation } from "@/lib/features/Invoice/invoiceApi";
 const Action = ({ id, actionName }) => {
     const [open, setOpen] = useState(false)
-    const [deleteSingleProformaInvoice,{isLoading,isError}] = useDeleteSingleProformaInvoiceMutation(id)
- 
-   
+    const [deleteSingleBill,{isLoading,isError}] = useDeleteSingleBillMutation(id)
     return (
         <div >   <Dialog open={open} onOpenChange={setOpen}>
             <Popover>
@@ -32,14 +30,11 @@ const Action = ({ id, actionName }) => {
                     <DialogTrigger>  <div className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer"><MdDelete size={24} color={"red"} className="cursor-pointer" /> <span className="mx-2">Delete</span></div></DialogTrigger>
                 </PopoverContent>
             </Popover>
-
-
             {
                 actionName === 'Delete' &&
                 <>
 
-                    <DeleteModal title={"Do You Want To Remove Chalan"} property={id} id={id} setOpen={setOpen} isLoading={isLoading}  deleteQueryFn={deleteSingleProformaInvoice}/>
-
+                    <DeleteModal title={"Do You Want To Remove Chalan"} property={id} id={id} setOpen={setOpen} isLoading={isLoading}  deleteQueryFn={deleteSingleBill}/>
                 </>
             }
         </Dialog>

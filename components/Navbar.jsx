@@ -32,7 +32,7 @@ const Navbar = ({ bg }) => {
             setLoading(false);
         }
 
-        let sidemenu = document.getElementsByClassName("flex flex-col h-screen hidden md:block bg-white dark:bg-gray-900 w-44 pl-8")[0];
+        let sidemenu = document.getElementsByClassName("flex flex-col h-screen   hidden md:block bg-white dark:bg-gray-900 desktop-sidebar")[0];
         if (sidemenu) {
             if (!isMenuOpen) {
                 sidemenu.classList.add("md:hidden");
@@ -66,14 +66,14 @@ const Navbar = ({ bg }) => {
 
     return (
 
-        <nav className={`${bg} relative`}>
-            <div className="container flex flex-wrap justify-between items-center mx-auto shadow-sm py-4">
+        <nav className={`${bg} relative bg-white`}>
+            <div className="container flex flex-wrap justify-between items-center mx-auto shadow-sm text-black">
                 <div className='flex items-center '>
-                    <IoMenu size={24} color='white' className='' onClick={handleSideBar} />
+                    <IoMenu size={24} color='dark' className='' onClick={handleSideBar} />
                     {/* <IoMenu size={20} color='white'/> */}
                     <Link href={"/"} className="flex items-center ml-2">
                         {/* <Image src={tertiary} alt='Tertiary Color Knit '/> */}
-                        <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white text-white">Tertiary Colour Knit Fabrics</span>
+                        <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white text-inactive">Tertiary Colour Knit Fabrics</span>
                     </Link>
 
                 </div>
@@ -96,7 +96,7 @@ const Navbar = ({ bg }) => {
                         <li ><Link href={`/`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${!selectedRoute && "text-white border-b"}`}>HOME</Link></li>
                         {path?.map((item, i) => {
                             return (
-                                <li key={i}><Link href={`/${item}`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${selectedRoute === item && "text-white"}`}>{item.toUpperCase()}</Link></li>
+                                <li key={i}><Link href={`/${item}`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${selectedRoute === item && "text-black"}`}>{item.toUpperCase()}</Link></li>
                             )
                         })}
 
@@ -104,15 +104,15 @@ const Navbar = ({ bg }) => {
                 </div>
                 {/* Desktop Menu */}
                 <div className="hidden lg:block ">
-                    <ul className="flex flex-row items-center justify-center py-2 space-x-4 text-white ">
-                        <li ><Link href={`/`} className={` hover:px-2 hover:text-white hover:border-b cursor-pointer py-4 ${!selectedRoute && "text-white border-b"}`}>HOME</Link></li>
+                    <ul className="flex flex-row items-center justify-center py-2 space-x-4 text-inactive ">
+                        <li ><Link href={`/`} className={` hover:px-2 hover:text-black hover:border-b cursor-pointer py-4 ${!selectedRoute && "text-active border-b"}`}>HOME</Link></li>
                         {path?.map((item, i) => {
                             return (
-                                <li key={i}><Link href={`/${item}`} className={` hover:px-2 hover:text-white hover:border-b cursor-pointer py-4 ${selectedRoute === item && "text-white border-b"}`}>{item.toUpperCase()}</Link></li>
+                                <li key={i}><Link href={`/${item}`} className={` hover:px-2  hover:border-b cursor-pointer py-4 ${selectedRoute === item && "text-inactive border-emerald-500 border-b"}`}>{item.toUpperCase()}</Link></li>
                             )
                         })}
                         {
-                            userInfo ? <Button onClick={handleLogOut}>Log Out</Button> : ""
+                            userInfo ? <Button onClick={handleLogOut} className="bg-active-color">Log Out</Button> : ""
                         }
                     </ul>
                 </div>

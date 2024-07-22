@@ -12,14 +12,13 @@ const ModalTable = ({ detail ,billingWays}) => {
     const [description, setDescription] = useState('')
     const { selectedValues, selectedCompany } = useAppSelector(state => state.invoiceSlice)
     const { cleared, totalQuantity, totalAmount } = useAppSelector(state => state.pI)
-    const { _sum: { deliveredQuantity }, companyId, fabricsName, buyerId, fabricsId } = detail
+    const { deliveredQuantity , companyId, fabricsName, buyerId,orderId, fabricsId } = detail
     const dispatch = useAppDispatch()
-
+console.log(orderId)
  
     const handleChange = (e) => {
         setValue(parseFloat(e.target.value))
     }
-    // let count = 0
     const amount = isNaN(deliveredQuantity * value) ? 0 : (deliveredQuantity * value)
     useEffect(() => {
         const object = {
@@ -38,6 +37,7 @@ const ModalTable = ({ detail ,billingWays}) => {
             amount: parseFloat(amount.toFixed(4)),
             invoiceQuantity: totalQuantity,
             invoiceAmount: totalAmount,
+            orderId:Number(orderId.slice(0,1)),
             billingWay:billingWays
         }
         dispatch(addPi(object))

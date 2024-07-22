@@ -72,7 +72,7 @@ const AddProduct = (props) => {
             )
           })
         }
-        <Button type="submit" className="">{isLoading ? "Submitting" :"Submit"}</Button>
+        <Button type="submit" className="bg-active-color">{isLoading ? "Submitting" :"Submit"}</Button>
       </form>
     </Form>
     </section>

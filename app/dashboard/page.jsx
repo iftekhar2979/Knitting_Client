@@ -1,13 +1,13 @@
 // import Counter from "@/components/counter/counter";
 
+import Dashboard from "@/components/dashboard/dashboard/Dashboard";
+
 
 
 const dashboard = (props) => {
 
     return (
-        <div>
-          <h2>We are Working On Dashboard</h2>  
-        </div>
+        <Dashboard/>
 
     )
 };

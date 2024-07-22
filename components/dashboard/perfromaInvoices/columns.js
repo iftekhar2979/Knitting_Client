@@ -182,7 +182,7 @@ export const columns = [
                     className={"flex"}
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Total Quantity
+                    Delivered Quantity
                     <RiArrowUpDownFill className=" h-4 w-4" size={22} />
                 </p>
             )

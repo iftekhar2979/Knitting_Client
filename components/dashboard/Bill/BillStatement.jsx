@@ -17,7 +17,6 @@ const BillStatement = ({ id }) => {
         // Safely attempt to get the elements
         const nav = document.getElementsByClassName("nav-back relative")[0];
         const footer = document.getElementsByClassName("px-4 py-8 dark:bg-gray-100 dark:text-gray-600")[0];
-
         // Check if elements exist before trying to modify them
         if (block) {
             if (nav) nav.classList.add("hidden");

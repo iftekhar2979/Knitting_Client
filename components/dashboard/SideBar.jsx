@@ -47,42 +47,41 @@ const SideBar = () => {
     useEffect(() => {
         let currentRoute=pathName.split("/")[2]
         setSelectedRoute(currentRoute);
-       
     }, [pathName]);
     return (
-        <div ref={sidebarRef} className={`flex flex-col h-screen   hidden md:block bg-white dark:bg-gray-900 ${isSidebarOpen ? "w-44 pl-8" : "w-32 pl-4"}`}>
+        <div ref={sidebarRef} className={`flex flex-col h-screen   hidden md:block bg-white dark:bg-gray-900 ${isSidebarOpen ? "desktop-sidebar" : "w-32 pl-4"}`}>
             <div className="flex flex-col justify-between flex-1 mt-6">
-                <nav className="-mx-3 space-y-6">
+                <nav className=" space-y-2">
                     <div className="space-y-3">
-                        <label className={`px-3 text-xs text-black uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Analytics</label>
+                        <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Analytics</label>
                         <Link href={`/dashboard`}>
-                            <div  className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${!selectedRoute && "bg-purple-700 text-white rounded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`}>
+                            <div  className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${!selectedRoute && "bg-active-color text-white rounded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`}>
                                 <MdDashboardCustomize />
                                 {isSidebarOpen && <span className="mx-2 text-sm font-medium">Dashboard</span>}
                             </div>
                         </Link>
                     </div>
                     <div className="space-y-3">
-                        <label className={`px-3 text-xs text-black font-bold uppercase dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Company</label>
+                        <label className={`px-3 text-xs text-inactive font-bold uppercase dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Company</label>
                         {companySection.map((item) => (
                             <SingleLink key={item.id} item={item} selectedRoute={selectedRoute}  isSidebarOpen={isSidebarOpen} />
                         ))}
                     </div>
                     <div className="space-y-3">
-                        <label className={`px-3 text-xs text-black uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Product</label>
+                        <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Product</label>
                         {productSection.map((item) => (
                             <SingleLink key={item.id} item={item} selectedRoute={selectedRoute}  isSidebarOpen={isSidebarOpen} />
                         ))}
                     </div>
                     <div className="space-y-3">
-                        <label className={`px-3 text-xs text-black uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Orders</label>
+                        <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Orders</label>
                         {orderSection.map((item) => (
                             <SingleLink key={item.id} item={item} selectedRoute={selectedRoute}  isSidebarOpen={isSidebarOpen} />
                         ))}
                     </div>
                     {userInfo?.data?.isAdmin &&
                         <div className="space-y-3">
-                            <label className={`px-3 text-xs text-black uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Invoice</label>
+                            <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Invoice</label>
                             {billSection.map((item) => (
                                 <SingleLink key={item.id} item={item} selectedRoute={selectedRoute}  isSidebarOpen={isSidebarOpen} />
                             ))}

@@ -46,23 +46,23 @@ const Navbar = ({ id }) => {
                 orderRoutes?.map(item => {
                     if(item.routeName === ""){
                         return (
-                            <Link href={`/dashboard/order/${id}`} key={item.id} className={`hover:bg-gray-200 hover:text-black  ${!selectedRoute && "bg-gray-200 text-black"} `}><MenubarMenu >
+                            <Link href={`/dashboard/order/${id}`} key={item.id} className={`hover:bg-gray-200 text-inactive  ${!selectedRoute && "bg-gray-200 text-inactive"} `}><MenubarMenu >
                             <MenubarTrigger>{item.value}</MenubarTrigger>
                         </MenubarMenu></Link>
                         )
                     }
                     return (
-                        <Link href={`/dashboard/order/${id}/${item.routeName}`} key={item.id} className={`hover:bg-gray-200 hover:text-black  ${item.routeName === selectedRoute && "bg-gray-200 text-black"}`}><MenubarMenu >
+                        <Link href={`/dashboard/order/${id}/${item.routeName}`} key={item.id} className={`hover:bg-gray-200 text-inactive  ${item.routeName === selectedRoute && "bg-gray-200 text-inactive"}`}><MenubarMenu >
                             <MenubarTrigger>{item.value}</MenubarTrigger>
                         </MenubarMenu></Link>
                     )
                 })
             }
 
-            {/* <Link href={`/dashboard/order/${id}/details`} className={`hover:bg-gray-200 hover:text-black py-4`}><MenubarMenu >
+            {/* <Link href={`/dashboard/order/${id}/details`} className={`hover:bg-gray-200 hover:text-inactive py-4`}><MenubarMenu >
                 <MenubarTrigger>Details</MenubarTrigger>
             </MenubarMenu></Link>
-            <Link href={`/dashboard/order/${id}/yarnDetails`} className={`hover:bg-gray-200 hover:text-black py-4`}> <MenubarMenu >
+            <Link href={`/dashboard/order/${id}/yarnDetails`} className={`hover:bg-gray-200 hover:text-inactive py-4`}> <MenubarMenu >
                 <MenubarTrigger>Yarn Details</MenubarTrigger>
             </MenubarMenu></Link>
             <MenubarMenu className={`hover:bg-purple-700 py-4`}>
