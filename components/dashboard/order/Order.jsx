@@ -18,14 +18,14 @@ const Order = ({ id }) => {
     if (isError) {
         return <Error data={"Sorry , there is something wrong with server"} />
     }
-    const { companyName, company = {},status, buyerName, targetDate, orderNumber, programNumber, jobNumber, season, bookingNumber, sbNumber, fabricsName, orderedDate } = data
+    const { companyName, company = {}, status, buyerName, targetDate, orderNumber, programNumber, jobNumber, season, bookingNumber, sbNumber, fabricsName, orderedDate } = data
     return (
         <section>
             <div className='flex justify-between py-4 text-inactive'>
                 <div>
 
-                <h2 className='font-bold text-xl'>Order ID : {orderNumber}</h2>
-                <h2 className="">Status  : <span className="border-b ">{status}</span></h2>
+                    <h2 className='font-bold text-xl'>Order ID : {orderNumber}</h2>
+                    <h2 className="">Status  : <span className="border-b ">{status}</span></h2>
                 </div>
                 <div className=''>
 
@@ -35,7 +35,7 @@ const Order = ({ id }) => {
 
             </div>
             <div className="flex flex-col md:flex-row font-mono justify-between  ">
-                <div className='border w-fit px-4'>
+                <div className='border w-full md:w-[35%] px-4 md:px-4 my-4'>
 
                     <div className='flex items-center py-4 border-b' >
                         <MdBusinessCenter size={40} />
@@ -44,7 +44,7 @@ const Order = ({ id }) => {
                     <div>
                         <div className='flex items-center py-4 '>
                             <div className='flex p-2'>
-                                <MdLocationPin size={20}  />
+                                <MdLocationPin size={20} />
                                 <h2 className=" font-semibold text-lg text-inactive"> {company?.location}</h2>
                             </div>
                             <div className='flex p-2 px-2'>
@@ -56,46 +56,45 @@ const Order = ({ id }) => {
                     </div>
 
                 </div>
-                <div className=' flex flex-col md:flex-row w-fit justify-between'>
-                    <div className='px-6 flex flex-row md:flex-col justify-between items-center md:justify-center '>
-                        <div className=''>
+                <div className=' grid  grid-cols-2  gap-2 md:grid-cols-4  '>
+                    <div className=' grid grid-rows-2 px-2 m-4 md:m-2  '>
+                        <div className='h-[100%] flex flex-col  '>
                             <h2 className="">Creation Date </h2>
                             <p> <span className="text-inactive">{format(orderedDate, "PP")}</span></p>
                         </div>
-                        <div className=''>
+                        <div className='h-[100%] flex flex-col  '>
                             <h2 className="">Fabric Type</h2>
-
                             <p> <span className="text-inactive">{fabricsName}</span></p>
                         </div>
 
                     </div>
-                    <div className='px-6 flex flex-row md:flex-col justify-between md:justify-center '>
-                        <div className=''>
+                    <div className='grid grid-rows-2 px-2 m-4 md:m-2  '>
+                        <div className='h-[100%] flex flex-col  '>
                             <h2 className="">Season</h2>
                             <p> <span className="text-inactive">{season}</span></p>
                         </div>
-                        <div className=''>
+                        <div className='h-[100%] flex flex-col  '>
                             <h2 className=""> Target Date</h2>
                             <p> <span className="text-inactive">{format(targetDate, "PP")}</span></p>
                         </div>
                     </div>
-                    <div className='px-6 flex flex-row md:flex-col justify-between md:justify-center '>
-                        <div className=''>
+                    <div className='grid grid-rows-2 px-2 m-4 md:m-2  '>
+                        <div className='h-[100%] flex flex-col  '>
                             <h2 className="">SB No.</h2>
 
                             <p> <span className="text-inactive">{sbNumber ? sbNumber : "_________"}</span></p>
                         </div>
-                        <div className=''>
+                        <div className='h-[100%] flex flex-col  '>
                             <h2 className="">Job No.</h2>
-                            <p> <span className="text-inactive">{jobNumber ? sbNumber : "_________"}</span></p>
+                            <p> <span className="text-inactive">{jobNumber ? jobNumber : "_________"}</span></p>
                         </div>
                     </div>
-                    <div className='px-6 flex flex-row md:flex-col justify-between md:justify-center '>
-                        <div className=''>
+                    <div className='grid grid-rows-2 px-2 m-4 md:m-2 '>
+                        <div className='h-[100%] flex flex-col  '>
                             <h2 className="">Season</h2>
                             <p> <span className="text-inactive">{programNumber ? programNumber : "_________"}</span></p>
                         </div>
-                        <div className=''>
+                        <div className='h-[100%] flex flex-col  '>
                             <h2 className="">Booking No.</h2>
 
                             <p> <span className="text-inactive">{bookingNumber ? bookingNumber : "_________"}</span></p>

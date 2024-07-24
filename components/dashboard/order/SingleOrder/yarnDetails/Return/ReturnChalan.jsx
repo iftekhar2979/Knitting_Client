@@ -75,7 +75,7 @@ const ReturnChalan = ({ id,anotherInfo, data }) => {
             </View>
             <View style={{ width: "60%", height: "100%", borderRight: "1px solid black" }}>
               <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, borderBottom: "1px solid black", paddingTop: 4 }}>Description of Yarn</Text>
-              <Text style={{ textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4, marginTop: 200, textAlign: 'center' }}>{anotherInfo?.descriptionOfYarn} </Text>
+              <Text style={{ textAlign: 'left',  fontSize: 12, padding: 10, }}>{anotherInfo?.descriptionOfYarn} </Text>
               <Text style={{textAlign:'left',height:"5%",width:"100%",position:'absolute',paddingTop:7,top:400,fontSize:12,textOverflow:"hidden",textAlign:'center',borderTop:"1px solid black"}}>Total</Text>
             </View>
             <View style={{ width: "10%", height: "100%", borderRight: "1px solid black" }}>

@@ -78,9 +78,9 @@ const QuantityInfo = ({ id }) => {
     return (
         <div>
 
-            <div className="my-2  rounded-md shadow-sm p-10 font-mono flex justify-center flex-col">
+            <div className="my-2  rounded-md shadow-sm  font-mono flex justify-center flex-col">
                 {deliveryError ? <Error data={"You can't Add More Quantity than Rest Quantity . Please Put Valid Quantity"} /> : ""}
-                <div className=' flex flex-col md:flex-row w-fit justify-between'>
+                <div className=' grid grid-cols-1 md:grid-cols-4 gap-4'>
 
                     <div className='px-6 flex flex-row md:flex-col justify-between md:justify-center '>
                         <div className='my-2 h-16'>

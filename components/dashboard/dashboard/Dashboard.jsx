@@ -10,7 +10,7 @@ import { MdArrowDownward } from "react-icons/md";
 const Dashboard = (props) => {
     return (
         <section className="px-4">
-            <div className="flex items-center justify-between my-6  w-[60%]">
+            <div className="flex items-center justify-between my-6 w-full md:w-[60%] ">
                 <h2 className=" font-bold text-xl ">Overview</h2>
                 <div className="px-4 flex items-center text-sm" >
                     <span className="mx-2">All Time</span>
@@ -18,7 +18,7 @@ const Dashboard = (props) => {
                 </div>
 
             </div>
-            <div className="shadow-sm p-6 border-rad-2 bg-white w-[60%] ">
+            <div className="shadow-sm p-6 border-rad-2 bg-white w-full md:w-[60%] ">
                 <div className="border p-6 flex justify-between  border-rad-2 bg-inactive">
                     <div className="border w-fit p-4 bg-white border-rad px-2 shadow-sm ">
                         <div className="flex items-center">
@@ -46,7 +46,7 @@ const Dashboard = (props) => {
 
                 <h1 className=" font-bold text-xl text-center my-4">Most Popular</h1>
                 <hr />
-                <div className="flex justify-around p-4 border-rad-2 my-4 bg-inactive">
+                <div className="flex justify-around p-4 border-rad-2 my-4 bg-inactive shadow-md">
                     <div className="bg-white border-rad p-4">
                         <h2 className=" font-bold text-xl py-2  "> Companies</h2>
                         <ol>
