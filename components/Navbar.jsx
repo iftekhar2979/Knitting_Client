@@ -6,24 +6,35 @@ import React, { useEffect, useState } from 'react';
 import '../app/globals.css'
 import { useGetUserByIdQuery, useLogoutMutation } from '@/lib/features/user/userApiSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { removeCredentials, setCredentials } from '@/lib/features/user/userSlice';
+import { removeCredentials, setCredentials, setNotification } from '@/lib/features/user/userSlice';
 import { Button } from './ui/button';
 import { IoMenu } from "react-icons/io5";
+import socket from '@/socketService';
+import Notifications from './ui/Notifications';
+// import Avatar from './Navbar/Avatar';
 
 const Navbar = ({ bg }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(true);
-    const { userInfo, path } = useAppSelector((state) => state.user);
+    const { userInfo, path,notify } = useAppSelector((state) => state.user);
     const { data: userInformation, isLoading } = useGetUserByIdQuery()
-    // const [path,setPath]=useState(['about', 'service', 'contact', 'login'])
-    const [logout] = useLogoutMutation()
+    
     const dispatch = useAppDispatch()
     const pathName = usePathname()
-    const router = useRouter()
     const [selectedRoute, setSelectedRoute] = useState()
     const [user, setUser] = useState()
     const [loading, setLoading] = useState(true)
 
-
+    useEffect(() => {
+        // Listen for new orders
+        socket.on('notification', (newOrder) => {
+          dispatch(setNotification())
+          
+        });
+        // Clean up the effect
+        return () => {
+            socket.off('notification');
+        };
+    }, []);
     useEffect(() => {
         setLoading(true);
         if (userInformation) {
@@ -31,7 +42,6 @@ const Navbar = ({ bg }) => {
             setUser(userInformation.data.name);
             setLoading(false);
         }
-
         let sidemenu = document.getElementsByClassName("flex flex-col h-screen   hidden md:block bg-white dark:bg-gray-900 desktop-sidebar")[0];
         if (sidemenu) {
             if (!isMenuOpen) {
@@ -40,7 +50,6 @@ const Navbar = ({ bg }) => {
                 sidemenu.classList.remove("md:hidden");
             }
         }
-
         // Cleanup function
         return () => {
             if (sidemenu) {
@@ -57,19 +66,14 @@ const Navbar = ({ bg }) => {
     const handleSideBar = () => {
         setIsMenuOpen(!isMenuOpen)
     }
-    const handleLogOut = () => {
-        logout().then(res => {
-            dispatch(removeCredentials())
-            router.push('/')
-        })
-    }
+// console.log(userInfo?.data?.id)
 
     return (
 
         <nav className={`${bg} relative bg-white`}>
             <div className="container flex flex-wrap justify-between items-center mx-auto shadow-sm text-black">
                 <div className='flex items-center '>
-                    <IoMenu size={24} color='dark' className='' onClick={handleSideBar} />
+                    <IoMenu size={24} color='dark' className='hover:bg-gray-300 cursor-pointer  hover:rounded-xl' onClick={handleSideBar} />
                     {/* <IoMenu size={20} color='white'/> */}
                     <Link href={"/"} className="flex items-center ml-2">
                         {/* <Image src={tertiary} alt='Tertiary Color Knit '/> */}
@@ -111,9 +115,10 @@ const Navbar = ({ bg }) => {
                                 <li key={i}><Link href={`/${item}`} className={` hover:px-2  hover:border-b cursor-pointer py-4 ${selectedRoute === item && "text-inactive border-emerald-500 border-b"}`}>{item.toUpperCase()}</Link></li>
                             )
                         })}
-                        {
-                            userInfo ? <Button onClick={handleLogOut} className="bg-active-color">Log Out</Button> : ""
-                        }
+                         
+                         {   userInfo ? <Notifications user={userInfo?.data?.id}/> : "" }
+                         
+                     
                     </ul>
                 </div>
             </div>

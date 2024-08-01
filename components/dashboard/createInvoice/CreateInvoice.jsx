@@ -47,6 +47,7 @@ const tableHeadings = [
         heading: "Total Amount (USD)"
     }
 ];
+
 let billingSystem = ["Proforma Invoice", "Bill"]
 const CreateInvoice = (props) => {
     const { data, isLoading, isError, error } = useGetInvoiceOrdersQuery()
@@ -103,10 +104,10 @@ const CreateInvoice = (props) => {
                                         :
                                         <>
                                             <DialogHeader>
-                                                <DialogTitle> Do You Want to Create PI for Order : {selectedValues.join(", ")}</DialogTitle>
+                                                <DialogTitle> Do You Want to Create <span className="font-bold text-purple-700/75">{billingWay} </span>for Order : {selectedValues.join(", ")}</DialogTitle>
                                             </DialogHeader>
                                             <Table tableHeadings={tableHeadings} >
-                                                {piOrders?.map((item, index) => <>
+                                                { piOrders?.map((item, index) => <>
                                                     <ModalTable key={index} detail={item} billingWays={billingWay} />
                                                 </>)}
                                                 <tr>

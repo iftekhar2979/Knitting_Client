@@ -261,7 +261,7 @@ export const columns = [
             )
         },
         cell: ({ row }) => {
-            return <div >{format(row.original.createdAt, 'PP')}</div>
+            return <div >{format(row?.original?.createdAt, 'PP')}</div>
         }
     },
     {
@@ -279,7 +279,7 @@ export const columns = [
                             className={""}
                             onChange={(event) => { column?.setFilterValue(event.target.value) }}
                         >
-                            <option disabled selected>Filter Status</option>
+                            <option disabled selected>Status</option>
                             <option className='cursor-pointer' value={""} >{"ALL"}</option>
                             <option className='cursor-pointer' value={"Ordered"} >{"Ordered"}</option>
                             <option className='cursor-pointer' value={"Pending"} >{"Pending"}</option>

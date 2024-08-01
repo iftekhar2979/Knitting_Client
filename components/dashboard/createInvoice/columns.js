@@ -5,9 +5,11 @@ import { RiArrowUpDownFill } from "react-icons/ri"
 import OrderListCheckBoxes from "./OrderListCheckBoxes"
 import { useEffect, useState } from "react"
 import { useAppDispatch } from "@/lib/hooks"
-import { pushingOnSelectedValue, pushingSelectedCompany } from "@/lib/features/Invoice/invoiceSlice"
+import { pushingOnSelectedValue, pushingSelectedCompany, selectCompanyName } from "@/lib/features/Invoice/invoiceSlice"
 import { CgUnavailable } from "react-icons/cg";
 import { MdOutlineEventAvailable } from "react-icons/md";
+import { FaCheck } from "react-icons/fa6"
+import { FaCheckCircle } from "react-icons/fa"
 export const columns = [
     {
         id: "select",
@@ -21,7 +23,7 @@ export const columns = [
                 aria-label="Select all"
             />
         ),
-        cell:function Cell ({ row }) {
+        cell: function Cell({ row }) {
             const [disabled, setDisabled] = useState(false)
             const [state, setState] = useState("")
             const dispatch = useAppDispatch()
@@ -29,7 +31,9 @@ export const columns = [
 
             const handleCheckboxChange = (event) => {
                 dispatch(pushingOnSelectedValue(event.target.value))
+                dispatch(selectCompanyName(row.original.companyName))
             };
+           
             return <OrderListCheckBoxes orderList={row.original.orderNumber} state={state} setDisabled={setDisabled} handleCheckboxChange={handleCheckboxChange} row={row.original} disabled={disabled} />
         },
 
@@ -164,7 +168,7 @@ export const columns = [
             )
         },
         cell: ({ row }) => {
-            return <div>{row.original.isProformaInvoiceCreated ? <MdOutlineEventAvailable size={25} color={"green"}/> : <CgUnavailable size={25} color={"red"}/>}</div>
+            return <div>{row.original.isProformaInvoiceCreated ? <MdOutlineEventAvailable size={25} color={"green"} /> : <CgUnavailable size={25} color={"red"} />}</div>
         },
 
     },

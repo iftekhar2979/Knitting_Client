@@ -14,8 +14,7 @@ const ModalTable = ({ detail ,billingWays}) => {
     const { cleared, totalQuantity, totalAmount } = useAppSelector(state => state.pI)
     const { deliveredQuantity , companyId, fabricsName, buyerId,orderId, fabricsId } = detail
     const dispatch = useAppDispatch()
-console.log(orderId)
- 
+
     const handleChange = (e) => {
         setValue(parseFloat(e.target.value))
     }

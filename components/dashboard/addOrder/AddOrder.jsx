@@ -32,6 +32,8 @@ import { useGetProductQuery } from "@/lib/features/Product/productApi"
 import { Label } from "@/components/ui/label"
 import Error from "@/components/utils/Error"
 import Radio from "@/components/ui/Radio"
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+
 
 const FormSchema = z.object({
 
@@ -95,11 +97,12 @@ const info = [
     },
 ]
 const units = ["Fabric", "Knitting"]
-export function AddOrder() {
+export function AddOrder({}) {
     const { data, isLoading, error, isError } = useGetCompanyQuery()
     const [addOrder, { isLoading: insertingOrderLoading, isError: insertingOrderError }] = useAddOrderMutation()
     const { data: product, isLoading: productLoading, error: productError, isError: productIsError } = useGetProductQuery()
     const [companyInfo, setCompanyInfo] = useState()
+    const { userInfo } = useAppSelector((state) => state.user);
     const [buyerInfo, setBuyerInfo] = useState()
     const [unit, setUnit] = useState()
     const [fabricsInfo, setFabricsInfo] = useState()
@@ -151,16 +154,14 @@ export function AddOrder() {
     const handleRadioChanges = (data) => {
         setUnit(data.item)
     }
-
     async function onSubmit(data) {
         const { companyId, companyName } = companyInfo
         if (quantity <= 0) {
             window.alert("Order Can't be place with out booking quantity")
             return
         }
-        const body = { companyId, companyName, ...buyerInfo, ...fabricsInfo, unit: unit, orderQuantity: parseFloat(quantity), restQuantity: parseFloat(quantity), targetDate: date, ...data }
+        const body = { userId:userInfo?.data?.id, companyId, companyName, ...buyerInfo, ...fabricsInfo, unit: unit, orderQuantity: parseFloat(quantity), restQuantity: parseFloat(quantity), targetDate: date, ...data }
         addOrder(body)
-        console.log(body)
     }
 
     return (

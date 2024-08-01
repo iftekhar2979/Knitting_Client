@@ -13,7 +13,10 @@ import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { BiCreditCard } from "react-icons/bi";
 import SingleLink from './Product/SingleLink';
 import dashboard from '@/app/dashboard/page';
-import { useAppSelector } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { Button } from '@/components/ui/button';
+import { removeCredentials } from '@/lib/features/user/userSlice';
+import { useLogoutMutation } from '@/lib/features/user/userApiSlice';
 
 const companySection = [
     { id: 510, routeName: "addCompany", value: "Add Company", icon: <BsBuildingAdd /> },
@@ -39,23 +42,34 @@ const dashboardSection = [
 
 const SideBar = () => {
     const pathName = usePathname();
+    const router = useRouter()
     const [selectedRoute, setSelectedRoute] = useState();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const { userInfo } = useAppSelector((state) => state.user);
     const sidebarRef = useRef(null);
+    const [logout] = useLogoutMutation()
+    const dispatch = useAppDispatch()
 
+    const handleLogOut = () => {
+        logout().then(res => {
+            dispatch(removeCredentials())
+            router.push('/')
+        })
+    }
     useEffect(() => {
-        let currentRoute=pathName.split("/")[2]
+        let currentRoute = pathName.split("/")[2]
         setSelectedRoute(currentRoute);
-    }, [pathName]);
+    }, [pathName, handleLogOut]);
+
+
     return (
-        <div ref={sidebarRef} className={`flex flex-col h-screen   hidden md:block bg-white dark:bg-gray-900 ${isSidebarOpen ? "desktop-sidebar" : "w-32 pl-4"}`}>
+        <div ref={sidebarRef} className={`flex flex-col h-screen hidden md:block bg-white dark:bg-gray-900 ${isSidebarOpen ? "desktop-sidebar" : "w-32 pl-4"}`}>
             <div className="flex flex-col justify-between flex-1 mt-6">
                 <nav className=" space-y-2">
                     <div className="space-y-3">
                         <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Analytics</label>
                         <Link href={`/dashboard`}>
-                            <div  className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${!selectedRoute && "bg-active-color text-white rounded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`}>
+                            <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${!selectedRoute && "bg-active-color text-white rounded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`}>
                                 <MdDashboardCustomize />
                                 {isSidebarOpen && <span className="mx-2 text-sm font-medium">Dashboard</span>}
                             </div>
@@ -64,28 +78,31 @@ const SideBar = () => {
                     <div className="space-y-3">
                         <label className={`px-3 text-xs text-inactive font-bold uppercase dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Company</label>
                         {companySection.map((item) => (
-                            <SingleLink key={item.id} item={item} selectedRoute={selectedRoute}  isSidebarOpen={isSidebarOpen} />
+                            <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={isSidebarOpen} />
                         ))}
                     </div>
                     <div className="space-y-3">
                         <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Product</label>
                         {productSection.map((item) => (
-                            <SingleLink key={item.id} item={item} selectedRoute={selectedRoute}  isSidebarOpen={isSidebarOpen} />
+                            <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={isSidebarOpen} />
                         ))}
                     </div>
                     <div className="space-y-3">
                         <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Orders</label>
                         {orderSection.map((item) => (
-                            <SingleLink key={item.id} item={item} selectedRoute={selectedRoute}  isSidebarOpen={isSidebarOpen} />
+                            <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={isSidebarOpen} />
                         ))}
                     </div>
                     {userInfo?.data?.isAdmin &&
                         <div className="space-y-3">
                             <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Invoice</label>
                             {billSection.map((item) => (
-                                <SingleLink key={item.id} item={item} selectedRoute={selectedRoute}  isSidebarOpen={isSidebarOpen} />
+                                <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={isSidebarOpen} />
                             ))}
                         </div>
+                    }
+                    {
+                        userInfo ? <Button onClick={handleLogOut} className="bg-active-color">Log Out</Button> : ""
                     }
                 </nav>
             </div>
