@@ -6,16 +6,17 @@ import React, { useEffect, useState } from 'react';
 import '../app/globals.css'
 import { useGetUserByIdQuery, useLogoutMutation } from '@/lib/features/user/userApiSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { removeCredentials, setCredentials, setNotification } from '@/lib/features/user/userSlice';
+import { removeCredentials, setCredentials, setNotification, setSidebarOnDesboard } from '@/lib/features/user/userSlice';
 import { Button } from './ui/button';
 import { IoMenu } from "react-icons/io5";
 import socket from '@/socketService';
 import Notifications from './ui/Notifications';
-// import Avatar from './Navbar/Avatar';
+import { FiX } from "react-icons/fi";
 
 const Navbar = ({ bg }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(true);
-    const { userInfo, path,notify } = useAppSelector((state) => state.user);
+    const [sidebar,setSidebar]=useState(false)
+    const { userInfo, path,notify,isSidebarOpenOnDashboard } = useAppSelector((state) => state.user);
     const { data: userInformation, isLoading } = useGetUserByIdQuery()
     
     const dispatch = useAppDispatch()
@@ -42,20 +43,20 @@ const Navbar = ({ bg }) => {
             setUser(userInformation.data.name);
             setLoading(false);
         }
-        let sidemenu = document.getElementsByClassName("flex flex-col h-screen   hidden md:block bg-white dark:bg-gray-900 desktop-sidebar")[0];
-        if (sidemenu) {
-            if (!isMenuOpen) {
-                sidemenu.classList.add("md:hidden");
-            } else {
-                sidemenu.classList.remove("md:hidden");
-            }
-        }
-        // Cleanup function
-        return () => {
-            if (sidemenu) {
-                sidemenu.classList.remove("md:hidden");
-            }
-        };
+        // let sidemenu = document.getElementsByClassName("flex flex-col h-screen   hidden md:block bg-white dark:bg-gray-900 desktop-sidebar")[0];
+        // if (sidemenu) {
+        //     if (!isMenuOpen) {
+        //         sidemenu.classList.add("md:hidden");
+        //     } else {
+        //         sidemenu.classList.remove("md:hidden");
+        //     }
+        // }
+        // // Cleanup function
+        // return () => {
+        //     if (sidemenu) {
+        //         sidemenu.classList.remove("md:hidden");
+        //     }
+        // };
     }, [userInformation, isMenuOpen]);
 
     useEffect(() => {
@@ -64,16 +65,21 @@ const Navbar = ({ bg }) => {
     }, [pathName])
 
     const handleSideBar = () => {
-        setIsMenuOpen(!isMenuOpen)
+        dispatch(setSidebarOnDesboard(isSidebarOpenOnDashboard))
+        // setSidebar(!isMenuOpen)
     }
-// console.log(userInfo?.data?.id)
+
 
     return (
 
         <nav className={`${bg} relative bg-white`}>
             <div className="container flex flex-wrap justify-between items-center mx-auto shadow-sm text-black">
                 <div className='flex items-center '>
-                    <IoMenu size={24} color='dark' className='hover:bg-gray-300 cursor-pointer  hover:rounded-xl' onClick={handleSideBar} />
+              { !isSidebarOpenOnDashboard ?    
+               <IoMenu size={24} color='dark' className='hover:bg-gray-300 cursor-pointer  hover:rounded-xl' onClick={handleSideBar} />
+              :
+              <FiX size={24} color='dark' className='hover:bg-gray-300 cursor-pointer  hover:rounded-xl' onClick={handleSideBar} />
+              }
                     {/* <IoMenu size={20} color='white'/> */}
                     <Link href={"/"} className="flex items-center ml-2">
                         {/* <Image src={tertiary} alt='Tertiary Color Knit '/> */}

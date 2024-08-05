@@ -1,12 +1,8 @@
 import { setRange } from '@/lib/features/dashboard/dashboardSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import react from 'react';
-import { BsFillTriangleFill } from 'react-icons/bs';
-
 const SelectTime = (props) => {
     const {range}=useAppSelector(state=>state.dashboard)
     const dispatch=useAppDispatch()
-    
     return (
         <div className="px-4 flex items-center text-sm" >
             <select className='border-none bg-transparent' onChange={(e)=>dispatch(setRange(e.target.value))}>

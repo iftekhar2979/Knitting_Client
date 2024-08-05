@@ -7,15 +7,12 @@ import { BsBuildingAdd } from "react-icons/bs";
 import { MdDashboardCustomize } from "react-icons/md";
 import { IoDocumentSharp } from "react-icons/io5";
 import { CiViewList, CiDeliveryTruck, CiViewTable } from "react-icons/ci";
-import { IoAnalyticsOutline } from "react-icons/io5";
-import { RiBillLine } from "react-icons/ri";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { BiCreditCard } from "react-icons/bi";
 import SingleLink from './Product/SingleLink';
-import dashboard from '@/app/dashboard/page';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { Button } from '@/components/ui/button';
-import { removeCredentials } from '@/lib/features/user/userSlice';
+import { removeCredentials, setSidebarOnDesboard } from '@/lib/features/user/userSlice';
 import { useLogoutMutation } from '@/lib/features/user/userApiSlice';
 
 const companySection = [
@@ -45,8 +42,8 @@ const SideBar = () => {
     const router = useRouter()
     const [selectedRoute, setSelectedRoute] = useState();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const { userInfo } = useAppSelector((state) => state.user);
-    const sidebarRef = useRef(null);
+    const { userInfo, isSidebarOpenOnDashboard } = useAppSelector((state) => state.user);
+
     const [logout] = useLogoutMutation()
     const dispatch = useAppDispatch()
 
@@ -63,7 +60,7 @@ const SideBar = () => {
 
 
     return (
-        <div ref={sidebarRef} className={`flex flex-col h-screen hidden md:block bg-white dark:bg-gray-900 ${isSidebarOpen ? "desktop-sidebar" : "w-32 pl-4"}`}>
+        <div className={`flex flex-col h-screen bg-white dark:bg-gray-900  sm:pl-6`}>
             <div className="flex flex-col justify-between flex-1 mt-6">
                 <nav className=" space-y-2">
                     <div className="space-y-3">
