@@ -11,7 +11,6 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     return () => {
-      // This function will be called when the component unmounts
       dispatch(setDashboardMenu());
     };
   }, [dispatch]);

@@ -1,8 +1,8 @@
 "use client"
 import Error from '@/components/utils/Error';
 import Loading from '@/components/utils/Loading';
-import { useGetSingleOrderQuery } from '@/lib/features/order/orderApi';
-import react from 'react';
+import { useEditStatusMutation, useGetSingleOrderQuery } from '@/lib/features/order/orderApi';
+import react, { useState } from 'react';
 import QuantityInfo from './SingleOrder/QuantityInfo';
 import { format } from 'date-fns';
 import { MdBuild, MdBuildCircle, MdBusinessCenter, MdLocationCity, MdLocationPin, MdSell } from 'react-icons/md';
@@ -11,6 +11,16 @@ import Link from 'next/link';
 
 const Order = ({ id }) => {
     const { data, isLoading, isError } = useGetSingleOrderQuery(id)
+    const [status, setStatus] = useState(data?.status || 'Pending');
+    const [editStatus]=useEditStatusMutation()
+
+    const handleStatusChange = (e) => {
+        const newStatus = e.target.value;
+        setStatus(newStatus);
+        let body={status}
+        editStatus({id,body})
+    
+    };
 
     if (isLoading) {
         return <Loading />
@@ -18,14 +28,25 @@ const Order = ({ id }) => {
     if (isError) {
         return <Error data={"Sorry , there is something wrong with server"} />
     }
-    const { companyName, company = {}, status, buyerName, targetDate, orderNumber, programNumber, jobNumber, season, bookingNumber, sbNumber, fabricsName, orderedDate } = data
+    const { companyName, company = {}, buyerName, targetDate, orderNumber, programNumber, jobNumber, season, bookingNumber, sbNumber, fabricsName, orderedDate } = data
     return (
         <section>
             <div className='flex justify-between py-4 text-inactive'>
                 <div>
 
                     <h2 className='font-bold text-xl'>Order ID : {orderNumber}</h2>
-                    <h2 className="">Status  : <span className="border-b ">{status}</span></h2>
+                    <div className="flex items-center">
+            <h2 className="mr-4">Status:</h2>
+            <select
+                value={status}
+                onChange={handleStatusChange}
+                className="border-b-2 border-gray-300 focus:outline-none focus:border-indigo-500"
+            >
+                <option value="Completed">Completed</option>
+                <option value="Pending">Pending</option>
+                <option value="Ordered">Ordered</option>
+            </select>
+        </div>
                 </div>
                 <div className=''>
 

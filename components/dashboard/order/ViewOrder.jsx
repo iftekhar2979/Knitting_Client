@@ -10,7 +10,9 @@ import socket from '@/socketService.js';
 import { useAppDispatch } from "@/lib/hooks";
 import { setNotification } from "@/lib/features/user/userSlice";
 const ViewOrder = (props) => {
-    let {data:initialData,isLoading,isError,error}=useGetOrderQuery()
+    let {data:initialData,isLoading,isError,error}=useGetOrderQuery(undefined,{
+        refetchOnMountOrArgChange:true
+    })
     // let [notify,setNotify]=useState([])
     const [data,setData]=useState(initialData)
     const dispatch=useAppDispatch()
@@ -39,6 +41,7 @@ const ViewOrder = (props) => {
     }
     return (
         <>
+        
              <DataTable columns={columns} data={data} searchingValue={"orderNumber"} placeholder={"Filter with Order Number..."}>
                 </DataTable>
         </>

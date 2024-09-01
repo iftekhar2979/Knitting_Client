@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 
   page: { fontFamily: "Times-Roman" },
   companyName: { fontFamily: "Times-Roman", textAlign: "center", fontSize: 35, marginTop: 5, fontWeight: 'bold' },
-  section: { fontFamily: "Times-Roman", fontSize: 15, color: 'black', textAlign: 'center', display: 'flex', justifyContent: 'center', flexDirection: 'row', marginTop: 5 },
+  section: { fontFamily: "Times-Roman", fontSize: 15, color: 'black', textAlign: 'center', display: 'flex', justifyContent: 'center', flexDirection: 'row' },
   descOfGoods: { textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4, marginLeft: 6 },
   chalanHeading: { textAlign: 'center', backgroundColor: "gray", padding: 4, margin: 2 },
   fabricsHeading: { fontSize: 17, textAlign: 'center' },
@@ -34,12 +34,12 @@ const Chalan = ({ id, data }) => {
       <Document>
         <Page size="A4" style={styles.page}>
           <View style={{display:"flex", justifyContent:"center"}}>
-            <Image src="https://i.postimg.cc/FKc8pPqQ/tertiary.jpg" style={{width:"58px",height:"68px" ,paddingTop:"7px" }}/>
-          <Text style={styles.companyName}>{companyInformation?.name}</Text>
+            <Image src="https://i.postimg.cc/vm2f1G1R/chalan-Headings-Tertiary-1.png" />
+          {/* <Text style={styles.companyName}>{companyInformation?.name}</Text> */}
           </View>
-          <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.location}</Text>
+          {/* <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.location}</Text>
           <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.intro}</Text>
-          <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>Mobile : 01711-344139, 01716-019843 , Email:kamrul@tertiaryckf.com</Text>
+          <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>Mobile : 01711-344139, 01716-019843 , Email:kamrul@tertiaryckf.com</Text> */}
           <View style={styles.section}>
             <Text style={styles.chalanHeading}>C</Text>
             <Text style={styles.chalanHeading}>H</Text>

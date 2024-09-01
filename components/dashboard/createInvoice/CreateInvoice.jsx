@@ -77,6 +77,7 @@ const CreateInvoice = (props) => {
         setBillSteps(2)
     }
     const handleSubmit = () => {
+        console.log(piValue)
         if (billingWay === "Proforma Invoice") {
             createProformaInvoice(piValue)
         } else {

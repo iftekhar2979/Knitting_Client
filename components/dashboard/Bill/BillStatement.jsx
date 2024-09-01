@@ -12,9 +12,9 @@ const BillStatement = ({ id }) => {
 
     const { data: bill, isLoading, isError } = useGetSingleBillQuery(id);
     let [block, setBlock] = useState(false)
-    useDocumentTitle(`Bill Number ${bill ? bill[0]?.billDetails.billNumber : ""}`)
+    useDocumentTitle(`Bill Number ${bill ? bill[0]?.billDetails?.billNumber : ""}`)
     useEffect(() => {
-        // Safely attempt to get the elements
+        // Safely attempt to get the elementss
         const nav = document.getElementsByClassName("nav-back relative")[0];
         const footer = document.getElementsByClassName("px-4 py-8 dark:bg-gray-100 dark:text-gray-600")[0];
         // Check if elements exist before trying to modify them
@@ -34,7 +34,10 @@ const BillStatement = ({ id }) => {
 
     if (isError) {
         return <div>Error loading bill data.</div>;
+    
     }
+    console.log(bill);
+    
 
     const handlePrint = () => {
 
@@ -64,7 +67,7 @@ const BillStatement = ({ id }) => {
 
 
                         <div className='flex justify-between mt-2 '>
-                            <div className="flex "> <span className="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(bill[0].billDetails.createdAt), 'dd-MM-yyyy')}</span></div>
+                            <div className="flex "> <span className="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(bill[0].billDetails.createdAt), 'PP')}</span></div>
                         </div>
                         <div className='flex justify-between mt-2 '>
                             <div className="flex "> <span className="ml-2 widthHeading">Bill Number </span> <span className='ml-[5px]'> : {bill[0].billDetails.billNumber}</span></div>

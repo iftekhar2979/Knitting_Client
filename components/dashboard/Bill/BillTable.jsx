@@ -76,7 +76,7 @@ const BillTable = ({ data }) => {
                     <td rowSpan={item.deliveryDetails.length} className='b_b text-center'>{item.fabricsName}</td>
                     <td className='b_b text-center'>{item.deliveryDetails[0].createdAt && format(new Date(item.deliveryDetails[0].createdAt), 'PP')}</td>
                     <td className='b_b text-center'>{item.deliveryDetails[0].id}</td>
-                    <td className='b_b text-center'>{item.deliveryDetails[0].deliveredQuantity.toLocaleString()}</td>
+                    <td className='b_b text-center'>{item.deliveryDetails[0].deliveredQuantity}</td>
                     <td className='b_b text-center'>{item.deliveryDetails[0].order.buyerName}</td>
                     <td className='b_b text-center'>
 
@@ -96,7 +96,7 @@ const BillTable = ({ data }) => {
                       <tr key={`${item.fabricsName}-${subIndex}`} className='b_b text-center ' >
                         <td className='b_b text-center'>{info.createdAt && format(new Date(info.createdAt), 'PP')}</td>
                         <td className='b_b text-center'> {info.id}</td>
-                        <td className='b_b text-center'>{info.deliveredQuantity.toLocaleString()}</td>
+                        <td className='b_b text-center'>{info.deliveredQuantity}</td>
                         <td className='b_b text-center'>{info.order.buyerName}</td>
                         <td className='b_b text-center'>
                           <ol className="text-[10pt] text-left ml-1">
@@ -114,11 +114,11 @@ const BillTable = ({ data }) => {
                     <td></td>
                     <td></td>
                     <td className='text-center text-md font-semibold'></td>
-                    <td className='text-center b_b text-center text-md font-semibold'>{item.deliveredQuantity.toLocaleString()}</td>
+                    <td className='text-center b_b text-center text-md font-semibold'>{item.deliveredQuantity}</td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td className='text-center b_b text-center text-md font-semibold'>{item.billDetails.amount.toFixed(2).toLocaleString()}</td>
+                    <td className='text-center b_b text-center text-md font-semibold'>{item.billDetails.amount.toFixed(2)}</td>
                   </tr> */}
                 </>
               )
@@ -128,11 +128,11 @@ const BillTable = ({ data }) => {
             <td></td>
             <td></td>
             <td className='text-center text-md font-semibold'>Total</td>
-            <td className='text-center b_b text-center text-md font-semibold'>{mergedData[0].billDetails.invoiceQuantity.toLocaleString()}</td>
+            <td className='text-center b_b text-center text-md font-semibold'>{mergedData[0].billDetails.invoiceQuantity}</td>
             <td></td>
             <td></td>
             <td></td>
-            <td className='text-center b_b text-center text-md font-semibold'>{mergedData[0].billDetails.invoiceAmount.toLocaleString()}</td>
+            <td className='text-center b_b text-center text-md font-semibold'>{mergedData[0].billDetails.invoiceAmount}</td>
           </tr>
         </tbody>
       </table>
