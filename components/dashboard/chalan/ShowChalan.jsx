@@ -14,6 +14,8 @@ const ShowChalan = (props) => {
     const dispatch = useAppDispatch()
     const { data, isLoading, isError } = useGetSingleDeliveryQuery(state?.id)
 
+    console.log("data",data)
+
     if (isLoading) {
         return <Loading/>
     }

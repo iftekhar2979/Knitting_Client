@@ -66,7 +66,8 @@ const Hero = (props) => {
             className="absolute bottom-0 left-0 -mb-16 -ml-12 h-20 w-20 -rotate-12 rounded-xl bg-red-200 bg-opacity-50"
           ></div>
           <div className="aspect-w-16 aspect-h-10 w-full fadeInLeftBig" data-aos="fade-right">
-            <Image src={knittingHero} alt='Knitting Machine' loading='lazy' quality={80} />
+            {/* <Image src={knittingHero} alt='Knitting Machine' loading='lazy' quality={80} /> */}
+            <img src={"https://i.postimg.cc/0NYWqBdg/knitting-Hero.png"}/>
             
              {/* <img src={knittingHero}  alt='Knitting Machine' /> */}
           </div>

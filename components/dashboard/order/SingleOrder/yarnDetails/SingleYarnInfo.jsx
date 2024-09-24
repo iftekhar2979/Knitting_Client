@@ -55,10 +55,10 @@ const SingleYarnInfo = ({ item }) => {
           <p className="py-1 px-4">Yarn : <span className="border-b  px-4">{yarnType}</span></p>
           <p className="py-1 px-4">Received Quantity : <span className="border-b  px-4">{ReceivingQuantity} Kg</span></p>
           {/* <p className="py-1 px-4">Received Quantiy : <span className="border-b  px-4">{ReceivingQuantity - restQuantity} Kg</span></p> */}
-          <p className=" py-1 px-4">Rest Quantity : <span className="border-b  px-4">{restQuantity} Kg</span></p>
+          {/* <p className=" py-1 px-4">Rest Quantity : <span className="border-b  px-4">{restQuantity} Kg</span></p> */}
           {/* <p className=" py-1 px-4">Description : <span className="border-b  px-4">{descriptionOfYarn}</span></p> */}
-          <p className=" py-1 px-4">Created At : <span className="border-b  px-4">{format(createdAt, "PPp")}</span></p>
-          <p className="py-1 px-4">Updated At : <span className="border-b  px-4">{updatedAt && format(updatedAt, "PPp")}</span></p>
+          <p className=" py-1 px-4">Received At : <span className="border-b  px-4">{format(createdAt, "PPp")}</span></p>
+          {/* <p className="py-1 px-4">Updated At : <span className="border-b  px-4">{updatedAt && format(updatedAt, "PPp")}</span></p> */}
           {restQuantity !== 0
             ?
             <Dialog>

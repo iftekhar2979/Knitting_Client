@@ -11,13 +11,14 @@ import Link from 'next/link';
 
 const Order = ({ id }) => {
     const { data, isLoading, isError } = useGetSingleOrderQuery(id)
-    const [status, setStatus] = useState(data?.status || 'Pending');
+    const [status, setStatus] = useState(data?.status);
     const [editStatus]=useEditStatusMutation()
 
     const handleStatusChange = (e) => {
         const newStatus = e.target.value;
+        console.log("new sataus",newStatus)
         setStatus(newStatus);
-        let body={status}
+        let body={status:newStatus}
         editStatus({id,body})
     
     };

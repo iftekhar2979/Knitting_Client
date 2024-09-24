@@ -2,6 +2,9 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import Action from "@/components/utils/Action"
+import { MdDelete } from "react-icons/md"
+import { Delete } from "lucide-react"
+import DeleteBuyer from "./Modal/DeleteBuyer"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -31,8 +34,7 @@ export const columns = [
     accessorKey: "buyers",
     header: "Buyer",
     cell: ({ row }) => {
-      const {buyers}=row.original 
-      return buyers?.map(item=><div key={item.id} className="py-1">{item.buyerName} <hr/></div>)
+      return <DeleteBuyer buyerInfo={row.original}/>
     },
   },
   {

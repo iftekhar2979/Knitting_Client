@@ -26,6 +26,8 @@ Font.register({
   fontStyle: 'italic',
   src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf'
 });
+
+// console.log("details",order?.details)
 const Chalan = ({ id, data }) => {
   if (id) {
     const { createdAt, deliveredQuantity, deliveredBy, order,roleQuantity,vechileNumber } = data
@@ -34,21 +36,16 @@ const Chalan = ({ id, data }) => {
       <Document>
         <Page size="A4" style={styles.page}>
           <View style={{display:"flex", justifyContent:"center"}}>
-            <Image src="https://i.postimg.cc/vm2f1G1R/chalan-Headings-Tertiary-1.png" />
+            <Image src="https://i.postimg.cc/856PDK8d/16dfcbd5-c7a3-49ce-ba66-09788c7d252f.png" />
           {/* <Text style={styles.companyName}>{companyInformation?.name}</Text> */}
           </View>
           {/* <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.location}</Text>
           <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.intro}</Text>
           <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>Mobile : 01711-344139, 01716-019843 , Email:kamrul@tertiaryckf.com</Text> */}
           <View style={styles.section}>
-            <Text style={styles.chalanHeading}>C</Text>
-            <Text style={styles.chalanHeading}>H</Text>
-            <Text style={styles.chalanHeading}>A</Text>
-            <Text style={styles.chalanHeading}>L</Text>
-            <Text style={styles.chalanHeading}>L</Text>
-            <Text style={styles.chalanHeading}>A</Text>
-            <Text style={styles.chalanHeading}>N</Text>
-          </View>
+          {/* <Text style={styles.chalanHeading}>D</Text> */}
+          <Text style={{ fontStyle: "italic", fontSize: 22, textAlign: 'center' }}>DELIVERY CHALLAN </Text>
+            </View>
           <Text style={{ fontStyle: "italic", fontSize: 17, textAlign: 'center' }}>( {order?.unit} Unit ) </Text>
           <View style={{ flexDirection: 'row', marginTop: 15 }}>
             <View style={{ width: '60%', fontSize: 14, marginLeft: 30, display: 'flex', flexDirection: 'column' }}>
@@ -91,9 +88,9 @@ const Chalan = ({ id, data }) => {
               {order?.details?.polyStarLot ?<Text style={styles.descOfGoods}>13.</Text>:""}
               {order?.details?.mc_DIA ?<Text style={styles.descOfGoods}>14.</Text>:""}
               {order?.details?.e_DIA ?<Text style={styles.descOfGoods}>15.</Text>:""} */}
-            <Text style={{textAlign:'left',height:"5%",width:32,position:'absolute',top:400,fontSize:12,paddingTop:4,textAlign:'center',borderTop:"1px solid black"}}></Text>
+            <Text style={{textAlign:'left',height:"3%",width:32,position:'absolute',top:400,fontSize:12,paddingTop:4,textAlign:'center',borderTop:"1px solid black"}}></Text>
             </View>
-            <View style={{ width: "45%", height: "100%", borderRight: "1px solid black" }}>
+            <View style={{ width: "37%", height: "100%", borderRight: "1px solid black" }}>
               <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, borderBottom: "1px solid black", paddingTop: 4 }}>Description of Goods</Text>
               {order?.details?.sl?<Text style={styles.descOfGoods}>Sl : {order?.details?.sl}</Text>:""}
               {order?.details?.style?<Text style={styles.descOfGoods}>Style : {order?.details?.style}</Text>:""}
@@ -117,15 +114,15 @@ const Chalan = ({ id, data }) => {
               <Text style={{ textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4, marginTop: 200, textAlign: 'center' }}>{roleQuantity ? roleQuantity :""} R </Text>
               <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,textAlign:'center',width:37,borderTop:"1px solid black"}}>{roleQuantity} R </Text>
             </View>
-            <View style={{ width: "15%", height: "100%", borderRight: "1px solid black" }}>
-              <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, paddingTop: 4, borderBottom: "1px solid black" }}>F/Weight (kg)</Text>
+            <View style={{ width: "20%", height: "100%", borderRight: "1px solid black" }}>
+              <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, paddingTop: 4, borderBottom: "1px solid black" }}>Finish Weight (kg)</Text>
               <Text style={{ textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4, marginTop: 200, textAlign: 'center' }}>{order?.unit==='Fabric' ? deliveredQuantity :""} </Text>
-              <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,width:81,textAlign:'center',borderTop:"1px solid black"}}>{order?.unit==='Fabric' ? deliveredQuantity :""}</Text>
+              <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,width:110,textAlign:'center',borderTop:"1px solid black"}}>{order?.unit==='Fabric' ? deliveredQuantity :""}</Text>
             </View>
-            <View style={{ width: "15%", height: "100%", borderRight: "1px solid black" }}>
-              <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, paddingTop: 4, borderBottom: "1px solid black" }}>G/Weight</Text>
+            <View style={{ width: "20%", height: "100%", borderRight: "1px solid black" }}>
+              <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, paddingTop: 4, borderBottom: "1px solid black" }}>Grey Weight (kg)</Text>
               <Text style={{ textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4, marginTop: 200, textAlign: 'center' }}>{order?.unit!=='Fabric' ? deliveredQuantity :""} </Text>
-              <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,width:81,textAlign:'center',borderTop:"1px solid black"}}>{order?.unit!=='Fabric' ? deliveredQuantity :""} </Text>
+              <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,width:110,textAlign:'center',borderTop:"1px solid black"}}>{order?.unit!=='Fabric' ? deliveredQuantity :""} </Text>
             </View>
             <View style={{ width: "12%", height: "100%" }}>
               <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, paddingTop: 4, borderBottom: "1px solid black" }}>Remark</Text>
@@ -137,7 +134,7 @@ const Chalan = ({ id, data }) => {
             <Text style={{ marginLeft: 30, fontSize: 13, width: 110, marginTop: 50, borderTop: '1px solid black' }}>Checked & Received</Text>
             <Text style={{ marginLeft: 30, fontSize: 13, width: 80, marginTop: 50, borderTop: '1px solid black' }}>Store Manager</Text>
             <Text style={{ marginLeft: 40, fontSize: 13, width: 100, marginTop: 50, borderTop: '1px solid black' }}>Factory Manager / Knitting Manager</Text>
-            <Text style={{ marginLeft: 60, fontSize: 13, width: 120, marginTop: 50, borderTop: '1px solid black' }}>Authoresed Signature</Text>
+            <Text style={{ marginLeft: 60, fontSize: 13, width: 120, marginTop: 50, borderTop: '1px solid black' }}>Authorized Signature</Text>
           </View>
         </Page>
       </Document>

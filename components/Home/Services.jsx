@@ -80,8 +80,8 @@ const Services = (props) => {
                             </div>
                         </div>
                         <div className="md:mb-12 lg:mb-0">
-                          <Image src={yellow_maching} loading="lazy" alt="Knitting Machine"/>
-                          {/* <img src={yellow_maching} alt="" /> */}
+                          {/* <Image src={yellow_maching} loading="lazy" alt="Knitting Machine"/> */}
+                          <img src={"https://i.postimg.cc/65FY4XMJ/yellow-maching.png"} alt="Knitting Machine" />
                         </div>
                     </div>
                 </div>

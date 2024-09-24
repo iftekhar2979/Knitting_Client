@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import Action from "@/components/utils/Action"
 import { DeleteIcon } from "lucide-react"
 import { MdDelete } from "react-icons/md"
+import ProductDelete from "./ProductDelete"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -31,7 +32,9 @@ export const columns = [
 
         header: "Action",
         cell: ({ row }) => {
-            return <div ><MdDelete size={32} color={"red"} className="cursor-pointer"/></div>
+
+            
+            return <ProductDelete productId={row.original.id}/>
         }
     }
 

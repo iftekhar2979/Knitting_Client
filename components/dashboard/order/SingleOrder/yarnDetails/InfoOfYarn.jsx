@@ -21,7 +21,7 @@ const InfoOfYarn = ({ anotherInfo,item, index }) => {
                 <button className="border-r font-mono cursor-pointer" onClick={handleDelete}> <MdDelete size={22} color={"red"} /></button>
                 <button className="border-r font-mono cursor-pointer"  >
 
-                    <PDFDownloadLink document={<ReturnChalan data={item} anotherInfo={anotherInfo} id={id} />} fileName={`Chalan Number ${id}`}>
+                    <PDFDownloadLink document={<ReturnChalan data={item} anotherInfo={anotherInfo} id={id} />} fileName={`Return Chalan Number ${id}`}>
                         {({ blob, url, loading, error }) =>
                             loading ? 'Loading...' : <MdFileDownload size={22} color="green" />
                         }

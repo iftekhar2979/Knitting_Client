@@ -34,21 +34,17 @@ const ReturnChalan = ({ id,anotherInfo, data }) => {
 
       <Document>
         <Page size="A4" style={styles.page}>
-          <View style={{display:"flex", justifyContent:"center"}}>
-            <Image src="https://i.postimg.cc/FKc8pPqQ/tertiary.jpg" style={{width:"58px",height:"68px" ,paddingTop:"7px" }}/>
-          <Text style={styles.companyName}>{companyInformation?.name}</Text>
+        <View style={{display:"flex", justifyContent:"center"}}>
+            <Image src="https://i.postimg.cc/856PDK8d/16dfcbd5-c7a3-49ce-ba66-09788c7d252f.png" />
+          {/* <Text style={styles.companyName}>{companyInformation?.name}</Text> */}
           </View>
-          <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.location}</Text>
+          {/* <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.location}</Text>
           <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.intro}</Text>
-          <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>Mobile : 01711-344139, 01716-019843 , Email:kamrul@tertiaryckf.com</Text>
-          <View style={styles.section}>
-            <Text style={styles.chalanHeading}>C</Text>
-            <Text style={styles.chalanHeading}>H</Text>
-            <Text style={styles.chalanHeading}>A</Text>
-            <Text style={styles.chalanHeading}>L</Text>
-            <Text style={styles.chalanHeading}>L</Text>
-            <Text style={styles.chalanHeading}>A</Text>
-            <Text style={styles.chalanHeading}>N</Text>
+          <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>Mobile : 01711-344139, 01716-019843 , Email:kamrul@tertiaryckf.com</Text> */}
+            <View style={styles.section}>
+          {/* <Text style={styles.chalanHeading}>R</Text> */}
+          <Text style={{ fontStyle: "italic", fontSize: 22, textAlign: 'center' }}>RETURN CHALLAN </Text>
+         {/* <Text style={{fontSize:"2rem",fontWeight:"bold"}}>RETURN CHALAN</Text> */}
           </View>
           {/* <Text style={{ fontStyle: "italic", fontSize: 17, textAlign: 'center' }}>( {order?.unit} Unit ) </Text> */}
           <View style={{ flexDirection: 'row', marginTop: 15 }}>
@@ -86,7 +82,7 @@ const ReturnChalan = ({ id,anotherInfo, data }) => {
             <View style={{ width: "33%", height: "100%", borderRight: "1px solid black" }}>
               <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, paddingTop: 4, borderBottom: "1px solid black" }}>Quantity</Text>
            <Text style={{ textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4, marginTop: 200, textAlign: 'center' }}>{data?.returnQuantity} </Text>
-           <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,width:"100%",textAlign:'center',borderTop:"1px solid black"}}></Text>
+           <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,width:"100%",textAlign:'center',borderTop:"1px solid black"}}> {data?.returnQuantity}</Text>
      
             </View>
             {/* <View style={{ width: "15%", height: "100%", borderRight: "1px solid black" }}>
@@ -104,7 +100,7 @@ const ReturnChalan = ({ id,anotherInfo, data }) => {
             <Text style={{ marginLeft: 30, fontSize: 13, width: 110, marginTop: 50, borderTop: '1px solid black' }}>Checked & Received</Text>
             <Text style={{ marginLeft: 30, fontSize: 13, width: 80, marginTop: 50, borderTop: '1px solid black' }}>Store Manager</Text>
             <Text style={{ marginLeft: 40, fontSize: 13, width: 100, marginTop: 50, borderTop: '1px solid black' }}>Factory Manager / Knitting Manager</Text>
-            <Text style={{ marginLeft: 60, fontSize: 13, width: 120, marginTop: 50, borderTop: '1px solid black' }}>Authoresed Signature</Text>
+            <Text style={{ marginLeft: 60, fontSize: 13, width: 120, marginTop: 50, borderTop: '1px solid black' }}>Authorized Signature</Text>
           </View>
         </Page>
       </Document>

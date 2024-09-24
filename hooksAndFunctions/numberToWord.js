@@ -66,7 +66,7 @@ function MakingDollarConvert(num) {
 
         }else{
 
-            str = `${toWords(valBeforePoint)} & Cents ${toWords(val)}`
+            str = `${toWords(valBeforePoint)} & Paisa ${toWords(val)}`
         }
         return str
 

@@ -26,37 +26,12 @@ const Navbar = ({ bg }) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        // Listen for new orders
-        socket.on('notification', (newOrder) => {
-          dispatch(setNotification())
-          
-        });
-        // Clean up the effect
-        return () => {
-            socket.off('notification');
-        };
-    }, []);
-    useEffect(() => {
         setLoading(true);
         if (userInformation) {
             dispatch(setCredentials(userInformation));
             setUser(userInformation.data.name);
             setLoading(false);
         }
-        // let sidemenu = document.getElementsByClassName("flex flex-col h-screen   hidden md:block bg-white dark:bg-gray-900 desktop-sidebar")[0];
-        // if (sidemenu) {
-        //     if (!isMenuOpen) {
-        //         sidemenu.classList.add("md:hidden");
-        //     } else {
-        //         sidemenu.classList.remove("md:hidden");
-        //     }
-        // }
-        // // Cleanup function
-        // return () => {
-        //     if (sidemenu) {
-        //         sidemenu.classList.remove("md:hidden");
-        //     }
-        // };
     }, [userInformation, isMenuOpen]);
 
     useEffect(() => {
@@ -66,10 +41,7 @@ const Navbar = ({ bg }) => {
 
     const handleSideBar = () => {
         dispatch(setSidebarOnDesboard(isSidebarOpenOnDashboard))
-        // setSidebar(!isMenuOpen)
     }
-
-
     return (
 
         <nav className={`${bg} relative bg-white`}>

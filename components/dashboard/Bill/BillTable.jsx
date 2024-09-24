@@ -54,7 +54,7 @@ const BillTable = ({ data }) => {
   console.log(mergedData)
   return (
     <>
-      <table className={`b_b text-center mx-8 text-[12pt] w-[1000px]`}>
+      <table className={`b_b text-center  text-[12pt] w-[1000px]`}>
         <thead>
           <tr >
             <th className='b_b text-center w-32'>Fabrics</th>
@@ -63,8 +63,8 @@ const BillTable = ({ data }) => {
             <th className='b_b text-center w-20'> Quantity</th>
             <th className='b_b text-center w-16'> Buyer</th>
             <th className='b_b text-center w-36'> Order Info.</th>
-            <th className='b_b text-center w-16'> Unit Price</th>
-            <th className='b_b text-center w-16'> Price</th>
+            <th className='b_b text-center w-16'> Unit Price (BDT)</th>
+            <th className='b_b text-center w-16'> Amount</th>
           </tr>
         </thead>
         <tbody>
