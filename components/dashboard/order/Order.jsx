@@ -34,7 +34,6 @@ const Order = ({ id }) => {
         <section>
             <div className='flex justify-between py-4 text-inactive'>
                 <div>
-
                     <h2 className='font-bold text-xl'>Order ID : {orderNumber}</h2>
                     <div className="flex items-center">
             <h2 className="mr-4">Status:</h2>

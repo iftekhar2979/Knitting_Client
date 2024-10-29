@@ -35,6 +35,13 @@ export const columns = [
         header: "Delivery Man",
     },
     {
+        accessorKey: "",
+        header: "Bill Created",
+        cell:({row})=>{
+            return <h2> {row.original.unitPrice?<span className='bg-green-400 p-1 rounded-lg'>Created</span>:<span className='bg-red-500 p-1 rounded-lg'>Not yet</span>}</h2>
+        }
+    },
+    {
         accessorKey: "createdAt",
         header: "Date",
         cell: ({ row }) => {
@@ -47,7 +54,7 @@ export const columns = [
         header: "Action",
         cell: ({ row }) => {
             
-            return(<Action id={row.original.id} actionName={"Delete"}/>)
+            return(<Action id={row.original.id} chalanInfo={row.original} actionName={"Delete"} billAction={"Action"}/>)
         }
     }
   

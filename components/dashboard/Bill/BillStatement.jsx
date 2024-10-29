@@ -40,7 +40,7 @@ const BillStatement = ({ id }) => {
         return <div>Error loading bill data.</div>;
     
     }
-    console.log(bill);
+    // console.log(bill);
     
 
     const handlePrint = () => {

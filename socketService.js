@@ -1,6 +1,6 @@
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
-const URL = "http://localhost:7000"; // Replace with your server URL
-const socket = io(URL);
+// const URL = "http://localhost:7000"; // Replace with your server URL
+// const socket = io(URL);
 
-export default socket;
+// export default socket;

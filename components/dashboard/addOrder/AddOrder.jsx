@@ -122,6 +122,7 @@ export function AddOrder({}) {
             status: "Ordered"
         },
     })
+
     const companyNames = data?.map(item => item.companyName)
     const products = product?.map(item => item.fabricsName)
 
