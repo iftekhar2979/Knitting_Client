@@ -239,7 +239,8 @@ export const columns = [
         },
         cell: ({ row }) => {
             const { orderQuantity, restQuantity } = row.original
-            return <div >{orderQuantity - restQuantity}</div>
+            let value=(orderQuantity-restQuantity).toFixed(2)
+            return <div >{value}</div>
         }
     },
     {

@@ -3,14 +3,17 @@ import { Button } from '@/components/ui/button'
 import Loading from '@/components/utils/Loading'
 import { companyInformation } from '@/contents/companyInformation'
 import MakingDollarConvert from '@/hooksAndFunctions/numberToWord'
-import { useGetBillForSingleOrderQuery } from '@/lib/features/delivery/deliveryApi'
+import { useGetBillForSingleOrderQuery, useUpdateBillNumberbyChalanMutation } from '@/lib/features/delivery/deliveryApi'
+// import { useUpdateBillNumberbyChalanMutation } from '@/lib/features/Invoice/invoiceApi'
 import { format } from 'date-fns'
 // import { useGetSingleBillQuery } from '@/lib/features/Invoice/invoiceApi'
 import React, { useEffect, useState } from 'react'
 
 export default function BillStatementFromChalan({id}) {
     const {data,isLoading,isError}=useGetBillForSingleOrderQuery(id)
+    const [updateBillNumberByChalan]=useUpdateBillNumberbyChalanMutation()
     const [block,setBlock]=useState(false)
+    const [state,setState]=useState("")
     const [edit,setEdit]=useState(false)
     useEffect(() => {
         // Safely attempt to get the elementss
@@ -40,7 +43,8 @@ export default function BillStatementFromChalan({id}) {
 
  const date=new Date()
  let thisYear=date.getFullYear()
- let billNumber=`TCKF-${data?.order?.company?.shortForm}-${data?.id}/${thisYear}`
+ console.log(data)
+ let billNumber= !data?.billNumber ?`TCKF-${data?.order?.company?.shortForm}-${data?.id}/${thisYear}` :data?.billNumber
     // console.log(data)
     let amount=data?.deliveredQuantity * data?.unitPrice ||0
     const handlePrint = () => {
@@ -50,6 +54,9 @@ export default function BillStatementFromChalan({id}) {
             setBlock(false)
             window.print()
         }, 10);
+    }
+    const handleUpdate=()=>{
+updateBillNumberByChalan({id,billNumber:state})
     }
   return (
     <>
@@ -82,7 +89,7 @@ export default function BillStatementFromChalan({id}) {
 
                     <div className='flex justify-between mt-2 '>
                             {/* <div className="flex "><span className="ml-2 widthHeading">Bill Number </span> <span className='ml-[5px]'> : {billbillDetails.billNumber}</span></div> */}
-                            {!edit ? <h2 class="" onClick={() => setEdit(true)}>Bill Number : {billNumber} </h2> : <div className=''>Bill Number : <input type='text' defaultValue={billNumber} /></div>}
+                            {!edit ? <h2 class="" onClick={() => setEdit(true)}>Bill Number : {billNumber} </h2> : <div className=''>Bill Number : <input type='text' onChange={(e)=>setState(e.target.value)} onBlur={handleUpdate} defaultValue={billNumber} /></div>}
                         </div>
                         </div>
                 </div>

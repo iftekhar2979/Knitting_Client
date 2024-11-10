@@ -80,7 +80,7 @@ const ReturnChalan = ({ id,anotherInfo, data }) => {
               <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,textAlign:'center',width:"100%",borderTop:"1px solid black"}}>{role} R </Text>
             </View>
             <View style={{ width: "33%", height: "100%", borderRight: "1px solid black" }}>
-              <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, paddingTop: 4, borderBottom: "1px solid black" }}>Quantity</Text>
+              <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, paddingTop: 4, borderBottom: "1px solid black" }}>Quantity (KG)</Text>
            <Text style={{ textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4, marginTop: 200, textAlign: 'center' }}>{data?.returnQuantity} </Text>
            <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,width:"100%",textAlign:'center',borderTop:"1px solid black"}}> {data?.returnQuantity}</Text>
      

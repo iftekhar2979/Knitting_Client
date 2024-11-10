@@ -1,6 +1,6 @@
 "use client"
 import { companyInformation } from '@/contents/companyInformation';
-import { useGetSingleBillQuery } from '@/lib/features/Invoice/invoiceApi';
+import { useGetSingleBillQuery, useUpdateBillNumberMutation } from '@/lib/features/Invoice/invoiceApi';
 import React, { useEffect, useState } from 'react';
 import BillTable from './BillTable';
 import Loading from '@/components/utils/Loading';
@@ -9,11 +9,12 @@ import { Button } from '@/components/ui/button';
 import useDocumentTitle from '@/hooksAndFunctions/useDocumentTitle';
 import MakingDollarConvert from "@/hooksAndFunctions/numberToWord"
 const BillStatement = ({ id }) => {
-
     const { data: bill, isLoading, isError } = useGetSingleBillQuery(id);
+    const [updateBillNumber]=useUpdateBillNumberMutation()
     let [block, setBlock] = useState(false)
     const [edit,setEdit]=useState(false)
-    useDocumentTitle(`Bill Number ${bill ? bill[0]?.billDetails?.billNumber : ""}`)
+    const [state,setState]=useState("")
+    // useDocumentTitle(`Bill Number ${bill ? bill[0]?.billDetails?.billNumber : ""}`)
     useEffect(() => {
         // Safely attempt to get the elementss
         const nav = document.getElementsByClassName("nav-back relative")[0];
@@ -35,16 +36,15 @@ const BillStatement = ({ id }) => {
     if (isLoading) {
         return <Loading />;
     }
-
     if (isError) {
-        return <div>Error loading bill data.</div>;
+        return <div>Error loading bill data .</div>;
     
     }
     // console.log(bill);
-    
-
+    const handleUpdateBillNumber=()=>{
+        updateBillNumber({id,billNumber:state})
+    }
     const handlePrint = () => {
-
         setBlock(true)
         setTimeout(() => {
             setBlock(false)
@@ -53,6 +53,7 @@ const BillStatement = ({ id }) => {
     }
 
     return (
+    
         <div>
             <section className='backgroundWaterMark bg-white'>
                 <div className='leading-4 text-black timesNewRoman'>
@@ -71,7 +72,7 @@ const BillStatement = ({ id }) => {
                    <div className="flex justify-between">
                     <div className=' my-4 '>
                         <div className='flex justify-between mt-2 '>
-                            <div className="flex "> <span className="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(bill[0].billDetails.createdAt), 'PP')}</span></div>
+                            <div className="flex "> <span className="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(bill[0]?.billDetails?.createdAt), 'PP')}</span></div>
                         </div>
                         <div ><span className="ml-2 widthHeading mt-2">To</span> <span className=''>: {bill[0]?.companyName}</span>
                         </div>
@@ -83,7 +84,7 @@ const BillStatement = ({ id }) => {
 
                     <div className='flex justify-between mt-2 '>
                             {/* <div className="flex "><span className="ml-2 widthHeading">Bill Number </span> <span className='ml-[5px]'> : {bill[0].billDetails.billNumber}</span></div> */}
-                            {!edit ? <h2 class="" onClick={() => setEdit(true)}>Bill Number : {bill[0].billDetails.billNumber}</h2> : <div className=''>Bill Number : <input type='text' defaultValue={bill[0].billDetails.billNumber} /></div>}
+                            {!edit ? <h2 class="" onClick={() => setEdit(true)}>Bill Number : {bill[0].billDetails.billNumber}</h2> : <div className=''>Bill Number : <input type='text' onBlur={handleUpdateBillNumber} onChange={(e)=>setState(e.target.value)} defaultValue={bill[0].billDetails.billNumber} /></div>}
                         </div>
                         </div>
                 </div>

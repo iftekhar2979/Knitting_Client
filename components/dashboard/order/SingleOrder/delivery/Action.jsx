@@ -7,7 +7,7 @@ import { addingId } from "@/lib/features/Chalan/chalanSlice";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useState } from "react";
 import Chalan from "@/components/dashboard/chalan/chalan";
-import { useCreateBillFromChalanMutation, useDeleteDeliveryMutation } from "@/lib/features/delivery/deliveryApi";
+import { useCreateBillFromChalanMutation, useDeleteDeliveryBillMutation, useDeleteDeliveryMutation } from "@/lib/features/delivery/deliveryApi";
 import { FaFileInvoice, FaEye } from "react-icons/fa";
 import { Popover } from "@radix-ui/react-popover";
 import { PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -19,12 +19,15 @@ import { clearingSelectedValue } from "@/lib/features/Invoice/invoiceSlice";
 import Model from "@/components/utils/Model";
 import { DialogClose } from "@radix-ui/react-dialog";
 import Link from "next/link";
+import { FaDeleteLeft } from "react-icons/fa6";
+import { TiDelete } from "react-icons/ti";
 const Action = ({ id, actionName,billAction ,chalanInfo}) => {
     const [open, setOpen] = useState(false)
     const [action ,setAction]=useState("Delete")
     const [unitPrice,setUnitPrice]=useState(0)
     const [deleteDelivery,{isLoading,isError}] = useDeleteDeliveryMutation()
     const [createBillForChalan]=useCreateBillFromChalanMutation()
+    const [deleteDeliveryBill,{isLoading:isDeletingLoading,isError:i}]=useDeleteDeliveryBillMutation()
     const [chalanName, setChalanName] = useState("")
     const dispatch = useAppDispatch()
     const handleChalan = (chalanId) => {
@@ -54,9 +57,11 @@ const Action = ({ id, actionName,billAction ,chalanInfo}) => {
                 </PopoverTrigger>
                 <PopoverContent className="w-44">
                     <div className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer" onClick={() => handleChalan(id)} ><FaEye size={24} color={"green"} className="cursor-pointer" /> <span className="mx-2">Chalan</span></div>
-                    <DialogTrigger>  <div className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer" onClick={()=>setAction("bill")}><FaFileInvoice /><span className="mx-2">Make Bill</span></div> </DialogTrigger>
-                  {chalanInfo?.unitPrice &&  <Link href={`/dashboard/bill/${id}`} className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer" onClick={() => handleChalan(id)} ><FaEye size={24} color={"green"} className="cursor-pointer" /> <span className="mx-2">Go to Bill</span></Link>}
-                    <DialogTrigger>  <div className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer" onClick={()=>setAction("delete")}><MdDelete size={24} color={"red"} className="cursor-pointer" /> <span className="mx-2">Delete</span></div></DialogTrigger>
+                {!chalanInfo?.unitPrice &&    <DialogTrigger>  <div className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer" onClick={()=>setAction("bill")}><FaFileInvoice /><span className="mx-2">Make Bill</span></div> </DialogTrigger>}
+                  {chalanInfo?.unitPrice &&  <Link href={`/dashboard/bill/${id}`}  className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer" onClick={() => handleChalan(id)} ><FaEye size={24} color={"green"} className="cursor-pointer" /> <span className="mx-2">Go to Bill</span></Link>}
+                    
+                  {chalanInfo?.unitPrice &&  <DialogTrigger  className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer" onClick={()=>setAction("removebill")} ><TiDelete size={24} color={"red"} className="cursor-pointer" /><span className="mx-2">Remove Bill </span></DialogTrigger>}
+                    <DialogTrigger>  <div className="flex mx-2 my-2 hover:bg-gray-200 cursor-pointer" onClick={()=>setAction("delete")}><MdDelete size={24} color={"red"} className="cursor-pointer" /> <span className="">Remove Chalan</span></div></DialogTrigger>
                 
                     </PopoverContent>
             </Popover>
@@ -79,7 +84,11 @@ const Action = ({ id, actionName,billAction ,chalanInfo}) => {
             </DialogContent>
     
     </>
-    :
+   : action === "removebill" ? (
+    <>
+          <DeleteModal title={"Are you sure you want to remove the bill associated with Chalan"} property={id} id={id} setOpen={setOpen} isLoading={isDeletingLoading}  deleteQueryFn={deleteDeliveryBill}/>
+    </>
+)  :
     <>
     <DeleteModal title={"Do You Want To Remove Chalan"} property={id} id={id} setOpen={setOpen} isLoading={isLoading}  deleteQueryFn={deleteDelivery}/>
     </>
