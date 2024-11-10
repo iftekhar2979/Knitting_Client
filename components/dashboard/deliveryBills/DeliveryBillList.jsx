@@ -6,6 +6,7 @@ import Loading from '@/components/utils/Loading'
 import { columns } from './columns'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import Error from '@/components/utils/Error'
 
 export default function DeliveryBillList() {
     const {data,isLoading,isError,error}=useGetAllDeliveryBillsQuery()
