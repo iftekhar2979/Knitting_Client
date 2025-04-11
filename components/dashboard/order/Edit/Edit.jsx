@@ -17,7 +17,7 @@ if(isLoading){
     return (
      <>
 
-     {data?.restQuantity ===data?.orderQuantity   ?
+     {/* {data?.restQuantity ===data?.orderQuantity   ? */}
      <>
       <div className="my-4 border rounded-md shadow-sm p-10">
                     <h2 className="py-2 px-4">Company Name : <span className="border-b py-2 px-4 font-extrabold">{data?.company?.companyName}</span></h2>
@@ -27,15 +27,8 @@ if(isLoading){
      </div>
      <EditOrder id={id} data={data}/>
      </>
-     :
-     <>
-     <Error data={"Your order is in pending stage or fullfilled stage. You can't edit any Order while pending . For editing the order you have to delete all deliveries of this Order "}/>
-    <div  className="flex justify-center">
-     <Link href={`/dashboard/order/${id}/delivery`} className="text-blue-300 text-center underline text-2xl">Go To the Link for deleting all Deliveries</Link>
-
-    </div>
-    </>
-    }
+  
+  
      </>
     )
 }

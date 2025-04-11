@@ -156,8 +156,16 @@ const { data: product, isLoading: productLoading, error: productError, isError: 
 
     async function onSubmit(data) {
         const {companyId, companyName}=companyInfo
-        const body = { companyId,companyName, ...buyerInfo, ...fabricsInfo, orderQuantity: parseFloat(quantity),restQuantity:parseFloat(quantity), targetDate: date, ...data }
-        console.log("body",body)
+let oldQty=orderInfo.orderQuantity
+let newQty= parseFloat(quantity)
+let newRestQty=orderInfo.restQuantity
+console.log(newRestQty)
+if(oldQty<newQty){
+newRestQty+=newQty-oldQty
+}else{
+    newRestQty-=oldQty-newQty
+}      
+        const body = { companyId,companyName, ...buyerInfo, ...fabricsInfo, orderQuantity: parseFloat(quantity),restQuantity:newRestQty, targetDate: date, ...data }
         editOrder({id,body})
     }
 
