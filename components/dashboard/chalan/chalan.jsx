@@ -30,7 +30,7 @@ Font.register({
 // console.log("details",order?.details)
 const Chalan = ({ id, data }) => {
   if (id) {
-    const { createdAt, deliveredQuantity, deliveredBy, order,roleQuantity,vechileNumber } = data
+    const { createdAt, deliveredQuantity, deliveredBy, order,roleQuantity,vechileNumber,colour='' } = data
     return (
 
       <Document>
@@ -56,7 +56,7 @@ const Chalan = ({ id, data }) => {
               {order?.bookingNumber ? <Text style={styles.childrenChalanInfo}>Booking No : {order?.bookingNumber}</Text> : ""}
               {order?.jobNumber ? <Text style={styles.childrenChalanInfo}>Job No : {order?.jobNumber}</Text> : ""}
               {order?.programNumber ? <Text style={styles.childrenChalanInfo}>Program No : {order?.programNumber}</Text> : ""}
-
+              {/* {colour ? <Text style={styles.childrenChalanInfo}>Program No : {color}</Text> : ""} */}
             </View>
             <View style={{ width: '30%', marginLeft: 40, fontSize: 14, display: 'flex', flexDirection: 'column' }}>
               <Text style={{}}>Date : {format(createdAt, "PP")}</Text>
@@ -73,28 +73,14 @@ const Chalan = ({ id, data }) => {
             <View style={{ width: "6%", height: "100%", borderRight: "1px solid black" }}>
 
               <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, paddingTop: 4, borderBottom: "1px solid black" }}>SL.</Text>
-              {/* <Text style={styles.descOfGoods}>1.</Text>
-              <Text style={styles.descOfGoods}>2.</Text>
-              <Text style={styles.descOfGoods}>3.</Text>
-              <Text style={styles.descOfGoods}>4.</Text>
-              <Text style={styles.descOfGoods}>5.</Text>
-              <Text style={styles.descOfGoods}>6.</Text>
-              <Text style={styles.descOfGoods}>7.</Text>
-              <Text style={styles.descOfGoods}>8.</Text>
-              <Text style={styles.descOfGoods}>9.</Text>
-              <Text style={styles.descOfGoods}>10.</Text>
-              <Text style={styles.descOfGoods}>11.</Text>
-              {order?.details?.polyStarBrand ?<Text style={styles.descOfGoods}>12.</Text>
-              {order?.details?.polyStarLot ?<Text style={styles.descOfGoods}>13.</Text>:""}
-              {order?.details?.mc_DIA ?<Text style={styles.descOfGoods}>14.</Text>:""}
-              {order?.details?.e_DIA ?<Text style={styles.descOfGoods}>15.</Text>:""} */}
+          
             <Text style={{textAlign:'left',height:"3%",width:32,position:'absolute',top:400,fontSize:12,paddingTop:4,textAlign:'center',borderTop:"1px solid black"}}></Text>
             </View>
             <View style={{ width: "37%", height: "100%", borderRight: "1px solid black" }}>
               <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, borderBottom: "1px solid black", paddingTop: 4 }}>Description of Goods</Text>
               {order?.details?.sl?<Text style={styles.descOfGoods}>Sl : {order?.details?.sl}</Text>:""}
               {order?.details?.style?<Text style={styles.descOfGoods}>Style : {order?.details?.style}</Text>:""}
-              {order?.details?.colour?<Text style={styles.descOfGoods}>Color : {order?.details?.colour}</Text>:""}
+              {order?.details?.colour?<Text style={styles.descOfGoods}>Color : {colour}</Text>:""}
               {order?.details?.f_GSM ?<Text style={styles.descOfGoods}>Fabrics Gsm : {order?.details?.f_GSM}</Text>:""}
               {order?.details?.yarnCount?<Text style={styles.descOfGoods}>Yarn Count : {order?.details?.yarnCount}</Text>:""}
               {order?.details?.yarnLot?<Text style={styles.descOfGoods}>Yarn Lot : {order?.details?.yarnLot}</Text>:""}

@@ -162,7 +162,14 @@ export function AddOrder({}) {
             return
         }
         const body = { userId:userInfo?.data?.id, companyId, companyName, ...buyerInfo, ...fabricsInfo, unit: unit, orderQuantity: parseFloat(quantity), restQuantity: parseFloat(quantity), targetDate: date, ...data }
-        addOrder(body)
+        addOrder(body).then(res=>{
+            if(res.data){
+                  Swal.fire({ title: 'success!',
+                                        text: 'Order created successfully!',
+                                        icon: 'success',
+                                        confirmButtonText: 'Cool' })
+            }
+        })
     }
 
     return (

@@ -22,7 +22,7 @@ import DeleteModal from "@/components/dashboard/company/Modal/DeleteModal";
 const SingleYarnInfo = ({ item }) => {
   // const [dynamicRestQuantity, setDynamicRestQuantity] = useState(0)
   const [addYarnReceived] = useAddYarnReceivedMutation()
-  const [retrunVal,setReturnVal]=useState({amount:0,role:"",vechileNumber:"",deliveredBy:""})
+  const [retrunVal,setReturnVal]=useState({amount:0,role:"",vechileNumber:"",deliveredBy:"",wasteQuantity:0})
   const [deleteYarnDetails, { isLoading }] = useDeleteYarnDetailsMutation()
   const { id, company: { companyName,location }, yarnType,descriptionOfYarn, ReceivingQuantity, restQuantity, updatedAt = '', createdAt, yarnInformationWithDetails = [] } = item
   const handleDelivery = (e) => {
@@ -73,6 +73,8 @@ const SingleYarnInfo = ({ item }) => {
                   <div className="my-4">
                     <Label>Return Quantity : </Label>
                     <Input type="number" placeholder="Return Quantity.."  name="amount"  className="inline" onChange={(e) => handleReturn(e)} />
+                    <Label>Total Waste : </Label>
+                    <Input type="number" placeholder="Return Quantity.."  name="waste"  className="inline" onChange={(e) => handleReturn(e)} />
                     <Label>Role : </Label>
                     <Input type="text" placeholder="Role Quantity.." name="role" className="inline" onChange={(e) => handleReturn(e)} />
                     <Label>Vechile No : </Label>

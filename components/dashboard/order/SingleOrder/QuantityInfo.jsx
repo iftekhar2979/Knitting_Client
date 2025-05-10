@@ -12,8 +12,9 @@ import { useGetAllDeliveryManQuery } from "@/lib/features/delivery/deliveryApi";
 import { FaFirstOrder, FaReceipt, FaSpinner, FaTruckPickup } from "react-icons/fa6";
 import { MdCardTravel, MdCarRental, MdDeliveryDining, MdPerson, MdPersonPinCircle, MdProductionQuantityLimits, MdRollerShades } from "react-icons/md";
 import { Bs6Square, BsBorderOuter, BsTruck } from "react-icons/bs";
-import { FaFirstOrderAlt, FaProductHunt, FaRestroom, FaTruck, FaTruckLoading } from "react-icons/fa";
+import { FaFirstOrderAlt, FaInfoCircle, FaProductHunt, FaRestroom, FaTruck, FaTruckLoading } from "react-icons/fa";
 import { BiReset } from "react-icons/bi";
+import Swal from "sweetalert2";
 
 
 const QuantityInfo = ({ id }) => {
@@ -23,6 +24,7 @@ const QuantityInfo = ({ id }) => {
     const [role, setRole] = useState("")
     const [deliveryQuantity, setDeliveryQuantity] = useState("")
     const [deliveryMan, setDeliveryMan] = useState("")
+    const [colour,setColour]=useState("")
 
     useEffect(() => {
 
@@ -59,9 +61,9 @@ const QuantityInfo = ({ id }) => {
             roleQuantity: parseFloat(role),
             amount: deliveryQuantity,
             from: parseFloat(id),
-            status
+            status,
+            colour
         }
-        console.log(query)
 
         createDelivery(query)
             .then(res => {
@@ -70,7 +72,27 @@ const QuantityInfo = ({ id }) => {
                     setDeliveryMan("")
                     setRole("")
                     setVechile("")
+                    setColour("")
+
+                    Swal.fire({
+                        title: 'success!',
+                        text: 'Delivery created successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'Cool'
+                      })
+
+                      console.log(res.data)
                 }
+            })
+            .catch(err=>{
+                
+                console.log(err)
+                Swal.fire({
+                    title: 'Sorry !',
+                    text:err.message,
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                  })
             })
 
     }
@@ -115,6 +137,7 @@ const QuantityInfo = ({ id }) => {
                             </div>
                             <Input type="text" placeholder="Delivery Man " name="role" onChange={(e) => setDeliveryMan(e.target.value)} className="" />
                         </div>
+                        
                     </div>
                     <div className='px-6 flex flex-row md:flex-col justify-between md:justify-center '>
                         <div className='my-2 h-16'>
@@ -150,10 +173,19 @@ const QuantityInfo = ({ id }) => {
 
                             <Input type="text" placeholder="Vechile Number" name="vechileNumber" onChange={(e) => handleVechile(e)} className="" />
                         </div>
-
+                       
                     </div>
                 </div>
+              <div className="w-1/2 p-8">
+              <div className='my-2 h-16'>
+                            <div className="flex items-center">
+                                <FaInfoCircle color="black" />
+                                <h2 className="px-2"> Colour</h2>
+                            </div>
 
+                            <Input type="text" placeholder="Colour" name="colour" onChange={(e) => setColour(e.target.value)} className="" />
+                        </div>
+              </div>
                 <div className="flex justify-center my-4">
 
                     <Button onClick={handleSendDelivery} className="bg-active-color mx-4">{deliveryLoading ?

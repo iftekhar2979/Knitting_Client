@@ -8,7 +8,6 @@ import ReturnChalan from "./Return/ReturnChalan"
 const InfoOfYarn = ({ anotherInfo,item, index }) => {
     const [deleteYarnInfoWithDetail, { isError }] = useDeleteYarnInfoWithDetailMutation()
     const { returnQuantity, createdAt, id, yarnInfoID } = item
-    console.log(anotherInfo)
     const handleDelete = () => {
         deleteYarnInfoWithDetail(id)
     }

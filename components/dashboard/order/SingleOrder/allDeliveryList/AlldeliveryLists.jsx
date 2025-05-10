@@ -4,10 +4,19 @@ import Error from '@/components/utils/Error';
 import Loading from '@/components/utils/Loading';
 import { useGetAllDeliveryQuery, } from '@/lib/features/delivery/deliveryApi';
 import { columns } from './columns';
+import { useState } from 'react';
 
 const AllDeliveryLists = ({}) => {
-
-    const {data,isLoading,isError,error}=useGetAllDeliveryQuery()
+    const [pageIndex, setPageIndex] = useState(0); // 0-based index
+    const [pageSize, setPageSize] = useState(50);
+  
+    const { data, isLoading, isError, error } = useGetAllDeliveryQuery({
+      page: pageIndex + 1,
+      limit: pageSize,
+    }, {
+      refetchOnMountOrArgChange: true,
+    });
+  
     if(isLoading){
         return <Loading/>
     }
@@ -16,8 +25,18 @@ const AllDeliveryLists = ({}) => {
     }
     return (
         <>
-     <DataTable columns={columns} data={data} searchingValue={"id"} placeholder={"Filter With Chalan No..."}> 
-      </DataTable>
+
+         <DataTable
+              columns={columns}
+              data={data?.data || []}
+              total={data?.total || 0}
+              pageIndex={pageIndex}
+              pageSize={pageSize}
+              onPageChange={setPageIndex}
+              onPageSizeChange={setPageSize}
+              searchingValue={"id"}
+              placeholder={"Filter with Order Number..."}
+            />
         </>
     )
 };
