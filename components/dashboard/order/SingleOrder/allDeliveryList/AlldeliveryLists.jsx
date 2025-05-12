@@ -35,7 +35,7 @@ const AllDeliveryLists = ({}) => {
               onPageChange={setPageIndex}
               onPageSizeChange={setPageSize}
               searchingValue={"id"}
-              placeholder={"Filter with Order Number..."}
+              placeholder={"Filter with Chalan Number..."}
             />
         </>
     )

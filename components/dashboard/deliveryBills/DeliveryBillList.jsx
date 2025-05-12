@@ -1,6 +1,6 @@
 "use client"
 import { useGetAllDeliveryBillsQuery } from '@/lib/features/delivery/deliveryApi'
-import React from 'react'
+import React, { useState } from 'react'
 import { DataTable } from '../company/DataTable'
 import Loading from '@/components/utils/Loading'
 import { columns } from './columns'
@@ -9,7 +9,17 @@ import { usePathname } from 'next/navigation'
 import Error from '@/components/utils/Error'
 
 export default function DeliveryBillList() {
-    const {data,isLoading,isError,error}=useGetAllDeliveryBillsQuery()
+    const [pageIndex, setPageIndex] = useState(0); // 0-based index
+        const [pageSize, setPageSize] = useState(50);
+    
+      
+        const { data, isLoading, isError, error } = useGetAllDeliveryBillsQuery({
+          page: pageIndex + 1,
+          limit: pageSize,
+        }, {
+          refetchOnMountOrArgChange: true,
+        });
+    // const {data,isLoading,isError,error}=useGetAllDeliveryBillsQuery()
     const pathname=usePathname()
     if(isLoading){
         return <Loading/>
@@ -28,8 +38,18 @@ export default function DeliveryBillList() {
       Chalan Bill
   </Link>
 </div>
-   <DataTable columns={columns} data={data} />
-   
+   {/* <DataTable columns={columns} data={data} /> */}
+   <DataTable
+         columns={columns}
+         data={data?.data || []}
+         total={data?.total || 0}
+         pageIndex={pageIndex}
+         pageSize={pageSize}
+         onPageChange={setPageIndex}
+         onPageSizeChange={setPageSize}
+         searchingValue={"bill number"}
+         placeholder={"Filter with PI Number.."}
+       />
    </>
   )
 }

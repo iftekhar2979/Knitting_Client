@@ -7,7 +7,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import ReturnChalan from "./Return/ReturnChalan"
 const InfoOfYarn = ({ anotherInfo,item, index }) => {
     const [deleteYarnInfoWithDetail, { isError }] = useDeleteYarnInfoWithDetailMutation()
-    const { returnQuantity, createdAt, id, yarnInfoID } = item
+    const { returnQuantity, createdAt, id, yarnInfoID ,westQuantity} = item
     const handleDelete = () => {
         deleteYarnInfoWithDetail(id)
     }
@@ -16,6 +16,7 @@ const InfoOfYarn = ({ anotherInfo,item, index }) => {
             <div className="border-t flex">
                 <span className="font-mono ">{index + 1}.</span>
                 <span className="border-r px-2 font-mono ">Returned Quantity : {returnQuantity} KG </span>
+                <span className="border-r px-2 font-mono ">Process Loss : {westQuantity} KG </span>
                 <span className="border-r px-1 font-mono ">  Date : {createdAt && format(createdAt, "PPp")} </span>
                 <button className="border-r font-mono cursor-pointer" onClick={handleDelete}> <MdDelete size={22} color={"red"} /></button>
                 <button className="border-r font-mono cursor-pointer"  >

@@ -29,7 +29,7 @@ Font.register({
 });
 const ReturnChalan = ({ id,anotherInfo, data }) => {
   if (id) {
-    const { createdAt, returnQuantity, deliveredBy, order,role,vechileNumber } = data
+    const { createdAt, returnQuantity,westQuantity, deliveredBy, order,role,vechileNumber } = data
     return (
 
       <Document>
@@ -72,6 +72,7 @@ const ReturnChalan = ({ id,anotherInfo, data }) => {
             <View style={{ width: "60%", height: "100%", borderRight: "1px solid black" }}>
               <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, borderBottom: "1px solid black", paddingTop: 4 }}>Description of Yarn</Text>
               <Text style={{ textAlign: 'left',  fontSize: 12, padding: 10, }}>{anotherInfo?.descriptionOfYarn} </Text>
+              <Text style={{ textAlign: 'left',  fontSize: 12, padding: 10,marginTop:200 }}>Process Loss </Text>
               <Text style={{textAlign:'left',height:"5%",width:"100%",position:'absolute',paddingTop:7,top:400,fontSize:12,textOverflow:"hidden",textAlign:'center',borderTop:"1px solid black"}}>Total</Text>
             </View>
             <View style={{ width: "10%", height: "100%", borderRight: "1px solid black" }}>
@@ -81,8 +82,10 @@ const ReturnChalan = ({ id,anotherInfo, data }) => {
             </View>
             <View style={{ width: "33%", height: "100%", borderRight: "1px solid black" }}>
               <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, paddingTop: 4, borderBottom: "1px solid black" }}>Quantity (KG)</Text>
-           <Text style={{ textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4, marginTop: 200, textAlign: 'center' }}>{data?.returnQuantity} </Text>
-           <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,width:"100%",textAlign:'center',borderTop:"1px solid black"}}> {data?.returnQuantity}</Text>
+              
+           <Text style={{ textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4,marginTop:10,  textAlign: 'center' }}> {data?.returnQuantity}  </Text>
+           <Text style={{ textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4, marginTop: 230, textAlign: 'center' }}>  {data?.westQuantity} </Text>
+           <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,width:"100%",textAlign:'center',borderTop:"1px solid black"}}> {data?.returnQuantity + data?.westQuantity}</Text>
      
             </View>
             {/* <View style={{ width: "15%", height: "100%", borderRight: "1px solid black" }}>
