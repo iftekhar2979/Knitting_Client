@@ -48,7 +48,7 @@ const PIList = (props) => {
       onPageChange={setPageIndex}
       onPageSizeChange={setPageSize}
       searchingValue={"billNumber"}
-      placeholder={"Filter with PI Number.."}
+      placeholder={"Filter with Bill Number.."}
     />
 
         {/* <DataTable columns={columns} data={data} searchingValue={"piNumber"} placeholder={"Filter with PI Number..."}>
