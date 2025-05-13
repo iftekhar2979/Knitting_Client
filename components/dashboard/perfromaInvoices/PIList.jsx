@@ -27,7 +27,6 @@ const PIList = (props) => {
     if(isError){
         return <Error data={"Fetching Data Error !!! Please try again and contact your software Provider"}/>
     }
-    console.log(pathname)
     return (
         <>
 <div className="border flex items-center">
