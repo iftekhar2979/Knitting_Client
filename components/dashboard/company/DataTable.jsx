@@ -37,8 +37,10 @@ export function DataTable({
   pageSize,
   onPageChange,
   onPageSizeChange,
+  onFilterChange,
   searchingValue,
   placeholder,
+  manualFiltering = false,
 }) {
   const [sorting, setSorting] = useState([])
   const [columnFilters, setColumnFilters] = useState([])
@@ -47,6 +49,7 @@ export function DataTable({
     data,
     columns,
     manualPagination: true,
+    manualFiltering: manualFiltering,
     pageCount: Math.ceil(total / pageSize),
     state: {
       pagination: {
@@ -62,23 +65,31 @@ export function DataTable({
       if (next.pageSize !== pageSize) onPageSizeChange(next.pageSize)
     },
     onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onColumnFiltersChange: (updater) => {
+      const next = typeof updater === "function" ? updater(columnFilters) : updater
+      setColumnFilters(next)
+      if (onFilterChange) {
+        onFilterChange(next)
+      }
+    },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(), // optional if using client-side filters
+    getFilteredRowModel: getFilteredRowModel(), 
   })
 
   return (
     <div className="rounded-md border">
       <div className="flex items-center py-4 px-4">
-        <Input
-          placeholder={placeholder}
-          value={(table.getColumn(searchingValue)?.getFilterValue()) ?? ""}
-          onChange={(event) =>
-            table.getColumn(searchingValue)?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        {searchingValue && (
+          <Input
+            placeholder={placeholder}
+            value={(table.getColumn(searchingValue)?.getFilterValue()) ?? ""}
+            onChange={(event) =>
+              table.getColumn(searchingValue)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
       </div>
       <Table className="text-[9pt]">
         <TableHeader className="text-[9pt]">
@@ -126,7 +137,7 @@ export function DataTable({
               <SelectValue />
             </SelectTrigger>
             <SelectContent side="top">
-              {[5,10, 20, 30, 50].map((size) => (
+              {[5,10, 20, 30, 50, 100].map((size) => (
                 <SelectItem key={size} value={`${size}`}>
                   {size}
                 </SelectItem>

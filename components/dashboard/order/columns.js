@@ -1,11 +1,8 @@
 "use client"
-import Link from 'next/link';
-import { MdDelete } from "react-icons/md"
-import { format } from "date-fns"
-import { RiArrowUpDownFill } from 'react-icons/ri';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import InputDropDown from '@/components/utils/InputDropDown';
+import { format } from "date-fns";
+import Link from 'next/link';
+import { RiArrowUpDownFill } from 'react-icons/ri';
 import Action from './Action';
 
 
@@ -278,6 +275,7 @@ export const columns = [
                     <div >
                         <select
                             className={""}
+                            defaultValue={"ALL"}
                             onChange={(event) => { column?.setFilterValue(event.target.value) }}
                         >
                             <option disabled selected>Status</option>
