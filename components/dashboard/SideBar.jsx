@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { Button } from '@/components/ui/button';
 import { removeCredentials, setSidebarOnDesboard } from '@/lib/features/user/userSlice';
 import { useLogoutMutation } from '@/lib/features/user/userApiSlice';
+import { FiX } from 'react-icons/fi';
 
 const companySection = [
     { id: 510, routeName: "addCompany", value: "Add Company", icon: <BsBuildingAdd /> },
@@ -37,6 +38,8 @@ const dashboardSection = [
     { id: 520, routeName: "dashboard", value: "Dashboard", icon: <MdDashboardCustomize /> }
 ];
 
+import { motion } from 'framer-motion';
+
 const SideBar = () => {
     const pathName = usePathname();
     const router = useRouter()
@@ -58,10 +61,22 @@ const SideBar = () => {
         setSelectedRoute(currentRoute);
     }, [pathName, handleLogOut]);
 
+    const handleCloseSidebar = () => {
+        dispatch(setSidebarOnDesboard(isSidebarOpenOnDashboard));
+    }
+
 
     return (
-        <div className={`flex flex-col h-screen bg-white dark:bg-gray-900  sm:pl-6`}>
+        <motion.div 
+            initial={{ x: -300, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className={`flex flex-col h-screen w-64 bg-white dark:bg-gray-900 border-r border-gray-100 sm:pl-6 relative`}
+        >
             <div className="flex flex-col justify-between flex-1 mt-6">
+                <div className="absolute right-4 top-2 sm:hidden">
+                    <FiX size={24} className="cursor-pointer text-gray-500" onClick={handleCloseSidebar} />
+                </div>
                 <nav className=" space-y-2">
                     <div className="space-y-3">
                         <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Analytics</label>
@@ -99,11 +114,11 @@ const SideBar = () => {
                         </div>
                     }
                     {
-                        userInfo ? <Button onClick={handleLogOut} className="bg-active-color">Log Out</Button> : ""
+                        userInfo ? <Button onClick={handleLogOut} className="bg-active-color w-full mt-4">Log Out</Button> : ""
                     }
                 </nav>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

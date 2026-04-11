@@ -1,37 +1,33 @@
 "use client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { date, number, z } from "zod"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
-    FormMessage,
+    FormMessage
 } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { CalendarIcon } from "lucide-react"
-import { Calendar } from "@/components/ui/calendar"
-import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
-import { useGetCompanyQuery } from "@/lib/features/company/companyApi"
-import { useAddOrderMutation, useEditOrderMutation, useGetOrderQuery, useGetSingleOrderQuery } from "@/lib/features/order/orderApi"
-import { toast, useToast } from "@/components/ui/use-toast"
-import InputDropDown from "@/components/utils/InputDropDown"
-import { useState } from "react"
-import { useGetProductQuery } from "@/lib/features/Product/productApi"
-import { Label } from "@/components/ui/label"
-import Loading from "@/components/utils/Loading"
-import { EditOrderDetails } from "./EditOrderDetails"
+import { toast } from "@/components/ui/use-toast"
 import Error from "@/components/utils/Error"
+import InputDropDown from "@/components/utils/InputDropDown"
+import { useGetCompanyQuery } from "@/lib/features/company/companyApi"
+import { useEditOrderMutation } from "@/lib/features/order/orderApi"
+import { useGetProductQuery } from "@/lib/features/Product/productApi"
+import { useState } from "react"
+import { EditOrderDetails } from "./EditOrderDetails"
 
 
 
@@ -168,7 +164,21 @@ newRestQty+=newQty-oldQty
         const body = { companyId,companyName, ...buyerInfo, ...fabricsInfo, orderQuantity: parseFloat(quantity),restQuantity:newRestQty, targetDate: date, ...data }
         editOrder({id,body})
     }
-
+useEffect(() => {
+    if (isSuccess) {
+        toast({
+            title: "Success",
+            description: "Order updated successfully",
+        })
+        form.reset()
+    }
+    if (isError) {
+        toast({
+            title: "Error",
+            description: "Failed to update order",
+        })
+    }
+}, [isSuccess, isError])
 
     return (
         <div className="w-full my-4 flex flex-col  justify-center">

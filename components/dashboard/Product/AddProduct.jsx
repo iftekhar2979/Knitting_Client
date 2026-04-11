@@ -1,12 +1,12 @@
 "use client"
-import { FormControl, FormField, FormItem, FormLabel, FormMessage,Form } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { useAddProductMutation } from '@/lib/features/Product/productApi';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from "zod"
-import { useForm } from "react-hook-form"
-import { Button } from '@/components/ui/button';
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const FormSchema = z.object({
     fabricsName: z.string().min(2, {
@@ -46,7 +46,21 @@ const AddProduct = (props) => {
     async function onSubmit(data) {
       addProduct(data)
     }
-  
+    useEffect(() => {
+      if (isSuccess) {
+        toast({
+          title: "Success",
+          description: "Product added successfully",
+        })
+        form.reset()
+      }
+      if (isError) {
+        toast({
+          title: "Error",
+          description: "Failed to add product",
+        })
+      }
+    }, [isSuccess, isError])
     return (
         <section className='my-4 w-full lg:w-1/2  md:w-full'>
         <Form {...form}>

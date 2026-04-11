@@ -18,61 +18,61 @@ const Services = (props) => {
                                 <div className="grid gap-x-6 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                                     <div className="mb-6">
                                         <p className="flex items-center">
-                                            <TiTick color="green" size={40} />
+                                            <TiTick className="text-brand-green" size={40} />
                                             Custom Design Service
                                         </p>
                                     </div>
 
                                     <div className="mb-6">
                                         <p className="flex items-center">
-                                            <TiTick color="green" size={40} />
+                                            <TiTick className="text-brand-green" size={40} />
                                             Pattern Development
                                         </p>
                                     </div>
 
                                     <div className="mb-6">
                                         <p className="flex items-center">
-                                            <TiTick color="green" size={40} />
+                                            <TiTick className="text-brand-green" size={40} />
                                             Yarn Sourcing
                                         </p>
                                     </div>
                                     <div className="mb-6">
                                         <p className="flex items-center">
-                                            <TiTick color="green" size={40} />
+                                            <TiTick className="text-brand-green" size={40} />
                                             Sample Knitting
                                         </p>
                                     </div>
 
                                     <div className="mb-6">
                                         <p className="flex items-center">
-                                            <TiTick color="green" size={40} />
+                                            <TiTick className="text-brand-green" size={40} />
                                             Bulk Production
                                         </p>
                                     </div>
 
                                     <div className="mb-6">
                                         <p className="flex items-center">
-                                            <TiTick color="green" size={40} />
+                                            <TiTick className="text-brand-green" size={40} />
                                             Finishing Services
                                         </p>
                                     </div>
                                     <div className="mb-6">
                                         <p className="flex items-center">
-                                            <TiTick color="green" size={40} />
+                                            <TiTick className="text-brand-green" size={40} />
                                             Packaging and Branding
                                         </p>
                                     </div>
 
                                     <div className="mb-6">
                                         <p className="flex items-center">
-                                            <TiTick color="green" size={40} />
+                                            <TiTick className="text-brand-green" size={40} />
                                             Logistics Support
                                         </p>
                                     </div>
 
                                     <div className="mb-6">
                                         <p className="flex items-center">
-                                            <TiTick color="green" size={40} />
+                                            <TiTick className="text-brand-green" size={40} />
                                             After-Sales Support
                                         </p>
                                     </div>
