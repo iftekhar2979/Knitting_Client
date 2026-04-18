@@ -34,7 +34,7 @@ const UserContext = ({ children }) => {
     // });
   }, [userInformation]);
   const object = {
-   setUser, user, loading, isLoading
+    setUser, user, loading, isLoading
   }
 
   return (
