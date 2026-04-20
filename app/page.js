@@ -1,5 +1,4 @@
-
-import Clients from "@/components/Home/Clients";
+import Collections from "@/components/Home/Collections";
 import Feature from "@/components/Home/Feature";
 import Footer from "@/components/Home/Footer";
 import Hero from "@/components/Home/Hero";
@@ -12,8 +11,9 @@ export default function Home() {
     <main className="">
       <Hero />
       <Feature />
+      <Collections />
       <Services />
-      <Clients />
+      {/* <Clients /> */}
       <section className="mb-32">
         <div className="relative h-[300px] overflow-hidden bg-cover bg-[50%] bg-no-repeat bg-[url('https://mdbcdn.b-cdn.net/img/new/textures/full/284.jpg')]"></div>
         <div className="container px-6 md:px-12">

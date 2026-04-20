@@ -1,37 +1,29 @@
 "use client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { date, number, z } from "zod"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
+
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
-    FormMessage,
+    FormMessage
 } from "@/components/ui/form"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import { CalendarIcon } from "lucide-react"
-import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
-import { useGetCompanyQuery } from "@/lib/features/company/companyApi"
-import { useAddOrderMutation, useEditOrderMutation, useGetOrderQuery, useGetSingleOrderQuery } from "@/lib/features/order/orderApi"
-import { toast, useToast } from "@/components/ui/use-toast"
-import InputDropDown from "@/components/utils/InputDropDown"
-import { useState } from "react"
-import { useGetProductQuery } from "@/lib/features/Product/productApi"
 import { Label } from "@/components/ui/label"
-import Loading from "@/components/utils/Loading"
-import { EditOrderDetails } from "./EditOrderDetails"
+
+import { toast } from "@/components/ui/use-toast"
 import Error from "@/components/utils/Error"
+import InputDropDown from "@/components/utils/InputDropDown"
+import { useGetCompanyQuery } from "@/lib/features/company/companyApi"
+import { useEditOrderMutation } from "@/lib/features/order/orderApi"
+import { useGetProductQuery } from "@/lib/features/Product/productApi"
+import { useState } from "react"
+import { EditOrderDetails } from "./EditOrderDetails"
 
 
 
@@ -106,7 +98,7 @@ const { data: product, isLoading: productLoading, error: productError, isError: 
     const [buyerInfo, setBuyerInfo] = useState()
     const [fabricsInfo, setFabricsInfo] = useState()
     const [buyers, setBuyers] = useState()
-    const [date, setDate] = useState()
+    const [date, setDate] = useState(orderInfo?.targetDate ? new Date(orderInfo.targetDate).toISOString().split('T')[0] : "")
     const [quantity, setQuantity] = useState(0)
     const form = useForm({
         resolver: zodResolver(FormSchema),
@@ -165,10 +157,24 @@ newRestQty+=newQty-oldQty
 }else{
     newRestQty-=oldQty-newQty
 }      
-        const body = { companyId,companyName, ...buyerInfo, ...fabricsInfo, orderQuantity: parseFloat(quantity),restQuantity:newRestQty, targetDate: date, ...data }
+        const body = { companyId,companyName, ...buyerInfo, ...fabricsInfo, orderQuantity: parseFloat(quantity),restQuantity:newRestQty, targetDate: date ? new Date(date) : undefined, ...data }
         editOrder({id,body})
     }
-
+useEffect(() => {
+    if (isSuccess) {
+        toast({
+            title: "Success",
+            description: "Order updated successfully",
+        })
+        form.reset()
+    }
+    if (isError) {
+        toast({
+            title: "Error",
+            description: "Failed to update order",
+        })
+    }
+}, [isSuccess, isError])
 
     return (
         <div className="w-full my-4 flex flex-col  justify-center">
@@ -204,23 +210,10 @@ newRestQty+=newQty-oldQty
                     required
                 />
                 <div className="my-2">
-                    <Popover>
-                        <PopoverTrigger asChild className="w-full px-2" >
-                            <div className="">
-                                <Label >Target Date </Label>
-                                <Input type="text" placeholder="DD/MM/YYYY" defaultValue={orderInfo?.targetDate} className="w-full" value={date} />
-                            </div>
-                        </PopoverTrigger>
-                        <PopoverContent className="">
-                            <Calendar
-                                mode="single"
-                                selected={date}
-                                onSelect={setDate}
-                                className="rounded-md border w-full"
-                            />
-
-                        </PopoverContent>
-                    </Popover>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 px-2">
+                        <Label >Target Date </Label>
+                        <Input type="date" className="w-full" value={date} onChange={(e) => setDate(e.target.value)} />
+                    </div>
                 </div>
 
                 <div className="my-2">

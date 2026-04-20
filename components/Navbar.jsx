@@ -1,29 +1,37 @@
 'use client'
-import dashboard from '@/app/dashboard/page';
-import Link from 'next/link';
-import { usePathname, useRouter, } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import '../app/globals.css'
 import { useGetUserByIdQuery, useLogoutMutation } from '@/lib/features/user/userApiSlice';
+import { removeCredentials, setCredentials, setSidebarOnDesboard } from '@/lib/features/user/userSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { removeCredentials, setCredentials, setNotification, setSidebarOnDesboard } from '@/lib/features/user/userSlice';
-import { Button } from './ui/button';
-import { IoMenu } from "react-icons/io5";
-import socket from '@/socketService';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { FiLogOut, FiUser } from 'react-icons/fi';
+import '../app/globals.css';
 import Notifications from './ui/Notifications';
-import { FiX } from "react-icons/fi";
 
 const Navbar = ({ bg }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(true);
     const [sidebar,setSidebar]=useState(false)
     const { userInfo, path,notify,isSidebarOpenOnDashboard } = useAppSelector((state) => state.user);
     const { data: userInformation, isLoading } = useGetUserByIdQuery()
+    const [logout] = useLogoutMutation();
+    const router = useRouter();
     
     const dispatch = useAppDispatch()
     const pathName = usePathname()
+    const isDashboard = pathName.startsWith('/dashboard');
     const [selectedRoute, setSelectedRoute] = useState()
     const [user, setUser] = useState()
     const [loading, setLoading] = useState(true)
+
+    // Filter paths based on requirements
+    const filteredPath = isDashboard 
+        ? path?.filter(item => !['service', 'about', 'contact', 'dashboard'].includes(item))
+        : path;
+
+    // Determine if the links menu (desktop/mobile) should be shown
+    // We remove the menu button (hamburger) entirely if on dashboard
+    const showLinksMenu = !isDashboard;
 
     useEffect(() => {
         setLoading(true);
@@ -42,63 +50,178 @@ const Navbar = ({ bg }) => {
     const handleSideBar = () => {
         dispatch(setSidebarOnDesboard(isSidebarOpenOnDashboard))
     }
+
+    const handleLogout = async () => {
+        try {
+            await logout().unwrap();
+            dispatch(removeCredentials());
+            router.push('/');
+        } catch (error) {
+            console.error('Logout failed:', error);
+            dispatch(removeCredentials());
+            router.push('/');
+        }
+    };
     return (
 
-        <nav className={`${bg} relative bg-white`}>
-            <div className="container flex flex-wrap justify-between items-center mx-auto shadow-sm text-black">
-                <div className='flex items-center '>
-              { !isSidebarOpenOnDashboard ?    
-               <IoMenu size={24} color='dark' className='hover:bg-gray-300 cursor-pointer  hover:rounded-xl' onClick={handleSideBar} />
-              :
-              <FiX size={24} color='dark' className='hover:bg-gray-300 cursor-pointer  hover:rounded-xl' onClick={handleSideBar} />
-              }
-                    {/* <IoMenu size={20} color='white'/> */}
-                    <Link href={"/"} className="flex items-center ml-2">
-                        {/* <Image src={tertiary} alt='Tertiary Color Knit '/> */}
-                        <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white text-inactive">Tertiary Colour Knit Fabrics</span>
+        <nav className={`${bg} relative bg-white border-b border-gray-100 py-4`}>
+            <div className="container flex flex-wrap justify-between items-center mx-auto px-4 lg:px-8">
+                <div className='flex items-center gap-4'>
+                    {/* {isDashboard && (
+                        <div className="mr-2">
+                            {!isSidebarOpenOnDashboard ?
+                                <IoMenu size={24} color='black' className='cursor-pointer' onClick={handleSideBar} />
+                                :
+                                <FiX size={24} color='black' className='cursor-pointer' onClick={handleSideBar} />
+                            }
+                        </div>
+                    )} */}
+                    <Link href={"/"} className="flex items-center">
+                        <span className="text-2xl font-bold tracking-tight text-brand-green">Tertiary Knit</span>
                     </Link>
-
                 </div>
-                <button
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg lg:hidden focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:focus:ring-gray-600"
-                    aria-expanded={isMenuOpen}
-                >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
-                </button>
-                {/* Mobile Menu */}
-                <div
-                    className={`${isMenuOpen ? 'block' : 'hidden'
-                        } absolute top-full left-0 right-0 z-10 p-5 bg-white shadow-md lg:hidden border`}
-                    style={{ animation: isMenuOpen ? 'slideDown 0.5s ease-out' : '' }}
-                >
-                    <ul className="flex flex-col items-center justify-center space-y-2 text-black border">
-                        <li ><Link href={`/`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${!selectedRoute && "text-white border-b"}`}>HOME</Link></li>
-                        {path?.map((item, i) => {
-                            return (
-                                <li key={i}><Link href={`/${item}`} className={`text-black hover:px-2 hover:text-white hover:bg-purple-700 cursor-pointer py-4 ${selectedRoute === item && "text-black"}`}>{item.toUpperCase()}</Link></li>
-                            )
-                        })}
 
-                    </ul>
-                </div>
                 {/* Desktop Menu */}
-                <div className="hidden lg:block ">
-                    <ul className="flex flex-row items-center justify-center py-2 space-x-4 text-inactive ">
-                        <li ><Link href={`/`} className={` hover:px-2 hover:text-black hover:border-b cursor-pointer py-4 ${!selectedRoute && "text-active border-b"}`}>HOME</Link></li>
-                        {path?.map((item, i) => {
+                <div className={`${showLinksMenu ? 'lg:block' : 'hidden'} hidden absolute left-1/2 -translate-x-1/2`}>
+                    <ul className="flex flex-row items-center space-x-8 text-sm font-medium">
+                        {filteredPath?.map((item, i) => {
+                            const label = item.charAt(0).toUpperCase() + item.slice(1);
                             return (
-                                <li key={i}><Link href={`/${item}`} className={` hover:px-2  hover:border-b cursor-pointer py-4 ${selectedRoute === item && "text-inactive border-emerald-500 border-b"}`}>{item.toUpperCase()}</Link></li>
+                                <li key={i}>
+                                    <Link 
+                                        href={`/${item}`} 
+                                        className={`transition-colors duration-200 hover:text-brand-green ${selectedRoute === item ? "text-brand-green border-b-2 border-brand-green pb-1" : "text-gray-500"}`}
+                                    >
+                                        {label}
+                                    </Link>
+                                </li>
                             )
                         })}
-                         
-                         {   userInfo ? <Notifications user={userInfo?.data?.id}/> : "" }
-                         
-                     
                     </ul>
                 </div>
+
+                <div className="flex items-center gap-4">
+                    {userInfo ? (
+                        <div className="flex items-center gap-3">
+                            <Notifications user={userInfo?.data?.id} />
+                            {!isDashboard && (
+                                <>
+                                    <Link 
+                                        href="/dashboard" 
+                                        className="hidden md:flex items-center gap-1.5 text-sm font-medium text-gray-700 hover:text-brand-green transition-colors"
+                                    >
+                                        <FiUser className="w-4 h-4" />
+                                        Dashboard
+                                    </Link>
+                                    <button 
+                                        onClick={handleLogout}
+                                        className="hidden md:flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-red-500 transition-colors"
+                                    >
+                                        <FiLogOut className="w-4 h-4" />
+                                        Logout
+                                    </button>
+                                </>
+                            )}
+                        </div>
+                    ) : (
+                        !isDashboard && (
+                            <Link 
+                                href="/login" 
+                                className="hidden md:flex items-center gap-1.5 text-sm font-medium text-gray-700 hover:text-brand-green transition-colors mr-2"
+                            >
+                                <FiUser className="w-4 h-4" />
+                                Login
+                            </Link>
+                        )
+                    )}
+                    {!isDashboard && (
+                        <Link 
+                            href="/contact" 
+                            className="hidden md:block bg-brand-green text-white px-6 py-2.5 rounded-md text-sm font-semibold hover:bg-brand-accent transition-all duration-300 shadow-sm"
+                        >
+                            Request Quote
+                        </Link>
+                    )}
+                    {showLinksMenu && (
+                        <button
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className="inline-flex items-center p-2 text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 transition-colors"
+                            aria-expanded={isMenuOpen}
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                            </svg>
+                        </button>
+                    )}
+                </div>
+
+                {/* Mobile Menu */}
+                {showLinksMenu && (
+                    <div
+                        className={`${isMenuOpen ? 'block' : 'hidden'} absolute top-full left-0 right-0 z-50 p-6 bg-white shadow-xl lg:hidden border-t animate-in fade-in slide-in-from-top-4 duration-300`}
+                    >
+                        <ul className="flex flex-col space-y-4">
+                            {filteredPath?.map((item, i) => (
+                                <li key={i}>
+                                    <Link 
+                                        href={`/${item}`} 
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="block py-2 text-lg font-medium text-gray-700 hover:text-brand-green transition-colors"
+                                    >
+                                        {item.charAt(0).toUpperCase() + item.slice(1)}
+                                    </Link>
+                                </li>
+                            ))}
+                            {!isDashboard && (
+                                userInfo ? (
+                                    <>
+                                        <li>
+                                            <Link 
+                                                href="/dashboard" 
+                                                onClick={() => setIsMenuOpen(false)}
+                                                className="flex items-center gap-2 py-2 text-lg font-medium text-gray-700 hover:text-brand-green transition-colors"
+                                            >
+                                                <FiUser /> Dashboard
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <button 
+                                                onClick={() => {
+                                                    setIsMenuOpen(false);
+                                                    handleLogout();
+                                                }}
+                                                className="flex items-center gap-2 py-2 text-lg font-medium text-red-500 hover:text-red-600 transition-colors"
+                                            >
+                                                <FiLogOut /> Logout
+                                            </button>
+                                        </li>
+                                    </>
+                                ) : (
+                                    <li>
+                                        <Link 
+                                            href="/login" 
+                                            onClick={() => setIsMenuOpen(false)}
+                                            className="flex items-center gap-2 py-2 text-lg font-medium text-gray-700 hover:text-brand-green transition-colors"
+                                        >
+                                            <FiUser /> Login
+                                        </Link>
+                                    </li>
+                                )
+                            )}
+                            {!isDashboard && (
+                                <li>
+                                    <Link 
+                                        href="/contact" 
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="block w-full text-center bg-brand-green text-white py-3 rounded-lg font-semibold mt-2"
+                                    >
+                                        Request Quote
+                                    </Link>
+                                </li>
+                            )}
+                        </ul>
+                    </div>
+                )}
             </div>
         </nav>
     );

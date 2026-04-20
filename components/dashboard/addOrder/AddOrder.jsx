@@ -14,13 +14,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import { CalendarIcon } from "lucide-react"
-import { Calendar } from "@/components/ui/calendar"
+
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { useGetCompanyQuery } from "@/lib/features/company/companyApi"
@@ -33,6 +27,7 @@ import { Label } from "@/components/ui/label"
 import Error from "@/components/utils/Error"
 import Radio from "@/components/ui/Radio"
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import Swal from "sweetalert2"
 
 
 const FormSchema = z.object({
@@ -97,7 +92,7 @@ const info = [
     },
 ]
 const units = ["Fabric", "Knitting"]
-export function AddOrder({}) {
+export function AddOrder({ }) {
     const { data, isLoading, error, isError } = useGetCompanyQuery()
     const [addOrder, { isLoading: insertingOrderLoading, isError: insertingOrderError }] = useAddOrderMutation()
     const { data: product, isLoading: productLoading, error: productError, isError: productIsError } = useGetProductQuery()
@@ -107,7 +102,7 @@ export function AddOrder({}) {
     const [unit, setUnit] = useState()
     const [fabricsInfo, setFabricsInfo] = useState()
     const [buyers, setBuyers] = useState()
-    const [date, setDate] = useState()
+    const [date, setDate] = useState("")
     const [quantity, setQuantity] = useState(0)
     const form = useForm({
         resolver: zodResolver(FormSchema),
@@ -161,13 +156,22 @@ export function AddOrder({}) {
             window.alert("Order Can't be place with out booking quantity")
             return
         }
-        const body = { userId:userInfo?.data?.id, companyId, companyName, ...buyerInfo, ...fabricsInfo, unit: unit, orderQuantity: parseFloat(quantity), restQuantity: parseFloat(quantity), targetDate: date, ...data }
-        addOrder(body).then(res=>{
-            if(res.data){
-                  Swal.fire({ title: 'success!',
-                                        text: 'Order created successfully!',
-                                        icon: 'success',
-                                        confirmButtonText: 'Cool' })
+        const body = { userId: userInfo?.data?.id, companyId, companyName, ...buyerInfo, ...fabricsInfo, unit: unit, orderQuantity: parseFloat(quantity), restQuantity: parseFloat(quantity), targetDate: date ? new Date(date) : undefined, ...data }
+        addOrder(body).then(res => {
+            if (res.data) {
+                Swal.fire({
+                    title: 'success!',
+                    text: 'Order created successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'Cool'
+                })
+            } else if (res.error) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: res.error.data?.message || 'Failed to create order!',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
             }
         })
     }
@@ -206,23 +210,10 @@ export function AddOrder({}) {
                     required
                 />
                 <div className="my-2">
-                    <Popover>
-                        <PopoverTrigger asChild className="w-full px-2" >
-                            <div className="">
-                                <Label >Target Date </Label>
-                                <Input type="text" placeholder="DD/MM/YYYY" className="w-full" value={date} />
-                            </div>
-                        </PopoverTrigger>
-                        <PopoverContent className="">
-                            <Calendar
-                                mode="single"
-                                selected={date}
-                                onSelect={setDate}
-                                className="rounded-md border w-full"
-                            />
-
-                        </PopoverContent>
-                    </Popover>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 px-2">
+                        <Label >Target Date </Label>
+                        <Input type="date" className="w-full" value={date} onChange={(e) => setDate(e.target.value)} />
+                    </div>
                 </div>
                 <Radio
                     label={"Select Unit"}

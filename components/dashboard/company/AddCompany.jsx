@@ -2,24 +2,22 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { number, z } from "zod"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useAddCompanyMutation } from "@/lib/features/company/companyApi"
 import { useToast } from "@/components/ui/use-toast"
-import { useEffect } from "react"
 import Error from "@/components/utils/Error"
-import { data } from "autoprefixer"
+import { useAddCompanyMutation } from "@/lib/features/company/companyApi"
+import { useEffect } from "react"
 
 const FormSchema = z.object({
   companyName: z.string().min(2, {
@@ -91,11 +89,26 @@ export function AddCompany() {
   })
 
   async function onSubmit(data) {
-    console.log(data)
+    // console.log(data)
     addCompany(data)
 
   }
-  console.log(error?.data)
+  useEffect(() => {
+    if (isSuccess) {
+      toast({
+        title: "Success",
+        description: "Company added successfully",
+      })
+      form.reset()
+    }
+    if (isError) {
+      toast({
+        title: "Error",
+        description: "Failed to add company",
+      })
+    }
+  }, [isSuccess, isError])
+  // console.log(error?.data)
 
   return (
     <div className="w-full my-4 flex justify-center">  

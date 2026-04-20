@@ -4,15 +4,17 @@ import Error from "@/components/utils/Error";
 import { useLoginMutation } from "@/lib/features/user/userApiSlice";
 import { setCredentials } from "@/lib/features/user/userSlice";
 import { useAppDispatch } from "@/lib/hooks";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { NextResponse } from "next/server";
 import { useEffect, useState } from "react";
 import cookieCutter from 'cookie-cutter'
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const Login = (props) => {
 
   const [email, setEmail] = useState("")
   const [pass, setPass] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
   const [error,setError]=useState("")
   const [login, { isLoading,isError }] = useLoginMutation();
   const dispatch = useAppDispatch();
@@ -42,14 +44,30 @@ const Login = (props) => {
           </div>
           <div className="mb-4">
             <label className="block mb-1" htmlFor="password">Password</label>
-            <input id="password" type="password" name="password" onChange={(e) => setPass(e.target.value)} className="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
+            <div className="relative">
+              <input 
+                id="password" 
+                type={showPassword ? "text" : "password"} 
+                name="password" 
+                onChange={(e) => setPass(e.target.value)} 
+                className="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full pr-10" 
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 mt-0.5 text-gray-500 hover:text-gray-700 transition-colors"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+              </button>
+            </div>
           </div>
           <div className="mt-6 flex items-center justify-between">
             <div className="flex items-center">
               <input id="remember_me" type="checkbox" className="border border-gray-300 text-red-600 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50" />
               <label htmlFor="remember_me" className="ml-2 block text-sm leading-5 text-gray-900"> Remember me </label>
             </div>
-            <a href="#" className="text-sm"> Forgot your password? </a>
+            <Link href="/forgot-password" size="sm"> Forgot your password? </Link>
           </div>
           {isError && <Error data={"Invalid User Information"}/> }
           <div className="mt-6">

@@ -1,5 +1,5 @@
 import { AddOrder } from '@/components/dashboard/addOrder/AddOrder';
-import react from 'react';
+
 export const metadata = {
     title: "Add Order for Teritiary Colour Knit",
     description: "Orders of Teritiary Colour Knit",
