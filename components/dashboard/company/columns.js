@@ -28,33 +28,38 @@ const action=[
 export const columns = [
   {
     accessorKey: "companyName",
-    header: "Company",
+    header: () => <div className="font-semibold text-gray-700">Company Name</div>,
+    cell: ({ row }) => <div className="font-medium text-gray-900">{row.getValue("companyName")}</div>
   },
   {
     accessorKey: "buyers",
-    header: "Buyer",
+    header: "Buyer Info",
     cell: ({ row }) => {
       return <DeleteBuyer buyerInfo={row.original}/>
     },
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: "Email Address",
   },
   {
     accessorKey: "location",
     header: "Location",
+    cell: ({ row }) => <div className="max-w-[200px] truncate">{row.getValue("location")}</div>
   },
   {
     accessorKey: "contact",
     header: "Contact"
   },
   {
-    accessorKey: "",
-    header: "Action",
+    accessorKey: "Action",
+    header: () => <div className="text-right px-4">Actions</div>,
     cell: ({ row }) => {
-
-      return <Action action={action} data={row.original}/>
+      return (
+        <div className="flex justify-end px-2">
+          <Action action={action} data={row.original}/>
+        </div>
+      )
     },
   },
 ]
