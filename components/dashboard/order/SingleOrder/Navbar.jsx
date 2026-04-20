@@ -1,74 +1,82 @@
 "use client"
-import {
-    Menubar,
-    MenubarMenu,
-    MenubarTrigger,
-} from "@/components/ui/menubar"
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { 
+    HiOutlineInformationCircle, 
+    HiOutlineClipboardList, 
+    HiOutlineCube, 
+    HiOutlineTruck 
+} from "react-icons/hi";
+
 const orderRoutes = [
     {
-        id:401,
+        id: 401,
         routeName: "",
-        value: "Order Information"
+        value: "Order Info",
+        icon: HiOutlineInformationCircle
     },
     {
-        id:402,
+        id: 402,
         routeName: "details",
-        value: "Detail"
+        value: "Production",
+        icon: HiOutlineClipboardList
     },
     {
-        id:403,
+        id: 403,
         routeName: "yarnDetails",
-        value: "Yarn"
+        value: "Yarn Hub",
+        icon: HiOutlineCube
     },
     {
-        id:406,
+        id: 406,
         routeName: "delivery",
-        value: "Delivery"
+        value: "Logistics",
+        icon: HiOutlineTruck
     },
+];
 
-]
 const Navbar = ({ id }) => {
-    const pathName = usePathname()
-    const [selectedRoute, setSelectedRoute] = useState()
+    const pathName = usePathname();
+    const [selectedRoute, setSelectedRoute] = useState("");
 
     useEffect(() => {
-        setSelectedRoute(pathName.split("/")[4])
-    }, [pathName])
-   
+        const segments = pathName.split("/");
+        // Assuming path is /dashboard/order/[id]/[routeName]
+        // If it's /dashboard/order/[id], segments[4] will be undefined
+        setSelectedRoute(segments[4] || "");
+    }, [pathName]);
+
     return (
-
-        <Menubar>
-            {
-                orderRoutes?.map(item => {
-                    if(item.routeName === ""){
-                        return (
-                            <Link href={`/dashboard/order/${id}`} key={item.id} className={`hover:bg-gray-200 text-inactive  ${!selectedRoute && "bg-gray-200 text-inactive"} `}><MenubarMenu >
-                            <MenubarTrigger>{item.value}</MenubarTrigger>
-                        </MenubarMenu></Link>
-                        )
-                    }
+        <nav className="w-full mb-6 mt-2">
+            <div className="inline-flex flex-wrap items-center bg-gray-50/80 backdrop-blur-md p-1.5 rounded-2xl border border-gray-100 shadow-sm gap-1">
+                {orderRoutes.map((item) => {
+                    const isActive = item.routeName === selectedRoute;
+                    const Icon = item.icon;
+                    
                     return (
-                        <Link href={`/dashboard/order/${id}/${item.routeName}`} key={item.id} className={`hover:bg-gray-200 text-inactive  ${item.routeName === selectedRoute && "bg-gray-200 text-inactive"}`}><MenubarMenu >
-                            <MenubarTrigger>{item.value}</MenubarTrigger>
-                        </MenubarMenu></Link>
-                    )
-                })
-            }
-
-            {/* <Link href={`/dashboard/order/${id}/details`} className={`hover:bg-gray-200 hover:text-inactive py-4`}><MenubarMenu >
-                <MenubarTrigger>Details</MenubarTrigger>
-            </MenubarMenu></Link>
-            <Link href={`/dashboard/order/${id}/yarnDetails`} className={`hover:bg-gray-200 hover:text-inactive py-4`}> <MenubarMenu >
-                <MenubarTrigger>Yarn Details</MenubarTrigger>
-            </MenubarMenu></Link>
-            <MenubarMenu className={`hover:bg-purple-700 py-4`}>
-                <MenubarTrigger>Delivery Details</MenubarTrigger>
-            </MenubarMenu> */}
-        </Menubar>
-    )
+                        <Link 
+                            key={item.id} 
+                            href={`/dashboard/order/${id}${item.routeName ? `/${item.routeName}` : ""}`}
+                            className={`
+                                flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300
+                                ${isActive 
+                                    ? "bg-white text-emerald-600 shadow-sm ring-1 ring-emerald-500/10 scale-[1.02]" 
+                                    : "text-gray-500 hover:text-gray-800 hover:bg-gray-100/50"
+                                }
+                            `}
+                        >
+                            <Icon className={`text-lg transition-colors ${isActive ? "text-emerald-500" : "text-gray-400 group-hover:text-gray-600"}`} />
+                            <span className="whitespace-nowrap">{item.value}</span>
+                            {isActive && (
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse ml-0.5" />
+                            )}
+                        </Link>
+                    );
+                })}
+            </div>
+        </nav>
+    );
 };
+
 export default Navbar;
