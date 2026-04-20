@@ -29,12 +29,13 @@ export const columns = [
     },
     {
         accessorKey: "Action",
-
-        header: "Action",
+        header: () => <div className="text-right px-4">Actions</div>,
         cell: ({ row }) => {
-
-            
-            return <ProductDelete productId={row.original.id}/>
+            return (
+                <div className="flex justify-end px-2">
+                    <ProductDelete productId={row.original.id}/>
+                </div>
+            )
         }
     }
 

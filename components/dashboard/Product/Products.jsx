@@ -15,7 +15,7 @@ export default function Products() {
         return <Error data={"Failed to Fetching Products !!!"} />
     }
     return (
-        <div className="container mx-auto py-10">
+        <div className="w-full overflow-x-auto">
             <DataTable columns={columns} data={data} />
         </div>
     )
