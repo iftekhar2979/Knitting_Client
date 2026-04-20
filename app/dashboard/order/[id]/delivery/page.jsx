@@ -3,11 +3,11 @@ import ShowChalan from '@/components/dashboard/chalan/ShowChalan';
 import DeliveryList from '@/components/dashboard/order/SingleOrder/delivery/DeliveryList';
 
 
-const page = ({params}) => {
- 
+const page = async ({params}) => {
+    const { id } = await params;
     return (
         <div>
-            <DeliveryList id={params.id}/>
+            <DeliveryList id={id}/>
            <ShowChalan/>
         </div>
     )

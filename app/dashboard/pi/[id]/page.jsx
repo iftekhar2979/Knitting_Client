@@ -7,8 +7,8 @@ export const metadata = {
     title: `Bill Number ${piNumber}`,
     description: "Orders of Teritiary Colour Knit",
   };
-const page = ({ params: { id } }) => {
-   
+const page = async ({ params }) => {
+    const { id } = await params;
     piNumber=id
     return (
         <>

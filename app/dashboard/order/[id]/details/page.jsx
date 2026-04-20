@@ -1,12 +1,12 @@
 
 import Details from '@/components/dashboard/order/Details/Details';
 
-const page = ({ params }) => {
-
+const page = async ({ params }) => {
+    const { id } = await params;
 
     return (
         <div>
-            <Details id={params.id} />
+            <Details id={id} />
         </div>
     )
 };

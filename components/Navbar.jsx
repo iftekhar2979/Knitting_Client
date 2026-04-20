@@ -11,12 +11,12 @@ import Notifications from './ui/Notifications';
 
 const Navbar = ({ bg }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(true);
-    const [sidebar,setSidebar]=useState(false)
-    const { userInfo, path,notify,isSidebarOpenOnDashboard } = useAppSelector((state) => state.user);
+    const [sidebar, setSidebar] = useState(false)
+    const { userInfo, path, notify, isSidebarOpenOnDashboard } = useAppSelector((state) => state.user);
     const { data: userInformation, isLoading } = useGetUserByIdQuery()
     const [logout] = useLogoutMutation();
     const router = useRouter();
-    
+
     const dispatch = useAppDispatch()
     const pathName = usePathname()
     const isDashboard = pathName.startsWith('/dashboard');
@@ -25,7 +25,7 @@ const Navbar = ({ bg }) => {
     const [loading, setLoading] = useState(true)
 
     // Filter paths based on requirements
-    const filteredPath = isDashboard 
+    const filteredPath = isDashboard
         ? path?.filter(item => !['service', 'about', 'contact', 'dashboard'].includes(item))
         : path;
 
@@ -64,7 +64,7 @@ const Navbar = ({ bg }) => {
     };
     return (
 
-        <nav className={`${bg} relative bg-white border-b border-gray-100 py-4`}>
+        <nav className={`${bg} relative bg-white border-b border-gray-100 py-4`} id="main-nav">
             <div className="container flex flex-wrap justify-between items-center mx-auto px-4 lg:px-8">
                 <div className='flex items-center gap-4'>
                     {/* {isDashboard && (
@@ -88,8 +88,8 @@ const Navbar = ({ bg }) => {
                             const label = item.charAt(0).toUpperCase() + item.slice(1);
                             return (
                                 <li key={i}>
-                                    <Link 
-                                        href={`/${item}`} 
+                                    <Link
+                                        href={`/${item}`}
                                         className={`transition-colors duration-200 hover:text-brand-green ${selectedRoute === item ? "text-brand-green border-b-2 border-brand-green pb-1" : "text-gray-500"}`}
                                     >
                                         {label}
@@ -106,14 +106,14 @@ const Navbar = ({ bg }) => {
                             <Notifications user={userInfo?.data?.id} />
                             {!isDashboard && (
                                 <>
-                                    <Link 
-                                        href="/dashboard" 
+                                    <Link
+                                        href="/dashboard"
                                         className="hidden md:flex items-center gap-1.5 text-sm font-medium text-gray-700 hover:text-brand-green transition-colors"
                                     >
                                         <FiUser className="w-4 h-4" />
                                         Dashboard
                                     </Link>
-                                    <button 
+                                    <button
                                         onClick={handleLogout}
                                         className="hidden md:flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-red-500 transition-colors"
                                     >
@@ -125,8 +125,8 @@ const Navbar = ({ bg }) => {
                         </div>
                     ) : (
                         !isDashboard && (
-                            <Link 
-                                href="/login" 
+                            <Link
+                                href="/login"
                                 className="hidden md:flex items-center gap-1.5 text-sm font-medium text-gray-700 hover:text-brand-green transition-colors mr-2"
                             >
                                 <FiUser className="w-4 h-4" />
@@ -135,8 +135,8 @@ const Navbar = ({ bg }) => {
                         )
                     )}
                     {!isDashboard && (
-                        <Link 
-                            href="/contact" 
+                        <Link
+                            href="/contact"
                             className="hidden md:block bg-brand-green text-white px-6 py-2.5 rounded-md text-sm font-semibold hover:bg-brand-accent transition-all duration-300 shadow-sm"
                         >
                             Request Quote
@@ -163,8 +163,8 @@ const Navbar = ({ bg }) => {
                         <ul className="flex flex-col space-y-4">
                             {filteredPath?.map((item, i) => (
                                 <li key={i}>
-                                    <Link 
-                                        href={`/${item}`} 
+                                    <Link
+                                        href={`/${item}`}
                                         onClick={() => setIsMenuOpen(false)}
                                         className="block py-2 text-lg font-medium text-gray-700 hover:text-brand-green transition-colors"
                                     >
@@ -176,8 +176,8 @@ const Navbar = ({ bg }) => {
                                 userInfo ? (
                                     <>
                                         <li>
-                                            <Link 
-                                                href="/dashboard" 
+                                            <Link
+                                                href="/dashboard"
                                                 onClick={() => setIsMenuOpen(false)}
                                                 className="flex items-center gap-2 py-2 text-lg font-medium text-gray-700 hover:text-brand-green transition-colors"
                                             >
@@ -185,7 +185,7 @@ const Navbar = ({ bg }) => {
                                             </Link>
                                         </li>
                                         <li>
-                                            <button 
+                                            <button
                                                 onClick={() => {
                                                     setIsMenuOpen(false);
                                                     handleLogout();
@@ -198,8 +198,8 @@ const Navbar = ({ bg }) => {
                                     </>
                                 ) : (
                                     <li>
-                                        <Link 
-                                            href="/login" 
+                                        <Link
+                                            href="/login"
                                             onClick={() => setIsMenuOpen(false)}
                                             className="flex items-center gap-2 py-2 text-lg font-medium text-gray-700 hover:text-brand-green transition-colors"
                                         >
@@ -210,8 +210,8 @@ const Navbar = ({ bg }) => {
                             )}
                             {!isDashboard && (
                                 <li>
-                                    <Link 
-                                        href="/contact" 
+                                    <Link
+                                        href="/contact"
                                         onClick={() => setIsMenuOpen(false)}
                                         className="block w-full text-center bg-brand-green text-white py-3 rounded-lg font-semibold mt-2"
                                     >

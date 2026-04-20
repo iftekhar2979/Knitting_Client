@@ -1,0 +1,56 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link "Tertiary Knit" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e6]: Tertiary Knit
+  - main [ref=e7]:
+    - main [ref=e8]:
+      - navigation [ref=e11]:
+        - generic [ref=e12]:
+          - text: Analytics
+          - link "Dashboard" [ref=e13] [cursor=pointer]:
+            - /url: /dashboard
+            - generic [ref=e14]:
+              - img [ref=e15]
+              - generic [ref=e18]: Dashboard
+        - generic [ref=e19]:
+          - text: Company
+          - link "Add Company" [ref=e20] [cursor=pointer]:
+            - /url: /dashboard/addCompany
+            - generic [ref=e21]:
+              - img [ref=e22]
+              - generic [ref=e26]: Add Company
+          - link "Company List" [ref=e27] [cursor=pointer]:
+            - /url: /dashboard/company
+            - generic [ref=e28]:
+              - img [ref=e29]
+              - generic [ref=e31]: Company List
+        - generic [ref=e32]:
+          - text: Product
+          - link "Products" [ref=e33] [cursor=pointer]:
+            - /url: /dashboard/product
+            - generic [ref=e34]:
+              - img [ref=e35]
+              - generic [ref=e45]: Products
+        - generic [ref=e46]:
+          - text: Orders
+          - link "Add Order" [ref=e47] [cursor=pointer]:
+            - /url: /dashboard/addOrder
+            - generic [ref=e48]:
+              - img [ref=e49]
+              - generic [ref=e52]: Add Order
+          - link "Order List" [ref=e53] [cursor=pointer]:
+            - /url: /dashboard/order
+            - generic [ref=e54]:
+              - img [ref=e55]
+              - generic [ref=e65]: Order List
+          - link "Delivery List" [ref=e66] [cursor=pointer]:
+            - /url: /dashboard/deliveryList
+            - generic [ref=e67]:
+              - img [ref=e68]
+              - generic [ref=e73]: Delivery List
+      - main [ref=e75]:
+        - generic [ref=e78]: Loading...
+  - button "Open Next.js Dev Tools" [ref=e87] [cursor=pointer]:
+    - img [ref=e88]
+  - alert [ref=e91]

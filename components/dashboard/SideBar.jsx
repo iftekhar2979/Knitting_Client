@@ -72,8 +72,9 @@ const SideBar = () => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className={`flex flex-col h-screen w-64 bg-white dark:bg-gray-900 border-r border-gray-100 sm:pl-6 relative`}
+            id="side-nav"
         >
-            <div className="flex flex-col justify-between flex-1 mt-6">
+            <div className="flex flex-col justify-between flex-1 mt-6" >
                 <div className="absolute right-4 top-2 sm:hidden">
                     <FiX size={24} className="cursor-pointer text-gray-500" onClick={handleCloseSidebar} />
                 </div>

@@ -9,14 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.3.4",
+    "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-checkbox": "^1.0.4",
-    "@radix-ui/react-dialog": "^1.0.5",
-    "@radix-ui/react-label": "^2.0.2",
-    "@radix-ui/react-menubar": "^1.0.4",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-label": "^2.1.8",
+    "@radix-ui/react-menu": "^2.1.16",
+    "@radix-ui/react-menubar": "^1.1.16",
     "@radix-ui/react-popover": "^1.0.7",
-    "@radix-ui/react-select": "^2.0.0",
-    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-primitive": "^2.1.4",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@react-pdf/renderer": "^3.4.0",
@@ -29,6 +31,7 @@
     "cookie-cutter": "^0.2.0",
     "date-fns": "^3.3.1",
     "framer-motion": "^12.38.0",
+    "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "lucide-react": "^0.334.0",
     "next": "^16.0.0",
@@ -36,7 +39,7 @@
     "react-csv": "^2.2.2",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18",
-    "react-hook-form": "^7.50.1",
+    "react-hook-form": "^7.72.1",
     "react-icons": "^5.0.1",
     "react-redux": "^9.2.0",
     "recharts": "^2.12.7",
@@ -45,7 +48,7 @@
     "sweetalert2": "^11.21.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

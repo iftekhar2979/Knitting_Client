@@ -5,7 +5,6 @@ const nextConfig = {
     
     formats:['image/webp']
   },
-  serverExternalPackages: ['@react-pdf/renderer'],
 };
 
 export default nextConfig;

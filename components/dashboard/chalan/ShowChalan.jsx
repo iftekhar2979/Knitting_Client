@@ -1,54 +1,71 @@
+// components/dashboard/chalan/ShowChalan.jsx
 "use client"
-import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
-import react, { useEffect } from 'react';
-import Chalan from './chalan';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import React from 'react';
+import { useAppSelector } from '@/lib/hooks';
 import { useGetSingleDeliveryQuery } from '@/lib/features/delivery/deliveryApi';
 import { Button } from '@/components/ui/button';
-import { MdDownload, MdDownloadDone, MdFontDownload } from 'react-icons/md';
-import { FaDownload, FaPrint } from 'react-icons/fa';
+import { FaPrint } from 'react-icons/fa';
 import Loading from '@/components/utils/Loading';
-import Error from "@/components/utils/Error"
-const ShowChalan = (props) => {
-    const state = useAppSelector(state => state.chalanSlice)
-    const dispatch = useAppDispatch()
-    const { data, isLoading, isError } = useGetSingleDeliveryQuery(state?.id)
+import Error from "@/components/utils/Error";
+import dynamic from 'next/dynamic';
 
-    console.log("data",data)
+// ✅ Each wrapper is dynamically imported as a whole unit — no cross-boundary children
+const ChalanViewer = dynamic(() => import('./ChalanViewer'), { ssr: false, loading: () => <Loading /> });
+const ChalanDownloadLink = dynamic(() => import('./ChalanDocumentLink'), { ssr: false });
 
-    if (isLoading) {
-        return <Loading/>
-    }
-    if (isError) {
-        return <Error  data={"Fetching Error!!!"}/>
-    }
-    const handlePrint=()=>{
-        console.log('value')
-    }
+const ShowChalan = () => {
+    const state = useAppSelector(state => state.chalanSlice);
+    const { data, isLoading, isError } = useGetSingleDeliveryQuery(state?.id, { skip: !state?.id });
+    const chalanRef = React.useRef(null);
 
+    if (isLoading) return <Loading />;
+    if (isError) return <Error data={"Fetching Error!!!"} />;
+    if (!state?.id || !data) return null;
+
+    // Sanitize Redux proxy state
+    const sanitizedData = JSON.parse(JSON.stringify(data));
+    const sanitizedState = JSON.parse(JSON.stringify(state));
+
+    const handlePrint = () => {
+        window.print();
+    };
 
     return (
-        <>{state.id && data ?
-            <div>
-                <h2 className='text-center my-6 font-bold text-2xl'>Showed Chalan : {state.id}</h2>
-                <PDFViewer className='w-9/12 mx-auto my-6' height={1100} showToolbar={false}>
-                    <Chalan data={data} id={data.id} />
+        <div className="relative">
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                @media print {
+                    body * { visibility: hidden !important; }
+                    .print-section, .print-section * { visibility: visible !important; }
+                    .print-section { position: absolute; left: 0; top: 0; width: 100% !important; margin: 0 !important; padding: 0 !important; }
+                    @page { size: auto; margin: 0mm; }
+                }
+            `}} />
 
-                </PDFViewer>
-                <div className='flex justify-center '>
-                <PDFDownloadLink document={<Chalan data={data} id={data.id} />} fileName={state.chalanName}>
-                    {({ blob, url, loading, error }) =>
-                        loading ? 'Loading...' : <Button><FaDownload style={{marginRight:"4px"}}/>Download</Button>
-                    }
-                </PDFDownloadLink>
-                <Button className='ml-4'><FaPrint style={{marginRight:"4px"}} onClick={handlePrint}/>Print Now</Button>
-                </div>
+            <h2 className='text-center my-6 font-bold text-2xl print:hidden'>
+                Showed Chalan: {sanitizedState.id}
+            </h2>
 
+            <div className='w-full lg:w-10/12 mx-auto my-6 print-section'>
+                <ChalanViewer
+                    data={sanitizedData}
+                    state={sanitizedState}
+                    reference={chalanRef}
+                />
             </div>
-            :
-            ""
-        }
-        </>
-    )
+
+            <div className='flex justify-center gap-4 mb-10 print:hidden'>
+                <ChalanDownloadLink
+                    reference={chalanRef}
+                    fileName={sanitizedState?.chalanName}
+                />
+                <Button variant="outline" onClick={handlePrint}>
+                    <FaPrint className="mr-2" />
+                    Print Chalan
+                </Button>
+            </div>
+        </div>
+    );
 };
+
 export default ShowChalan;

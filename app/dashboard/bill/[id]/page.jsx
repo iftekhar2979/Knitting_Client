@@ -2,10 +2,11 @@
 import BillStatementFromChalan from '@/components/dashboard/Bill/BillStatementFromChalan'
 import React from 'react'
 
-export default function page({params}) {
+export default async function page({params}) {
+    const { id } = await params;
   return (
     <>
-    <BillStatementFromChalan id={params.id}/>
+    <BillStatementFromChalan id={id}/>
     </>
   )
 }

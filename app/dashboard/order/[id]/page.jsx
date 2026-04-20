@@ -10,8 +10,8 @@ export const metadata = {
     description: "Orders of Teritiary Colour Knit",
   };
 
-const singleOrder = async ({ params: {id} }) => {
-   
+const singleOrder = async ({ params }) => {
+    const { id } = await params;
     return (
         <Order id={id}/>
     )

@@ -1,10 +1,10 @@
 
 import Navbar from '@/components/dashboard/order/SingleOrder/Navbar';
-const layout = ({ children ,params}) => {
-
+const layout = async ({ children ,params}) => {
+    const { id } = await params;
     return (
         <section className=''>
-            <Navbar id={params.id} />
+            <Navbar id={id} />
             <section className='my-4'>
                 {children}
             </section>

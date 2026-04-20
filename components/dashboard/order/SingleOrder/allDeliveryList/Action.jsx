@@ -1,18 +1,32 @@
+"use client";
 
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import { FaDownload } from "react-icons/fa6";
+import { useState } from "react";
+import { generateChalanPdf } from "@/components/dashboard/chalan/generateChalanPdf";
 
-import Chalan from "@/components/dashboard/chalan/chalan";
-const Action = ({ id ,data}) => {
-  
+const Action = ({ id, data }) => {
+    const [loading, setLoading] = useState(false);
+
+    const handleDownload = async () => {
+        setLoading(true);
+        try {
+            // Using the new stable HTML-to-PDF utility
+            await generateChalanPdf(data, { id, chalanName: `Chalan Number ${id}.pdf` });
+        } catch (error) {
+            console.error("PDF Generation Error:", error);
+            alert("Failed to generate PDF. Please ensure html2canvas is installed.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className='flex' >
-            <PDFDownloadLink document={<Chalan data={data} id={data.id} />} fileName={`Chalan Number ${data.id}`}>
-                {({ blob, url, loading, error }) =>
-                    loading ? 'Loading...' : <FaDownload size={24} color={"green"} className="cursor-pointer" />
-                }
-            </PDFDownloadLink>
+            <div onClick={!loading ? handleDownload : undefined} className={!loading ? "cursor-pointer" : ""}>
+                {loading ? 'Downloading...' : <FaDownload size={24} color={"green"} />}
+            </div>
         </div>
     )
 };
+
 export default Action;
