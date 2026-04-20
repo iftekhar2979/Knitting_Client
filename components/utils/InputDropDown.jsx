@@ -1,6 +1,13 @@
 "use client"
 import React, { memo } from 'react';
 import { cn } from '@/lib/utils';
+import { 
+    Select, 
+    SelectContent, 
+    SelectItem, 
+    SelectTrigger, 
+    SelectValue 
+} from "@/components/ui/select";
 
 const InputDropDown = ({ 
     handleInputDropdown, 
@@ -13,6 +20,18 @@ const InputDropDown = ({
     className, 
     labelblock 
 }) => {
+    // Compatibility layer: simulate a standard React event object
+    const onValueChange = (val) => {
+        if (handleInputDropdown) {
+            handleInputDropdown({
+                target: {
+                    name: sectionName,
+                    value: val
+                }
+            });
+        }
+    };
+
     return (
         <div className={cn("space-y-2", divclass)}>
             {!labelblock && (
@@ -20,32 +39,28 @@ const InputDropDown = ({
                     {label}
                 </label>
             )}
-            <div className="relative">
-                <select
-                    className={cn(
-                        "pr-10 cursor-pointer focus:outline-none",
-                        className
-                    )}
-                    name={sectionName}
-                    onChange={handleInputDropdown}
-                    defaultValue={defaultValue || placeholder}
-                    required
-                >
-                    <option disabled value={placeholder}>{placeholder}</option>
+            <Select 
+                onValueChange={onValueChange} 
+                defaultValue={defaultValue} 
+                name={sectionName}
+            >
+                <SelectTrigger className={cn("w-full h-11 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 rounded-lg transition-all duration-200", className)}>
+                    <SelectValue placeholder={placeholder || "Select option"} />
+                </SelectTrigger>
+                <SelectContent className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
                     {Array.isArray(options) && options?.map((option, index) => (
-                        <option className="py-2" key={index} value={option}>
+                        <SelectItem 
+                            key={index} 
+                            value={option}
+                            className="cursor-pointer focus:bg-emerald-50 focus:text-emerald-900 dark:focus:bg-emerald-900/30 dark:focus:text-emerald-400"
+                        >
                             {option}
-                        </option>
+                        </SelectItem>
                     ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
-                    <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                        <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                    </svg>
-                </div>
-            </div>
+                </SelectContent>
+            </Select>
         </div>
     );
 };
 
-export default memo(InputDropDown);
+export default memo(InputDropDown);

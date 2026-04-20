@@ -17,290 +17,110 @@ const action = [
     },
 ]
 
+import { Badge } from "@/components/ui/badge"
+
 export const columns = [
     {
-        accessorKey: "companyName",
-        header: ({ column }) => {
-
+        accessorKey: "orderNumber",
+        header: "Order Number",
+        cell: ({ row }) => {
+            const { id, orderNumber } = row.original
             return (
-                <div
-                    className={"flex flex-col"}
-
-                >
-                    <div className='flex'>
-
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Company</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div>
-                        <Input type="text"
-                            value={(column?.getFilterValue()) ?? ""}
-                            onChange={(event) =>
-                                column?.setFilterValue(event.target.value)
-                            }
-                            className="h-4 text-[11px]"
-                            placeholder="Company..."
-                        />
-                    </div>
-                </div>
+                <Link href={`/dashboard/order/${id}`} className="font-bold text-emerald-600 hover:underline transition-all underline-offset-4 decoration-emerald-200">
+                    {orderNumber}
+                </Link>
             )
-        },
+        }
+    },
+    {
+        accessorKey: "companyName",
+        header: "Company",
+        cell: ({ row }) => {
+            const companyName = row.original.company?.companyName || row.original.companyName || "N/A"
+            return <div className="font-semibold text-gray-800">{companyName}</div>
+        }
     },
     {
         accessorKey: "buyerName",
-        header: ({ column }) => {
-            return (
-                <div
-                    className={"flex flex-col"}
-                >
-                    <div className='flex'>
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Buyer</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div>
-                        <Input type="text"
-                            value={(column?.getFilterValue()) ?? ""}
-                            onChange={(event) =>
-                                column?.setFilterValue(event.target.value)
-                            }
-                            className="h-4 text-[11px]"
-                            placeholder="Buyer..."
-                        />
-                    </div>
-                </div>
-            )
-        },
+        header: "Buyer",
+        cell: ({ row }) => {
+            const buyerName = row.original.buyer?.buyerName || row.original.buyerName || "N/A"
+            return <div className="text-gray-600">{buyerName}</div>
+        }
     },
     {
         accessorKey: "fabricsName",
-        header: ({ column }) => {
-
-            return (
-                <div
-                    className={"flex flex-col"}
-
-                >
-                    <div className='flex'>
-
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Fabric Type</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div>
-                        <Input type="text"
-                            value={(column?.getFilterValue()) ?? ""}
-                            onChange={(event) =>
-                                column?.setFilterValue(event.target.value)
-                            }
-                            className="h-4 text-[11px]"
-                            placeholder="Fabrics..."
-                        />
-                    </div>
-                </div>
-            )
-        },
-    },
-   
-    {
-        accessorKey: "season",
-        header: ({ column }) => {
-
-            return (
-                <div
-                    className={"flex flex-col"}
-
-                >
-                    <div className='flex'>
-
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Season</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div>
-                        <Input type="text"
-                            value={(column?.getFilterValue()) ?? ""}
-                            onChange={(event) =>
-                                column?.setFilterValue(event.target.value)
-                            }
-                            className="h-4 text-[11px]"
-                            placeholder="Season..."
-                        />
-                    </div>
-                </div>
-            )
-        },
-    },
-    {
-        accessorKey: "unit",
-        header: "Unit",
-    },
-    {
-        accessorKey: "orderNumber",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Order Num.
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
+        header: "Fabric Type",
         cell: ({ row }) => {
-            const { id, orderNumber } = row.original
-            return <Link href={`/dashboard/order/${id}`} className="text-blue-300">{orderNumber}</Link>
+            const fabric = row.original.fabricsType?.fabricsName || row.original.fabricsName || "N/A"
+            return <div className="text-gray-500 font-medium text-sm italic">{fabric}</div>
         }
-
-    },
-    {
-        accessorKey: "sbNumber",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    SB No
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
-    },
-    {
-        accessorKey: "programNumber",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Program No
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
-    },
-    {
-        accessorKey: "jobNumber",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Job No
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
-    },
-    {
-        accessorKey: "bookingNumber",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Booking No
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
     },
     {
         accessorKey: "orderQuantity",
-        header: ({ column }) => {
+        header: "Order Quantity",
+        cell: ({ row }) => {
             return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Order Qty.
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
+                <div className="flex flex-col">
+                    <span className="font-bold text-gray-800">{row.original.orderQuantity}</span>
+                    <span className="text-[10px] text-gray-400 font-bold uppercase">{row.original.unit || "KG"}</span>
+                </div>
             )
-        },
+        }
     },
     {
         accessorKey: "deliveryQuantity",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Delivery Qty.
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
+        header: "Delivered",
         cell: ({ row }) => {
             const { orderQuantity, restQuantity } = row.original
-            let value=(orderQuantity-restQuantity).toFixed(2)
-            return <div >{value}</div>
+            const delivered = (orderQuantity - restQuantity).toFixed(2)
+            return <div className="font-medium text-emerald-600">{delivered}</div>
         }
     },
     {
         accessorKey: "restQuantity",
         header: "Rest Qty",
-    },
-    
-    {
-        accessorKey: "targetDate",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Created
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
         cell: ({ row }) => {
-            return <div >{format(row?.original?.createdAt, 'PP')}</div>
+            return <div className="text-rose-500 font-semibold">{row.original.restQuantity}</div>
+        }
+    },
+    {
+        accessorKey: "createdAt",
+        header: "Created",
+        cell: ({ row }) => {
+            return <div className="text-gray-400 text-[11px] font-medium">{format(new Date(row.original.createdAt), 'PP')}</div>
         }
     },
     {
         accessorKey: "status",
-        header: ({ column }) => {
-            const statuses = ["All", "Pending", "Ordered", "Fullfilled"]
-            return (
-                <div className={"flex flex-col"} >
-                    <div className='flex'>
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Status</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div >
-                        <select
-                            className={""}
-                            defaultValue={"ALL"}
-                            onChange={(event) => { column?.setFilterValue(event.target.value) }}
-                        >
-                            <option disabled selected>Status</option>
-                            <option className='cursor-pointer' value={""} >{"ALL"}</option>
-                            <option className='cursor-pointer' value={"Ordered"} >{"Ordered"}</option>
-                            <option className='cursor-pointer' value={"Pending"} >{"Pending"}</option>
-                            <option className='cursor-pointer' value={"Fullfilled"} >{"Fullfilled"}</option>
-                        </select>
-                    </div>
-                </div>
-            )
-        },
-
+        header: "Status",
         cell: ({ row }) => {
-            return <div >{row.original.status}</div>
+            const status = row.original.status || "Pending"
+            let variant = "secondary"
+            let className = "bg-gray-100 text-gray-600"
+
+            if (status === "Fullfilled" || status === "Completed") {
+                variant = "default"
+                className = "bg-emerald-100 text-emerald-700 hover:bg-emerald-100"
+            } else if (status === "Pending" || status === "Ordered") {
+                className = "bg-amber-100 text-amber-700 hover:bg-amber-100"
+            }
+
+            return (
+                <Badge variant={variant} className={`py-0.5 px-2 text-[10px] font-bold uppercase tracking-wider ${className}`}>
+                    {status}
+                </Badge>
+            )
         }
     },
-
     {
-        accessorKey: "Action",
+        id: "action",
         header: "Action",
         cell: ({ row }) => {
             return (<Action id={row.original.id} row={row.original} orderNumber={row.original.orderNumber} actionName={"Delete"} />)
         }
     }
-
-
 ]
+
+
+

@@ -16,58 +16,62 @@ const action = [
     },
 ]
 
-export const columns = [
+import { Badge } from "@/components/ui/badge"
 
-    // {
-    //     accessorKey: "id",
-    //     header: "Serial No.",
-    // },
+export const columns = [
     {
         accessorKey: "companyName",
-        header: "Company Name",
-        accessorFn: (originalRow, index) => {
-            console.log(originalRow)
-            return String(originalRow.order.company.companyName)
-        },
+        header: "Company",
+        cell: ({ row }) => {
+            const companyName = row.original.order?.company?.companyName || "N/A"
+            return <div className="font-semibold text-gray-800">{companyName}</div>
+        }
     },
     {
         accessorKey: "buyerName",
         header: "Buyer",
-        accessorFn: (originalRow, index) => {
-            // console.log(originalRow)
-            return String(originalRow.order.buyer.buyerName)
-        },
+        cell: ({ row }) => {
+            const buyerName = row.original.order?.buyer?.buyerName || "N/A"
+            return <div className="text-gray-600">{buyerName}</div>
+        }
     },
     {
         accessorKey: "deliveredQuantity",
-        header: "Delivered Quantity (KG)",
-        accessorFn: (originalRow, index) => {
-            return String(originalRow.deliveredQuantity)
-        },
+        header: "Quantity",
+        cell: ({ row }) => {
+            return <div className="font-bold text-gray-700">{row.original.deliveredQuantity} KG</div>
+        }
     },
     {
-        accessorKey: "",
-        header: "Bill Number",
-        cell:({row})=>{
-            return <h2> {row.original.billNumber?<span className='bg-green-400 p-1 rounded-lg'>{row.original.billNumber}</span>:<span className='bg-red-500 p-1 rounded-lg'>not edited</span>}</h2>
+        accessorKey: "billNumber",
+        header: "Bill / Chalan Number",
+        cell: ({ row }) => {
+            const { billNumber, id } = row.original
+            
+            return (
+                <div className="flex flex-col gap-1">
+                    <div className="font-bold text-sm text-gray-800 tracking-tight">
+                        {billNumber || `Chalan #${id}`}
+                    </div>
+                    <Badge variant={billNumber ? "default" : "secondary"} className={`w-fit py-0 px-1.5 text-[10px] ${billNumber ? 'bg-emerald-600' : 'bg-amber-100 text-amber-700 hover:bg-amber-100'}`}>
+                        {billNumber ? "BILLED" : "CHALAN ONLY"}
+                    </Badge>
+                </div>
+            )
         }
     },
     {
         accessorKey: "createdAt",
         header: "Date",
         cell: ({ row }) => {
-
-            return <div >{format(row.original.createdAt, 'PP')}</div>
+            return <div className="text-gray-500 text-sm font-medium">{format(new Date(row.original.createdAt), 'PP')}</div>
         }
     },
     {
-        accessorKey: "Action",
+        id: "action",
         header: "Action",
         cell: ({ row }) => {     
             return(<Action id={row.original.id} chalanInfo={row.original} actionName={"Delete"} billAction={"Action"}/>)
         }
     }
-  
-
-
 ]

@@ -17,200 +17,79 @@ const action = [
     },
 ]
 
+import { Badge } from "@/components/ui/badge";
+
 export const columns = [
     {
         accessorKey: "companyName",
-        accessorFn: (originalRow, index) => {
-            return String(originalRow.company.companyName)
-        },
-        header: ({ column }) => {
-
-            return (
-                <div
-                    className={"flex flex-col"}
-
-                >
-                    <div className='flex'>
-
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Company</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div>
-                        <Input type="text"
-                            value={(column?.getFilterValue()) ?? ""}
-                            onChange={(event) =>
-                                column?.setFilterValue(event.target.value)
-                            }
-                            className="h-4 text-[11px]"
-                            placeholder="Company..."
-                        />
-                    </div>
-                </div>
-            )
-        },
+        header: "Company",
+        cell: ({ row }) => {
+            const companyName = row.original.company?.companyName || "N/A";
+            return <div className="font-semibold text-gray-800">{companyName}</div>
+        }
     },
     {
         accessorKey: "buyerName",
-        accessorFn: (originalRow, index) => {
-            if (!originalRow.buyer) {
-                return "N/A"
-            } else {
-
-                return String(originalRow.buyer.buyerName)
-            }
-        },
-        header: ({ column }) => {
-            return (
-                <div
-                    className={"flex flex-col"}
-                >
-                    <div className='flex'>
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Buyer</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div>
-                        <Input type="text"
-                            value={(column?.getFilterValue()) ?? ""}
-                            onChange={(event) =>
-                                column?.setFilterValue(event.target.value)
-                            }
-                            className="h-4 text-[11px]"
-                            placeholder="Buyer..."
-                        />
-                    </div>
-                </div>
-            )
-        },
+        header: "Buyer",
+        cell: ({ row }) => {
+            const buyerName = row.original.buyer?.buyerName || "N/A";
+            return <div className="text-gray-600">{buyerName}</div>
+        }
     },
     {
         accessorKey: "fabricsName",
-
-        header: ({ column }) => {
-
-            return (
-                <div
-                    className={"flex flex-col"}
-
-                >
-                    <div className='flex'>
-
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Fabrics</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div>
-                        <Input type="text"
-                            value={(column?.getFilterValue()) ?? ""}
-                            onChange={(event) =>
-                                column?.setFilterValue(event.target.value)
-                            }
-                            className="h-4 text-[11px]"
-                            placeholder="Fabrics..."
-                        />
-                    </div>
-                </div>
-            )
-        },
+        header: "Fabrics",
         cell: ({ row }) => {
-                 
-                    return <span >{row.original.fabricsType.fabricsName}</span>
-                }
-            },
-    
-    // {
-    //     accessorKey: "billingWay",
-    //     header: ({ column }) => {
-    //         let billingSystem = ["Proforma Invoice", "Bill"]
-    //         return (
-    //             <div className={"flex flex-col"} >
-    //                 <div className='flex'>
-    //                     <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Invoice Type</h2>
-    //                     <RiArrowUpDownFill size={22} />
-    //                 </div>
-    //                 <div >
-    //                     <select
-    //                         className={""}
-    //                         onChange={(event) => { column?.setFilterValue(event.target.value) }}
-    //                     >
-    //                         <option disabled selected>Filter Invoice type</option>
-    //                         <option className='cursor-pointer' value={""} >{"ALL"}</option>
-    //                         <option className='cursor-pointer' value={"Proforma Invoice"} >{"Proforma Invoice"}</option>
-    //                         <option className='cursor-pointer' value={"Bill"} >{"Bill"}</option>
-
-    //                     </select>
-    //                 </div>
-    //             </div>
-    //         )
-    //     },
-
-    //     cell: ({ row }) => {
-    //         let classlist;
-    //         if (row.original.billingWay === "Bill") {
-    //             classlist = `bg-green-600 rounded-md text-white text-md text-center px-2`
-    //         } else {
-    //             classlist = `bg-blue-600 rounded-md text-white text-md text-center px-2`
-    //         }
-    //         return <span className={classlist}>{row.original.billingWay}</span>
-    //     }
-    // },
-
+            const fabricName = row.original.fabricsType?.fabricsName || row.original.fabricsName || "N/A";
+            return <div className="text-gray-600 font-medium">{fabricName}</div>
+        }
+    },
     {
         accessorKey: "billNumber",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Bill Number
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
+        header: "Bill / PI Number",
         cell: ({ row }) => {
-            const { id, billNumber, containOrders } = row.original
+            const { billNumber, piNumber, containOrders } = row.original;
+            const number = billNumber || piNumber;
+            const isBill = !!billNumber;
 
-            return <Link href={`/dashboard/pi/${containOrders}`} className="text-blue-300">{billNumber}</Link>
+            return (
+                <div className="flex flex-col gap-1">
+                    <Link href={`/dashboard/pi/${containOrders}`} className="text-blue-500 hover:underline font-bold text-sm tracking-tight transition-colors">
+                        {number}
+                    </Link>
+                    <Badge variant={isBill ? "default" : "outline"} className={`w-fit py-0 px-1.5 text-[10px] ${isBill ? 'bg-emerald-600 hover:bg-emerald-700' : 'text-blue-600 border-blue-200'}`}>
+                        {isBill ? "BILL" : "PI"}
+                    </Badge>
+                </div>
+            )
         }
-
     },
-
     {
         accessorKey: "invoiceQuantity",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Delivered Quantity
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
+        header: "Total Qty",
+        cell: ({ row }) => {
+            const qty = row.original.invoiceQuantity || row.original.totalPIQuantity;
+            return <div className="font-bold text-gray-700">{qty} KG</div>
+        }
     },
     {
         accessorKey: "invoiceAmount",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Total Amount
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
-    }, {
-        accessorKey: "Action",
+        header: "Total Amount",
+        cell: ({ row }) => {
+            const amount = row.original.invoiceAmount || row.original.totalPIAmount;
+            return <div className="font-bold text-emerald-700">$ {amount?.toLocaleString()}</div>
+        }
+    },
+    {
+        id: "action",
         header: "Action",
         cell: ({ row }) => {
-
             return (<Action id={row.original.containOrders} actionName={"Delete"} />)
         }
     }
-
-
-
-
 ]
+
+
+
+
+

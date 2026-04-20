@@ -1,4 +1,4 @@
-
+"use client"
 import { Checkbox } from '@/components/ui/checkbox';
 import { clearingSelectedValue, pushingOnSelectedValue } from '@/lib/features/Invoice/invoiceSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
@@ -12,9 +12,9 @@ const OrderListCheckBoxes = ({ orderList, row, handleCheckboxChange }) => {
 
     return (
         <>
-          {  row.isBillCreated ? <> <input type='checkbox' checked={true} className={` checkbox checkbox-md checkbox-success mx-2`} disabled={true} /></>
-            :
-            <input type='checkbox' className={` checkbox checkbox-md checkbox-success mx-2`} disabled={!selectedCompanyName ? false : selectedCompanyName !== row.companyName ? true : false} value={orderList} checked={selectedValues?.includes(orderList)} onChange={handleCheckboxChange} />}
+            {row.isBillCreated ? <> <input type='checkbox' checked={true} className={` checkbox checkbox-md checkbox-success mx-2`} disabled={true} /></>
+                :
+                <input type='checkbox' className={` checkbox checkbox-md checkbox-success mx-2`} disabled={!selectedCompanyName ? false : selectedCompanyName !== row.companyName ? true : false} value={orderList} checked={selectedValues?.includes(orderList)} onChange={handleCheckboxChange} />}
         </>
     )
 };

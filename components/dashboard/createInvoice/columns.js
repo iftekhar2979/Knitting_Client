@@ -1,3 +1,4 @@
+"use client"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
@@ -33,148 +34,58 @@ export const columns = [
                 dispatch(pushingOnSelectedValue(event.target.value))
                 dispatch(selectCompanyName(row.original.companyName))
             };
-           
+
             return <OrderListCheckBoxes orderList={row.original.orderNumber} state={state} setDisabled={setDisabled} handleCheckboxChange={handleCheckboxChange} row={row.original} disabled={disabled} />
         },
 
     },
     {
         accessorKey: "orderNumber",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Order Num.
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
+        header: "Order Num.",
         cell: ({ row }) => {
             const { id, orderNumber } = row.original
-            // console.log(id)
-            return <Link href={`/dashboard/order/${id}`} className="text-blue-300">{orderNumber}</Link>
+            return <Link href={`/dashboard/order/${id}`} className="text-blue-500 hover:underline font-medium">{orderNumber}</Link>
         }
 
     },
     {
         accessorKey: "companyName",
-        header: ({ column }) => {
-
-            return (
-                <div
-                    className={"flex flex-col"}
-
-                >
-                    <div className='flex'>
-
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Company</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div>
-                        <Input type="text"
-                            value={(column?.getFilterValue()) ?? ""}
-                            onChange={(event) =>
-                                column?.setFilterValue(event.target.value)
-                            }
-                            className="h-4 text-[11px]"
-                            placeholder="Company..."
-                        />
-                    </div>
-                </div>
-            )
-        },
+        header: "Company",
+        cell: ({ row }) => <div className="font-medium text-gray-700">{row.getValue("companyName")}</div>
     },
     {
         accessorKey: "buyerName",
-        header: ({ column }) => {
-            return (
-                <div
-                    className={"flex flex-col"}
-                >
-                    <div className='flex'>
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Buyer</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div>
-                        <Input type="text"
-                            value={(column?.getFilterValue()) ?? ""}
-                            onChange={(event) =>
-                                column?.setFilterValue(event.target.value)
-                            }
-                            className="h-4 text-[11px]"
-                            placeholder="Buyer..."
-                        />
-                    </div>
-                </div>
-            )
-        },
+        header: "Buyer",
+        cell: ({ row }) => <div className="text-gray-600">{row.getValue("buyerName")}</div>
     },
     {
         accessorKey: "fabricsName",
-        header: ({ column }) => {
-
-            return (
-                <div
-                    className={"flex flex-col"}
-
-                >
-                    <div className='flex'>
-
-                        <h2 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>Fabrics</h2>
-                        <RiArrowUpDownFill size={22} />
-                    </div>
-                    <div>
-                        <Input type="text"
-                            value={(column?.getFilterValue()) ?? ""}
-                            onChange={(event) =>
-                                column?.setFilterValue(event.target.value)
-                            }
-                            className="h-4 text-[11px]"
-                            placeholder="Fabrics..."
-                        />
-                    </div>
-                </div>
-            )
-        },
+        header: "Fabrics",
+        cell: ({ row }) => <div className="text-gray-600">{row.getValue("fabricsName")}</div>
     },
     {
         accessorKey: "orderQuantity",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Order Quantity
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
+        header: "Order Quantity",
+        cell: ({ row }) => <div className="font-semibold">{row.getValue("orderQuantity")} KG</div>
     },
-
     {
         accessorKey: "isProformaInvoiceCreated",
-        header: ({ column }) => {
-            return (
-                <p
-                    className={"flex"}
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Invoice Created
-                    <RiArrowUpDownFill className=" h-4 w-4" size={22} />
-                </p>
-            )
-        },
+        header: "Invoice Status",
         cell: ({ row }) => {
-            return <div>{row.original.isProformaInvoiceCreated ? <MdOutlineEventAvailable size={25} color={"green"} /> : <CgUnavailable size={25} color={"red"} />}</div>
+            return (
+                <div className="flex items-center gap-2">
+                    {row.original.isProformaInvoiceCreated ? (
+                        <div className="flex items-center text-emerald-600 gap-1 bg-emerald-50 px-2 py-1 rounded-full text-xs font-medium">
+                            <FaCheckCircle size={14} /> Created
+                        </div>
+                    ) : (
+                        <div className="flex items-center text-rose-600 gap-1 bg-rose-50 px-2 py-1 rounded-full text-xs font-medium">
+                            <CgUnavailable size={14} /> Pending
+                        </div>
+                    )}
+                </div>
+            )
         },
 
     },
-
-
-
-
-
 ]

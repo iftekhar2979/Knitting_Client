@@ -22,7 +22,7 @@ import InputDropDown from "@/components/utils/InputDropDown"
 import { useGetCompanyQuery } from "@/lib/features/company/companyApi"
 import { useEditOrderMutation } from "@/lib/features/order/orderApi"
 import { useGetProductQuery } from "@/lib/features/Product/productApi"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { EditOrderDetails } from "./EditOrderDetails"
 
 
@@ -178,35 +178,32 @@ useEffect(() => {
 
     return (
         <div className="w-full my-4 flex flex-col  justify-center">
-            <div className="grid grid-cols-2 gap-6 mx-6 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 bg-white dark:bg-gray-900/50 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
                 <InputDropDown
                     label={'Company'}
-                    divclassName={'my-2'}
                     handleInputDropdown={handleInputDropdown}
-                    className={`py-3 px-4 pe-9 block w-full bg-gray-50 border rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600 `}
+                    className="h-11 border-gray-200 focus:border-emerald-500 focus:ring-emerald-500/20"
                     options={companyNames}
                     sectionName={'companyName'}
-                    placeholder={'Select your Company'}
+                    placeholder={'Select Company'}
                     required
                 />
                 <InputDropDown
                     label={'Buyer'}
-                    divclassName={'my-2'}
                     handleInputDropdown={(e) => handleBuyerDropDown(e)}
-                    className={`py-3 px-4 pe-9 block w-full bg-gray-50 border rounded-lg text-sm  disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600 `}
+                    className="h-11 border-gray-200 focus:border-emerald-500 focus:ring-emerald-500/20"
                     options={buyers}
                     sectionName={'Buyer Name'}
-                    placeholder={'Select your Buyer'}
+                    placeholder={'Select Buyer'}
                     required
                 />
                 <InputDropDown
                     label={'Fabrics Type'}
-                    divclassName={'my-2'}
                     handleInputDropdown={productDropDown}
-                    className={`py-3 px-4 pe-9 block w-full bg-gray-50 border rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600 `}
+                    className="h-11 border-gray-200 focus:border-emerald-500 focus:ring-emerald-500/20"
                     options={products}
                     sectionName={'fabricsName'}
-                    placeholder={'Select your Fabrics Type'}
+                    placeholder={'Select Fabrics Type'}
                     required
                 />
                 <div className="my-2">
