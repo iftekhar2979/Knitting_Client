@@ -152,7 +152,7 @@ const SideBar = () => {
             <div className="px-4 py-6 border-t border-gray-50 bg-gray-50/30">
                 <div className="flex items-center gap-3 p-2 bg-white rounded-2xl shadow-sm ring-1 ring-gray-100">
                     <Avatar className="h-10 w-10 ring-2 ring-emerald-50 border-white">
-                        <AvatarImage src="" />
+                        <AvatarImage src={null} />
                         <AvatarFallback className="bg-emerald-600 text-white font-bold text-xs">
                             {userInitials}
                         </AvatarFallback>
