@@ -1,123 +1,174 @@
 'use client'
+import React, { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState, useRef } from 'react';
-import { FaBuildingColumns } from "react-icons/fa6";
-import { BsBuildingAdd } from "react-icons/bs";
-import { MdDashboardCustomize } from "react-icons/md";
-import { IoDocumentSharp } from "react-icons/io5";
-import { CiViewList, CiDeliveryTruck, CiViewTable } from "react-icons/ci";
-import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
-import { BiCreditCard } from "react-icons/bi";
+import { 
+    HiOutlineHome, 
+    HiOutlineOfficeBuilding, 
+    HiOutlinePlusCircle, 
+    HiOutlineDocumentAdd, 
+    HiOutlineClipboardList, 
+    HiOutlineTruck, 
+    HiOutlineCreditCard, 
+    HiOutlineCurrencyDollar, 
+    HiOutlineCube,
+    HiOutlineLogout,
+    HiOutlineLightningBolt,
+    HiX
+} from "react-icons/hi";
 import SingleLink from './Product/SingleLink';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { Button } from '@/components/ui/button';
 import { removeCredentials, setSidebarOnDesboard } from '@/lib/features/user/userSlice';
 import { useLogoutMutation } from '@/lib/features/user/userApiSlice';
-import { FiX } from 'react-icons/fi';
+import { motion } from 'framer-motion';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 const companySection = [
-    { id: 510, routeName: "addCompany", value: "Add Company", icon: <BsBuildingAdd /> },
-    { id: 511, routeName: "company", value: "Company List", icon: <FaBuildingColumns /> }
+    { id: 510, routeName: "addCompany", value: "Add Company", icon: <HiOutlinePlusCircle /> },
+    { id: 511, routeName: "company", value: "Company List", icon: <HiOutlineOfficeBuilding /> }
 ];
 const orderSection = [
-    { id: 512, routeName: "addOrder", value: "Add Order", icon: <IoDocumentSharp /> },
-    { id: 513, routeName: "order", value: "Order List", icon: <CiViewList /> },
-    { id: 514, routeName: "deliveryList", value: "Delivery List", icon: <CiDeliveryTruck /> }
+    { id: 512, routeName: "addOrder", value: "Add Order", icon: <HiOutlineDocumentAdd /> },
+    { id: 513, routeName: "order", value: "Order List", icon: <HiOutlineClipboardList /> },
+    { id: 514, routeName: "deliveryList", value: "Delivery List", icon: <HiOutlineTruck /> }
 ];
 const billSection = [
-    { id: 515, routeName: "createInvoices", value: "Create Invoice", icon: <BiCreditCard /> },
-    { id: 516, routeName: "performaInvoices", value: "Bills", icon: <LiaFileInvoiceDollarSolid /> },
-    // { id: 517, routeName: "bills", value: "Bills", icon: <RiBillLine /> }
+    { id: 515, routeName: "createInvoices", value: "Create Invoice", icon: <HiOutlineCreditCard /> },
+    { id: 516, routeName: "performaInvoices", value: "Statements", icon: <HiOutlineCurrencyDollar /> }
 ];
 const productSection = [
-    // { id: 518, routeName: "analytics", value: "Analytics", icon: <IoAnalyticsOutline /> },
-    { id: 519, routeName: "product", value: "Products", icon: <CiViewList /> }
+    { id: 519, routeName: "product", value: "Products", icon: <HiOutlineCube /> }
 ];
-const dashboardSection = [
-    { id: 520, routeName: "dashboard", value: "Dashboard", icon: <MdDashboardCustomize /> }
-];
-
-import { motion } from 'framer-motion';
 
 const SideBar = () => {
     const pathName = usePathname();
     const router = useRouter()
-    const [selectedRoute, setSelectedRoute] = useState();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [selectedRoute, setSelectedRoute] = useState("");
     const { userInfo, isSidebarOpenOnDashboard } = useAppSelector((state) => state.user);
 
     const [logout] = useLogoutMutation()
     const dispatch = useAppDispatch()
 
     const handleLogOut = () => {
-        logout().then(res => {
+        logout().then(() => {
             dispatch(removeCredentials())
             router.push('/')
         })
     }
+
     useEffect(() => {
-        let currentRoute = pathName.split("/")[2]
+        const currentRoute = pathName.split("/")[2] || "dashboard";
         setSelectedRoute(currentRoute);
-    }, [pathName, handleLogOut]);
+    }, [pathName]);
 
     const handleCloseSidebar = () => {
         dispatch(setSidebarOnDesboard(isSidebarOpenOnDashboard));
     }
 
+    const userName = userInfo?.data?.name || "Guest User";
+    const userRole = userInfo?.data?.isAdmin ? "Administrator" : "User";
+    const userInitials = userName.split(" ").map(n => n[0]).join("").toUpperCase().substring(0, 2);
 
     return (
         <motion.div
             initial={{ x: -300, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className={`flex flex-col h-screen w-64 bg-white dark:bg-gray-900 border-r border-gray-100 sm:pl-6 relative`}
+            className="flex flex-col h-screen w-64 bg-white dark:bg-gray-950 border-r border-gray-100 dark:border-gray-800 shadow-sm relative z-50 overflow-hidden"
             id="side-nav"
         >
-            <div className="flex flex-col justify-between flex-1 mt-6" >
-                <div className="absolute right-4 top-2 sm:hidden">
-                    <FiX size={24} className="cursor-pointer text-gray-500" onClick={handleCloseSidebar} />
+            {/* Logo Section */}
+            <div className="flex items-center gap-3 px-6 py-8">
+                <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
+                    <HiOutlineLightningBolt size={24} />
                 </div>
-                <nav className=" space-y-2">
-                    <div className="space-y-3">
-                        <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Analytics</label>
-                        <Link href={`/dashboard`}>
-                            <div className={`flex my-1 items-center px-3 py-2 text-gray-500 transition-colors ${!selectedRoute && "bg-active-color text-white rounded-md"} duration-300 transform rounded-lg dark:text-gray-200 hover:bg-purple-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-white`}>
-                                <MdDashboardCustomize />
-                                {isSidebarOpen && <span className="mx-2 text-sm font-medium">Dashboard</span>}
-                            </div>
-                        </Link>
-                    </div>
-                    <div className="space-y-3">
-                        <label className={`px-3 text-xs text-inactive font-bold uppercase dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Company</label>
-                        {companySection.map((item) => (
-                            <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={isSidebarOpen} />
-                        ))}
-                    </div>
-                    <div className="space-y-3">
-                        <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Product</label>
-                        {productSection.map((item) => (
-                            <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={isSidebarOpen} />
-                        ))}
-                    </div>
-                    <div className="space-y-3">
-                        <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Orders</label>
-                        {orderSection.map((item) => (
-                            <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={isSidebarOpen} />
-                        ))}
-                    </div>
-                    {userInfo?.data?.isAdmin &&
-                        <div className="space-y-3">
-                            <label className={`px-3 text-xs text-inactive uppercase font-bold dark:text-gray-400 ${!isSidebarOpen && "hidden"}`}>Invoice</label>
-                            {billSection.map((item) => (
-                                <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={isSidebarOpen} />
-                            ))}
+                <div className="flex flex-col">
+                    <h1 className="text-lg font-black tracking-tighter text-gray-900 dark:text-white leading-none">
+                        TERTIARY <span className="text-emerald-600">KNIT</span>
+                    </h1>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Industrial ERP</span>
+                </div>
+                <button className="sm:hidden ml-auto p-1.5 hover:bg-gray-100 rounded-lg text-gray-500" onClick={handleCloseSidebar}>
+                    <HiX size={20} />
+                </button>
+            </div>
+
+            {/* Navigation Sections */}
+            <div className="flex-1 px-4 py-4 space-y-8 overflow-y-auto no-scrollbar scroll-smooth">
+                {/* Dashboard Section */}
+                <div className="space-y-1">
+                    <label className="px-4 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2 block">General</label>
+                    <Link href="/dashboard" className="group block">
+                        <div className={`
+                            flex items-center px-4 py-2.5 transition-all duration-300 rounded-xl
+                            ${selectedRoute === "dashboard" 
+                                ? "bg-emerald-50 text-emerald-600 shadow-sm ring-1 ring-emerald-500/10 font-bold" 
+                                : "text-gray-500 hover:text-emerald-500 hover:bg-emerald-50/50"
+                            }
+                        `}>
+                            <HiOutlineHome className={`text-xl ${selectedRoute === "dashboard" ? "text-emerald-500" : "text-gray-400 group-hover:text-emerald-500"}`} />
+                            <span className="mx-3 text-[13px] font-semibold tracking-tight">Overview</span>
                         </div>
-                    }
-                    {
-                        userInfo ? <Button onClick={handleLogOut} className="bg-active-color w-full mt-4">Log Out</Button> : ""
-                    }
-                </nav>
+                    </Link>
+                </div>
+
+                {/* Company Section */}
+                <div className="space-y-1">
+                    <label className="px-4 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2 block">Organization</label>
+                    {companySection.map((item) => (
+                        <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={true} />
+                    ))}
+                </div>
+
+                {/* Order Section */}
+                <div className="space-y-1">
+                    <label className="px-4 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2 block">Operations</label>
+                    {orderSection.map((item) => (
+                        <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={true} />
+                    ))}
+                </div>
+
+                {/* Bill Section (Admin Only) */}
+                {userInfo?.data?.isAdmin && (
+                    <div className="space-y-1">
+                        <label className="px-4 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2 block">Finance</label>
+                        {billSection.map((item) => (
+                            <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={true} />
+                        ))}
+                    </div>
+                )}
+
+                {/* Product Section */}
+                <div className="space-y-1">
+                    <label className="px-4 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2 block">Inventory</label>
+                    {productSection.map((item) => (
+                        <SingleLink key={item.id} item={item} selectedRoute={selectedRoute} isSidebarOpen={true} />
+                    ))}
+                </div>
+            </div>
+
+            {/* User Profile Hook */}
+            <div className="px-4 py-6 border-t border-gray-50 bg-gray-50/30">
+                <div className="flex items-center gap-3 p-2 bg-white rounded-2xl shadow-sm ring-1 ring-gray-100">
+                    <Avatar className="h-10 w-10 ring-2 ring-emerald-50 border-white">
+                        <AvatarImage src="" />
+                        <AvatarFallback className="bg-emerald-600 text-white font-bold text-xs">
+                            {userInitials}
+                        </AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col min-w-0">
+                        <span className="text-[13px] font-bold text-gray-900 truncate">{userName}</span>
+                        <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider leading-none mt-0.5">{userRole}</span>
+                    </div>
+                    <button 
+                        onClick={handleLogOut}
+                        className="ml-auto p-2 text-gray-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all"
+                        title="Sign Out"
+                    >
+                        <HiOutlineLogout size={18} />
+                    </button>
+                </div>
             </div>
         </motion.div>
     );
