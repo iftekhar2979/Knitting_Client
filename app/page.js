@@ -8,12 +8,14 @@ import Contact from "@/components/Contact/Contact";
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="overflow-x-hidden pt-16 md:pt-0 pb-24 md:pb-0">
       <Hero />
-      <Feature />
-      <Collections />
-      <Services />
-      <Contact />
+      <div className="flex flex-col gap-0">
+        <Feature />
+        <Collections />
+        <Services />
+        <Contact />
+      </div>
       <Footer />
     </main>
   );
