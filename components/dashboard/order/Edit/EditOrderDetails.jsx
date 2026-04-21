@@ -16,8 +16,24 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useAddCompanyMutation } from "@/lib/features/company/companyApi"
-import { toast, useToast } from "@/components/ui/use-toast"
+import { toast } from "@/components/ui/use-toast"
 import { useAddOrderDetailsMutation, useEditOrderDetailsMutation } from "@/lib/features/orderDetailis/orderDetailsApi"
+import { motion } from "framer-motion"
+import { 
+    Dna, 
+    Pipette, 
+    Settings, 
+    Maximize, 
+    Scale, 
+    Scissors, 
+    Palette, 
+    Type, 
+    Send,
+    CircleDot,
+    Cpu,
+    Microscope
+} from "lucide-react"
+import { useEffect } from "react"
 
 const FormSchema = z.object({
   style: z.string(),
@@ -37,176 +53,252 @@ const FormSchema = z.object({
   sl: z.string()
 })
 
-
-const info = [
-  {
-    id: 201,
-    name: 'style',
-    header: "Style",
-    placeholder: "Style...",
-    type: "String"
-  },
-  {
-    id: 214,
-    name: 'colour',
-    header: "Color",
-    placeholder: "Color...",
-    type: "String"
-  },
-  {
-    id: 202,
-    name: 'yarnCount',
-    header: "Yarn Count",
-    placeholder: "Yarn Count...",
-    type: "String"
-  },
-  {
-    id: 203,
-    name: 'yarnBrand',
-    header: "Yarn Brand",
-    placeholder: "Yarn Barnd...",
-    type: "String"
-  },
-  {
-    id: 215,
-    name: 'yarnLot',
-    header: "Yarn Lot",
-    placeholder: "Yarn Lot...",
-    type: "String"
-  },
-  {
-    id: 204,
-    name: 'lycraCount',
-    header: "Lycra Count",
-    placeholder: "Lycra Count...",
-    type: "String"
-  },
-  {
-    id: 205,
-    name: 'lycraBrand',
-    header: "Lycra Brand",
-    placeholder: "Lycra Brand...",
-    type: "String"
-  },
-  {
-    id: 206,
-    name: 'lycraLot',
-    header: "Lycra Lot",
-    placeholder: "Lycra Lot...",
-    type: "String"
-  },
-  {
-    id: 207,
-    name: 'polyStarCount',
-    header: "Polyster Count",
-    placeholder: "Polyster Count...",
-    type: "String"
-  },
-  {
-    id: 208,
-    name: 'polyStarBrand',
-    header: "Polyster Brand",
-    placeholder: "Polyster Brand...",
-    type: "String"
-  },
-  {
-    id: 209,
-    name: 'polyStarLot',
-    header: "Polyster Lot",
-    placeholder: "Polyster Lot...",
-    type: "String"
-  },
-  {
-    id: 210,
-    name: 'e_DIA',
-    header: "F DIA",
-    placeholder: "F DIA...",
-    type: "String"
-  },
-  {
-    id: 211,
-    name: 'mc_DIA',
-    header: "MECHINE DIA",
-    placeholder: "MECHINE DIA...",
-    type: "String"
-  },
-  {
-    id: 212,
-    name: 'f_GSM',
-    header: "F GSM",
-    placeholder: "F GSM...",
-    type: "String"
-  },
-  {
-    id: 213,
-    name: 'sl',
-    header: "Stitch Length",
-    placeholder: "Stitch Length...",
-    type: "String"
-  },
-
-]
-
-export function EditOrderDetails({orderId,details}) {
-  const [editOrderDetails,{isLoading,isError,error}]=useEditOrderDetailsMutation(details?.id)
+export function EditOrderDetails({ orderId, details }) {
+  const [editOrderDetails, { isLoading, isError, isSuccess }] = useEditOrderDetailsMutation()
+  
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-        style: details?.style,
-        colour: details?.colour,
-        yarnCount: details?.yarnCount,
-        yarnBrand: details?.yarnBrand,
-        yarnLot: details?.yarnLot,
-        lycraCount: details?.lycraCount,
-        lycraBrand: details?.lycraBrand,
-        lycraLot: details?.lycraLot,
-        polyStarCount: details?.polyStarCount,
-        polyStarBrand: details?.polyStarBrand,
-        polyStarLot: details?.polyStarLot,
-        e_DIA: details?.e_DIA,
-        mc_DIA: details?.mc_DIA,
-        f_GSM: details?.f_GSM,
-        sl: details?.sl
-
+      style: details?.style || "",
+      colour: details?.colour || "",
+      yarnCount: details?.yarnCount || "",
+      yarnBrand: details?.yarnBrand || "",
+      yarnLot: details?.yarnLot || "",
+      lycraCount: details?.lycraCount || "",
+      lycraBrand: details?.lycraBrand || "",
+      lycraLot: details?.lycraLot || "",
+      polyStarCount: details?.polyStarCount || "",
+      polyStarBrand: details?.polyStarBrand || "",
+      polyStarLot: details?.polyStarLot || "",
+      e_DIA: details?.e_DIA || "",
+      mc_DIA: details?.mc_DIA || "",
+      f_GSM: details?.f_GSM || "",
+      sl: details?.sl || ""
     },
   })
 
+  useEffect(() => {
+    if (isSuccess) {
+      toast({
+        title: "Details Updated",
+        description: "Order specification details have been saved.",
+        className: "bg-emerald-600 text-white border-none",
+      })
+    }
+    if (isError) {
+      toast({
+        variant: "destructive",
+        title: "Update Failed",
+        description: "Failed to update order details. Please try again.",
+      })
+    }
+  }, [isSuccess, isError])
+
   async function onSubmit(data) {
-const body={orderId:parseInt(orderId),...data}
-editOrderDetails({id:details?.id,body})
+    const body = { orderId: parseInt(orderId), ...data }
+    editOrderDetails({ id: details?.id, body })
+  }
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
   }
 
   return (
-    <div className="w-full my-4 flex justify-center">
+    <div className="w-full max-w-7xl mx-auto py-6">
       <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            
+            {/* Card 1: Material Composition (Yarn, Lycra, Poly) */}
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={cardVariants}
+              className="xl:col-span-2 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden"
+            >
+              <div className="px-6 py-4 bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800 flex items-center gap-2">
+                <Dna className="w-5 h-5 text-emerald-500" />
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">Material Composition</h3>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                  {/* Yarn Section */}
+                  <div className="space-y-4">
+                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Yarn
+                    </h4>
+                    {['yarnCount', 'yarnBrand', 'yarnLot'].map(name => (
+                      <FormField
+                        key={name}
+                        control={form.control}
+                        name={name}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="flex items-center gap-2 text-xs text-gray-500">
+                              <Pipette className="w-3.5 h-3.5" /> {name.replace('yarn', 'Yarn ')}
+                            </FormLabel>
+                            <FormControl>
+                              <Input className="h-10 rounded-lg border-gray-200 focus:border-emerald-500 focus:ring-emerald-500/20" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    ))}
+                  </div>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full  px-8 rounded-xl hover:shadow-xl space-y-6">
-          <div className="grid grid-cols-2 gap-4">
-            {
-              info.map(item => {
-                const { name, header, placeholder, id, type } = item
-                return (
+                  {/* Lycra Section */}
+                  <div className="space-y-4">
+                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-purple-400" /> Lycra
+                    </h4>
+                    {['lycraCount', 'lycraBrand', 'lycraLot'].map(name => (
+                      <FormField
+                        key={name}
+                        control={form.control}
+                        name={name}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="flex items-center gap-2 text-xs text-gray-500">
+                              <Pipette className="w-3.5 h-3.5" /> {name.replace('lycra', 'Lycra ')}
+                            </FormLabel>
+                            <FormControl>
+                              <Input className="h-10 rounded-lg border-gray-200 focus:border-emerald-500 focus:ring-emerald-500/20" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Polyester Section */}
+                  <div className="space-y-4">
+                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400" /> Polyester
+                    </h4>
+                    {['polyStarCount', 'polyStarBrand', 'polyStarLot'].map(name => (
+                      <FormField
+                        key={name}
+                        control={form.control}
+                        name={name}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="flex items-center gap-2 text-xs text-gray-500">
+                              <Pipette className="w-3.5 h-3.5" /> {name.replace('polyStar', 'Poly ')}
+                            </FormLabel>
+                            <FormControl>
+                              <Input className="h-10 rounded-lg border-gray-200 focus:border-emerald-500 focus:ring-emerald-500/20" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Card 2: Fabric & Machine Specs */}
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={cardVariants}
+              className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden"
+            >
+              <div className="px-6 py-4 bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800 flex items-center gap-2">
+                <Settings className="w-5 h-5 text-emerald-500" />
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">Machine & Fabric</h3>
+              </div>
+              <div className="p-6 grid grid-cols-1 gap-6">
+                {[
+                  { name: 'mc_DIA', header: 'Machine DIA', icon: Cpu },
+                  { name: 'e_DIA', header: 'Fabric DIA', icon: Maximize },
+                  { name: 'f_GSM', header: 'Fabric GSM', icon: Scale },
+                  { name: 'sl', header: 'Stitch Length', icon: Scissors },
+                ].map(field => (
                   <FormField
-                    key={id}
+                    key={field.name}
                     control={form.control}
-                    name={name}
-                    render={({ field }) => (
+                    name={field.name}
+                    render={({ field: formField }) => (
                       <FormItem>
-                        <FormLabel>{header}</FormLabel>
+                        <FormLabel className="flex items-center gap-2 mb-1.5">
+                          <field.icon className="w-4 h-4" /> {field.header}
+                        </FormLabel>
                         <FormControl>
-                          <Input placeholder={placeholder} {...field} />
+                          <Input className="h-11 rounded-xl border-gray-200 focus:border-emerald-500 focus:ring-emerald-500/20" {...formField} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                )
-              })
-            }
-          </div>
-          <div className="flex justify-center my-4">
-            <Button type="submit" className="my-4">{isLoading?"Editing":"Edit Details"}</Button>
+                ))}
+              </div>
+            </motion.div>
 
+            {/* Card 3: Attributes (Style & Color) */}
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={cardVariants}
+              className="xl:col-span-3 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden"
+            >
+              <div className="px-6 py-4 bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800 flex items-center gap-2">
+                <Microscope className="w-5 h-5 text-emerald-500" />
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">Visual Attributes</h3>
+              </div>
+              <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                {['style', 'colour'].map(name => (
+                  <FormField
+                    key={name}
+                    control={form.control}
+                    name={name}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 mb-1.5 capitalize">
+                          {name === 'style' ? <Type className="w-4 h-4" /> : <Palette className="w-4 h-4" />} {name}
+                        </FormLabel>
+                        <FormControl>
+                          <Input className="h-12 text-lg font-medium rounded-xl border-gray-200 focus:border-emerald-500 focus:ring-emerald-500/20 bg-gray-50/30 dark:bg-gray-800/20" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="flex justify-center pt-4 pb-12">
+            <Button 
+                type="submit" 
+                disabled={isLoading}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 h-12 rounded-xl text-lg font-medium shadow-xl shadow-emerald-200 dark:shadow-none transition-all active:scale-95 flex items-center gap-3"
+            >
+              {isLoading ? (
+                <>
+                  <motion.div 
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                  >
+                    <CircleDot className="w-5 h-5" />
+                  </motion.div>
+                  Applying Changes...
+                </>
+              ) : (
+                <>
+                  <Send className="w-5 h-5" />
+                  Update Specifications
+                </>
+              )}
+            </Button>
           </div>
         </form>
       </Form>
