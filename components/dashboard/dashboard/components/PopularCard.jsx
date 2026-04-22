@@ -1,56 +1,27 @@
-import react from 'react';
+import React from 'react';
 import PopularList from './PopularList';
 
-const PopularCard = ({cardItems}) => {
-    const {category,listItem}=cardItems
-    // console.log(listItem)
+const PopularCard = ({ cardItems }) => {
+    const { category, listItem } = cardItems;
+
     return (
-        <div className="bg-white border-rad p-4">
-        <h2 className=" font-bold text-xl"> {category}</h2>
-        <ol className="pt-4">
-            {
-                listItem?.map(list=><PopularList key={list.id} listItems={list}/>)
-            }
-
-            {/* <li>
-                <div>
-                    <h2>Grapics Textile Ltd</h2>
-                    <div className="flex justify-between">
-
-                        <BiSolidShoppingBag size={18} className="text-active" />
-                        <span className="text-sm text-active font-bold">02</span>
-                    </div>
-                </div>
-                <hr />
-
-            </li>
-            <li>
-                <div>
-                    <h2>Mahmud Fashion</h2>
-                    <div className="flex justify-between">
-
-                        <BiSolidShoppingBag size={18} className="text-active" />
-                        <span className="text-sm text-active font-bold">02</span>
-                    </div>
-                </div>
-                <hr />
-
-            </li>
-            <li>
-                <div>
-                    <h2>The Abc Ltd</h2>
-                    <div className="flex justify-between">
-
-                        <BiSolidShoppingBag size={18} className="text-active" />
-                        <span className="text-sm text-active font-bold">02</span>
-                    </div>
-                </div>
-                <hr />
-
-            </li> */}
-
-        </ol>
-    </div>
+        <div className="bg-white rounded-2xl p-5 ring-1 ring-gray-100 shadow-sm transition-all hover:shadow-md h-full flex flex-col">
+            <div className="flex items-center justify-between mb-5 px-1">
+                <h3 className="text-sm font-black text-gray-400 uppercase tracking-widest">{category}</h3>
+                <span className="text-[10px] font-bold bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">Top Entries</span>
+            </div>
+            
+            <div className="flex-1 space-y-1">
+                {listItem && listItem.length > 0 ? (
+                    listItem.map((list, index) => (
+                        <PopularList key={list.id || index} listItems={list} />
+                    ))
+                ) : (
+                    <p className="text-xs text-gray-400 italic text-center py-4">No data available</p>
+                )}
+            </div>
+        </div>
     )
 };
+
 export default PopularCard;

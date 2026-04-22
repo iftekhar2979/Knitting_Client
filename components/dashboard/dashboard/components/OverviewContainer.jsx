@@ -7,46 +7,42 @@ import { useGetCompanyFabricsAndOrderCountQuery } from '@/lib/features/dashboard
 import { useAppSelector } from '@/lib/hooks';
 import Loading from '@/components/utils/Loading';
 
-let overviewCards = [
-    {
-        id: 1001,
-        title: "Company",
-        icon: <GiFactory size={20} className="text-white" />,
-        count: 500,
-        className: "border w-full p-4 card-bg-1 border-rad  shadow-sm "
-    },
-
-    {
-        id: 1002,
-        title: "Fabrics",
-        icon: <GiDress size={20} className="text-white" />,
-        count: 100,
-        className: "border w-full p-4 card-bg-2 border-rad  shadow-sm "
-    },
-
-    {
-        id: 1003,
-        title: "Order",
-        icon: <FaCartShopping size={20} className='text-white' />,
-        count: 1800,
-        className: "border w-full p-4 card-bg-3 border-rad  shadow-sm "
-    },
-]
-
 const OverviewContainer = (props) => {
     const {range}=useAppSelector(state=>state.dashboard)
-    console.log(range)
     const {data,isLoading,isError}=useGetCompanyFabricsAndOrderCountQuery(range)
+    
     if(isLoading){
         return <Loading/>
     }
-   overviewCards[0].count=data?.companyCount
-   overviewCards[1].count=data?.fabricCount
-   overviewCards[2].count=data?.orderCount
+
+    const overviewCards = [
+        {
+            id: 1001,
+            title: "Total Companies",
+            icon: <GiFactory size={24} />,
+            count: data?.companyCount || 0,
+            color: "emerald"
+        },
+        {
+            id: 1002,
+            title: "Fabric Variants",
+            icon: <GiDress size={24} />,
+            count: data?.fabricCount || 0,
+            color: "blue"
+        },
+        {
+            id: 1003,
+            title: "Active Orders",
+            icon: <FaCartShopping size={24} />,
+            count: data?.orderCount || 0,
+            color: "orange"
+        },
+    ]
+
     return (
-        <div className="border p-4 grid grid-cols-1 md:grid-cols-3 gap-4  border-rad-2 bg-inactive">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {
-                overviewCards?.map(card => <OverviewCard key={card.id} cardItem={card} data={data} />)
+                overviewCards?.map(card => <OverviewCard key={card.id} cardItem={card} />)
             }
         </div>
     )
