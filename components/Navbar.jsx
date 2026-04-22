@@ -38,8 +38,7 @@ const Navbar = () => {
         { name: 'Contact', href: '/contact', icon: Phone },
     ];
 
-    // Don't show this main navbar inside the dashboard if you prefer the dedicated dashboard sidebar
-    // However, the user asked for a global navbar. For now, I'll keep the logic but style it beautifully.
+    if (isDashboard) return null;
 
     return (
         <>

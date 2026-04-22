@@ -72,16 +72,16 @@ const page = (props) => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="relative z-10 text-center pt-20 pb-16 px-6"
+                className="relative z-10 text-center pt-24 pb-12 sm:pt-32 sm:pb-16 lg:pt-40 lg:pb-20 px-4 sm:px-6"
             >
-                <span className="inline-block px-4 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-widest mb-5">
+                <span className="inline-block px-4 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-5">
                     What We Offer
                 </span>
-                <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight">
-                    World-Class Textile <br className="hidden md:block" />
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight px-2">
+                    World-Class Textile <br className="hidden sm:block" />
                     <span className="text-emerald-600">Services & Solutions</span>
                 </h1>
-                <p className="mt-6 max-w-2xl mx-auto text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
+                <p className="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-gray-500 dark:text-gray-400 leading-relaxed px-4">
                     From high-speed production to sustainable sourcing, we offer a complete ecosystem of textile manufacturing services tailored to global industry demands.
                 </p>
             </motion.div>
@@ -92,7 +92,7 @@ const page = (props) => {
                 whileInView="visible"
                 viewport={{ once: true, margin: "-80px" }}
                 variants={containerVariants}
-                className="relative z-10 container mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                className="relative z-10 container mx-auto px-4 sm:px-6 pb-16 sm:pb-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
             >
                 {services.map((service, i) => {
                     const colors = colorMap[service.color];
@@ -100,13 +100,13 @@ const page = (props) => {
                         <motion.div
                             key={i}
                             variants={cardVariants}
-                            className={`group bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-default ${colors.border}`}
+                            className={`group bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-6 sm:p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-default ${colors.border}`}
                         >
-                            <div className={`w-14 h-14 rounded-2xl ${colors.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                                <service.icon className={`w-7 h-7 ${colors.icon}`} />
+                            <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl ${colors.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                                <service.icon className={`w-6 h-6 sm:w-7 sm:h-7 ${colors.icon}`} />
                             </div>
 
-                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                            <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3">
                                 {service.title}
                             </h3>
                             <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm">
@@ -128,21 +128,21 @@ const page = (props) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="relative z-10 container mx-auto px-6 pb-24"
+                className="relative z-10 container mx-auto px-4 sm:px-6 pb-20 sm:pb-28"
             >
-                <div className="bg-emerald-600 rounded-3xl p-10 md:p-14 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl shadow-emerald-200 dark:shadow-none overflow-hidden">
+                <div className="bg-emerald-600 rounded-2xl sm:rounded-[2.5rem] p-8 sm:p-12 md:p-14 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl shadow-emerald-200 dark:shadow-none overflow-hidden">
                     {/* Background glow */}
                     <div className="absolute -top-10 -right-10 w-64 h-64 bg-emerald-500/30 rounded-full blur-3xl pointer-events-none" />
-                    <div className="space-y-3 relative z-10">
-                        <div className="flex items-center gap-2">
-                            <Star className="w-5 h-5 text-emerald-200" />
-                            <span className="text-emerald-200 text-xs font-bold uppercase tracking-widest">Trusted by 500+ clients</span>
+                    <div className="space-y-3 relative z-10 text-center md:text-left">
+                        <div className="flex items-center justify-center md:justify-start gap-2">
+                            <Star className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-200" />
+                            <span className="text-emerald-200 text-[10px] sm:text-xs font-bold uppercase tracking-widest">Trusted by 500+ clients</span>
                         </div>
-                        <h3 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight">
                             Ready to transform <br className="hidden md:block" /> your supply chain?
                         </h3>
                     </div>
-                    <button className="relative z-10 shrink-0 flex items-center gap-3 bg-white hover:bg-gray-50 text-emerald-700 px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-md active:scale-95 whitespace-nowrap">
+                    <button className="w-full sm:w-auto relative z-10 shrink-0 flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-emerald-700 px-8 py-4 rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg transition-all shadow-md active:scale-95 whitespace-nowrap">
                         Get a Free Quote <ArrowRight className="w-5 h-5" />
                     </button>
                 </div>
@@ -150,4 +150,4 @@ const page = (props) => {
         </div>
     );
 };
-export default page;
+export default page;
