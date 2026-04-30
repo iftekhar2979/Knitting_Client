@@ -1,91 +1,114 @@
 "use client"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import { RiArrowUpDownFill } from "react-icons/ri"
 import OrderListCheckBoxes from "./OrderListCheckBoxes"
-import { useEffect, useState } from "react"
 import { useAppDispatch } from "@/lib/hooks"
-import { pushingOnSelectedValue, pushingSelectedCompany, selectCompanyName } from "@/lib/features/Invoice/invoiceSlice"
+import { pushingOnSelectedValue, selectCompanyName } from "@/lib/features/Invoice/invoiceSlice"
 import { CgUnavailable } from "react-icons/cg";
-import { MdOutlineEventAvailable } from "react-icons/md";
-import { FaCheck } from "react-icons/fa6"
 import { FaCheckCircle } from "react-icons/fa"
+import { Badge } from "@/components/ui/badge"
+
 export const columns = [
     {
         id: "select",
         header: ({ table }) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
-                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all"
-            />
+            <div className="flex items-center justify-center px-2">
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && "indeterminate")
+                    }
+                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                    aria-label="Select all"
+                    className="border-gray-300 data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600"
+                />
+            </div>
         ),
         cell: function Cell({ row }) {
-            const [disabled, setDisabled] = useState(false)
-            const [state, setState] = useState("")
             const dispatch = useAppDispatch()
-
 
             const handleCheckboxChange = (event) => {
                 dispatch(pushingOnSelectedValue(event.target.value))
                 dispatch(selectCompanyName(row.original.companyName))
             };
 
-            return <OrderListCheckBoxes orderList={row.original.orderNumber} state={state} setDisabled={setDisabled} handleCheckboxChange={handleCheckboxChange} row={row.original} disabled={disabled} />
+            return (
+                <OrderListCheckBoxes 
+                    orderList={row.original.orderNumber} 
+                    handleCheckboxChange={handleCheckboxChange} 
+                    row={row.original} 
+                />
+            )
         },
-
     },
     {
         accessorKey: "orderNumber",
-        header: "Order Num.",
+        header: "Order ID",
         cell: ({ row }) => {
             const { id, orderNumber } = row.original
-            return <Link href={`/dashboard/order/${id}`} className="text-blue-500 hover:underline font-medium">{orderNumber}</Link>
+            return (
+                <Link 
+                    href={`/dashboard/order/${id}`} 
+                    className="text-emerald-600 hover:text-emerald-700 font-bold transition-colors underline-offset-4 hover:underline"
+                >
+                    {orderNumber}
+                </Link>
+            )
         }
-
     },
     {
         accessorKey: "companyName",
         header: "Company",
-        cell: ({ row }) => <div className="font-medium text-gray-700">{row.getValue("companyName")}</div>
+        cell: ({ row }) => (
+            <div className="font-semibold text-gray-800 tracking-tight">
+                {row.getValue("companyName")}
+            </div>
+        )
     },
     {
         accessorKey: "buyerName",
         header: "Buyer",
-        cell: ({ row }) => <div className="text-gray-600">{row.getValue("buyerName")}</div>
+        cell: ({ row }) => <div className="text-gray-500 font-medium">{row.getValue("buyerName")}</div>
     },
     {
         accessorKey: "fabricsName",
         header: "Fabrics",
-        cell: ({ row }) => <div className="text-gray-600">{row.getValue("fabricsName")}</div>
+        cell: ({ row }) => (
+            <Badge variant="secondary" className="bg-gray-100 text-gray-700 border-none font-normal">
+                {row.getValue("fabricsName")}
+            </Badge>
+        )
     },
     {
         accessorKey: "orderQuantity",
-        header: "Order Quantity",
-        cell: ({ row }) => <div className="font-semibold">{row.getValue("orderQuantity")} KG</div>
+        header: () => <div className="text-right">Quantity</div>,
+        cell: ({ row }) => (
+            <div className="text-right font-mono font-bold text-gray-700">
+                {row.getValue("orderQuantity").toLocaleString()} <span className="text-[10px] text-gray-400 font-sans">KG</span>
+            </div>
+        )
     },
     {
         accessorKey: "isProformaInvoiceCreated",
-        header: "Invoice Status",
+        header: () => <div className="text-center">Status</div>,
         cell: ({ row }) => {
+            const isCreated = row.original.isProformaInvoiceCreated;
             return (
-                <div className="flex items-center gap-2">
-                    {row.original.isProformaInvoiceCreated ? (
-                        <div className="flex items-center text-emerald-600 gap-1 bg-emerald-50 px-2 py-1 rounded-full text-xs font-medium">
-                            <FaCheckCircle size={14} /> Created
-                        </div>
+                <div className="flex justify-center">
+                    {isCreated ? (
+                        <Badge className="bg-emerald-50 text-emerald-700 border-emerald-100 hover:bg-emerald-100 transition-colors gap-1.5 px-3 py-1">
+                            <FaCheckCircle size={12} />
+                            <span className="text-[11px] font-bold uppercase tracking-wider">Invoiced</span>
+                        </Badge>
                     ) : (
-                        <div className="flex items-center text-rose-600 gap-1 bg-rose-50 px-2 py-1 rounded-full text-xs font-medium">
-                            <CgUnavailable size={14} /> Pending
-                        </div>
+                        <Badge variant="outline" className="bg-rose-50 text-rose-600 border-rose-100 gap-1.5 px-3 py-1">
+                            <CgUnavailable size={14} />
+                            <span className="text-[11px] font-bold uppercase tracking-wider">Pending</span>
+                        </Badge>
                     )}
                 </div>
             )
         },
-
     },
 ]
+

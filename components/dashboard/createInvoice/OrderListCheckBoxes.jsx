@@ -1,21 +1,39 @@
 "use client"
 import { Checkbox } from '@/components/ui/checkbox';
-import { clearingSelectedValue, pushingOnSelectedValue } from '@/lib/features/Invoice/invoiceSlice';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import react, { useEffect, useState } from 'react';
+import { useAppSelector } from '@/lib/hooks';
 
 const OrderListCheckBoxes = ({ orderList, row, handleCheckboxChange }) => {
-    const [disabled, setDisabled] = useState(false)
-    const { selectedValues, selectedCompanyName } = useAppSelector(state => state.invoiceSlice)
+    const { selectedValues, selectedCompanyName } = useAppSelector(state => state.invoiceSlice);
 
+    const isDisabled = !selectedCompanyName 
+        ? false 
+        : selectedCompanyName !== row.companyName;
 
+    if (row.isBillCreated) {
+        return (
+            <div className="flex items-center justify-center">
+                <Checkbox 
+                    checked={true} 
+                    disabled={true} 
+                    className="h-5 w-5 border-emerald-500 data-[state=checked]:bg-emerald-500 data-[state=checked]:text-white" 
+                />
+            </div>
+        );
+    }
 
     return (
-        <>
-            {row.isBillCreated ? <> <input type='checkbox' checked={true} className={` checkbox checkbox-md checkbox-success mx-2`} disabled={true} /></>
-                :
-                <input type='checkbox' className={` checkbox checkbox-md checkbox-success mx-2`} disabled={!selectedCompanyName ? false : selectedCompanyName !== row.companyName ? true : false} value={orderList} checked={selectedValues?.includes(orderList)} onChange={handleCheckboxChange} />}
-        </>
-    )
+        <div className="flex items-center justify-center">
+            <Checkbox 
+                id={`order-${orderList}`}
+                className="h-5 w-5 border-gray-300 data-[state=checked]:border-emerald-500 data-[state=checked]:bg-emerald-500 transition-all focus-visible:ring-emerald-500"
+                disabled={isDisabled}
+                checked={selectedValues?.includes(orderList)}
+                onCheckedChange={(checked) => {
+                    handleCheckboxChange({ target: { value: orderList, checked } });
+                }}
+            />
+        </div>
+    );
 };
+
 export default OrderListCheckBoxes;
