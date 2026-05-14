@@ -88,7 +88,7 @@ export const columns = [
         accessorKey: "createdAt",
         header: "Created",
         cell: ({ row }) => {
-            return <div className="text-gray-400 text-[11px] font-medium">{format(new Date(row.original.createdAt), 'PP')}</div>
+            return <div className="text-gray-400 text-[11px] font-medium">{format(new Date(row.original.created_at), 'PP')}</div>
         }
     },
     {

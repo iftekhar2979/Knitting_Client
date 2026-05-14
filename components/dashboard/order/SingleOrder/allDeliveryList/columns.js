@@ -67,17 +67,17 @@ export const columns = [
         }
     },
     {
-        accessorKey: "createdAt",
+        accessorKey: "created_at",
         header: "Date",
         cell: ({ row }) => {
-            return <div className="text-gray-500 text-sm font-medium">{format(new Date(row.original.createdAt), 'PPp')}</div>
+            return <div className="text-gray-500 text-sm font-medium">{format(new Date(row.original.created_at), 'PPp')}</div>
         }
     },
     {
         id: "action",
         header: "Action",
         cell: ({ row }) => {
-            return(<Action id={row.original.id} data={row.original}/>)
+            return (<Action id={row.original.id} data={row.original} />)
         }
     }
 ]

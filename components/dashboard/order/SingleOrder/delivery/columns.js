@@ -41,17 +41,17 @@ export const columns = [
         }
     },
     {
-        accessorKey: "createdAt",
+        accessorKey: "created_at",
         header: "Date",
         cell: ({ row }) => {
-            return <div className="text-gray-500 text-sm font-medium">{format(new Date(row.original.createdAt), 'PP')}</div>
+            return <div className="text-gray-500 text-sm font-medium">{format(new Date(row.original.created_at), 'PP')}</div>
         }
     },
     {
         id: "action",
         header: "Action",
         cell: ({ row }) => {
-            return(<Action id={row.original.id} chalanInfo={row.original} actionName={"Delete"} billAction={"Action"}/>)
+            return (<Action id={row.original.id} chalanInfo={row.original} actionName={"Delete"} billAction={"Action"} />)
         }
     }
 ]
