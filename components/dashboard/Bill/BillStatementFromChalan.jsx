@@ -7,28 +7,14 @@ import { useGetBillForSingleOrderQuery, useUpdateBillNumberbyChalanMutation } fr
 // import { useUpdateBillNumberbyChalanMutation } from '@/lib/features/Invoice/invoiceApi'
 import { format } from 'date-fns'
 // import { useGetSingleBillQuery } from '@/lib/features/Invoice/invoiceApi'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 export default function BillStatementFromChalan({ id }) {
     const { data, isLoading, isError } = useGetBillForSingleOrderQuery(id)
     const [updateBillNumberByChalan] = useUpdateBillNumberbyChalanMutation()
-    const [block, setBlock] = useState(false)
     const [state, setState] = useState("")
     const [edit, setEdit] = useState(false)
-    useEffect(() => {
-        const nav = document.getElementById("main-nav");
-        const sidebar = document.getElementById("side-nav");
 
-        if (block) {
-            nav?.classList.add("hidden");
-            sidebar?.classList.add("hidden");
-        }
-
-        return () => {
-            nav?.classList.remove("hidden");
-            sidebar?.classList.remove("hidden");
-        };
-    }, [block]);
     if (isLoading) {
         return <Loading />
     }
@@ -43,19 +29,46 @@ export default function BillStatementFromChalan({ id }) {
     // console.log(data)
     let amount = data?.deliveredQuantity * data?.unitPrice || 0
     const handlePrint = () => {
-
-        setBlock(true)
-        setTimeout(() => {
-            setBlock(false)
-            window.print()
-        }, 10);
+        window.print()
     }
     const handleUpdate = () => {
         updateBillNumberByChalan({ id, billNumber: state })
     }
     return (
         <>
-            <section>
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                @media print {
+                    #main-nav,
+                    #side-nav {
+                        display: none !important;
+                    }
+
+                    body * {
+                        visibility: hidden !important;
+                    }
+
+                    .bill-statement-print-section,
+                    .bill-statement-print-section * {
+                        visibility: visible !important;
+                    }
+
+                    .bill-statement-print-section {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100% !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        background: #ffffff !important;
+                    }
+
+                    .bill-statement-no-print {
+                        display: none !important;
+                    }
+                }
+            `}} />
+            <section className="bill-statement-print-section">
                 <div className='leading-4 text-black timesNewRoman'>
                     <div className="mx-2 flex justify-around">
                         <nav className='flex flex-col justify-center'>
@@ -84,7 +97,7 @@ export default function BillStatementFromChalan({ id }) {
 
                         <div className='flex justify-between mt-2 '>
                             {/* <div className="flex "><span className="ml-2 widthHeading">Bill Number </span> <span className='ml-[5px]'> : {billbillDetails.billNumber}</span></div> */}
-                            {!edit ? <h2 class="" onClick={() => setEdit(true)}>Bill Number : {billNumber} </h2> : <div className=''>Bill Number : <input type='text' onChange={(e) => setState(e.target.value)} onBlur={handleUpdate} defaultValue={billNumber} /></div>}
+                            {!edit ? <h2 className="" onClick={() => setEdit(true)}>Bill Number : {billNumber} </h2> : <div className=''>Bill Number : <input type='text' onChange={(e) => setState(e.target.value)} onBlur={handleUpdate} defaultValue={billNumber} /></div>}
                         </div>
                     </div>
                 </div>
@@ -134,8 +147,8 @@ export default function BillStatementFromChalan({ id }) {
                     </tbody>
                 </table>
 
-                <h2 class="font-semibold text-[11pt] mt-4 text-black italic">( In Words: {MakingDollarConvert(amount)?.toUpperCase()} TAKA ONLY )</h2>
-                <section class="w-full pt-4 mt-14">
+                <h2 className="font-semibold text-[11pt] mt-4 text-black italic">( In Words: {MakingDollarConvert(amount)?.toUpperCase()} TAKA ONLY )</h2>
+                <section className="w-full pt-4 mt-14">
                     <div className='flex justify-between '>
                         <div className='flex items-end'>
 
@@ -155,8 +168,8 @@ export default function BillStatementFromChalan({ id }) {
                         </div>
                     </div>
                 </section>
-                <div className='text-right'>
-                    <Button className={`${block && 'hidden'}`} onClick={handlePrint}>Print this out!</Button>
+                <div className='text-right bill-statement-no-print'>
+                    <Button onClick={handlePrint}>Print this out!</Button>
                 </div>
             </section>
         </>

@@ -35,7 +35,7 @@ const TopNavbar = () => {
     const userInitials = userName.split(" ").map(n => n[0]).join("").toUpperCase().substring(0, 2);
 
     return (
-        <header className="sticky top-0 z-40 flex h-16 w-full items-center justify-between border-b border-gray-100 bg-white/80 px-4 backdrop-blur-md dark:border-gray-800 dark:bg-gray-950/80 sm:px-6">
+        <header id="main-nav" className="sticky top-0 z-40 flex h-16 w-full items-center justify-between border-b border-gray-100 bg-white/80 px-4 backdrop-blur-md dark:border-gray-800 dark:bg-gray-950/80 sm:px-6 print:hidden">
             <div className="flex items-center gap-4 flex-1">
                 <Button 
                     variant="ghost" 

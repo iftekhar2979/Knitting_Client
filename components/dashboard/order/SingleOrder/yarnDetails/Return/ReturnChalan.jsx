@@ -1,9 +1,7 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet, Font,Image } from '@react-pdf/renderer';
-import { useAppSelector } from '@/lib/hooks';
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { format } from 'date-fns';
 import { companyInformation } from '@/contents/companyInformation';
-import { Item } from '@radix-ui/react-menubar';
 // import {logo} from "../../../public/assets/logo.jpg"
 // Create styles
 const styles = StyleSheet.create({
@@ -22,21 +20,18 @@ const styles = StyleSheet.create({
   childrenChalanInfo: { marginTop: 2 ,fontWeight:'bold'},
 });
 
-Font.register({
-  family: 'Times-Roman',
-  fontStyle: 'italic',
-  src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf'
-});
 const ReturnChalan = ({ id,anotherInfo, data }) => {
   if (id) {
     const { createdAt, returnQuantity,westQuantity, deliveredBy, order,role,vechileNumber } = data
+    const totalQuantity = (Number(returnQuantity) || 0) + (Number(westQuantity) || 0);
+    const yarnDescription = anotherInfo?.descriptionOfYarn || anotherInfo?.yarnType || "";
+
     return (
 
       <Document>
         <Page size="A4" style={styles.page}>
         <View style={{display:"flex", justifyContent:"center"}}>
-            <Image src="https://i.postimg.cc/856PDK8d/16dfcbd5-c7a3-49ce-ba66-09788c7d252f.png" />
-          {/* <Text style={styles.companyName}>{companyInformation?.name}</Text> */}
+          <Text style={styles.companyName}>{companyInformation?.name}</Text>
           </View>
           {/* <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.location}</Text>
           <Text style={{ fontStyle: "italic", fontSize: 12, textAlign: 'center' }}>{companyInformation?.intro}</Text>
@@ -54,7 +49,7 @@ const ReturnChalan = ({ id,anotherInfo, data }) => {
               <Text style={styles.childrenChalanInfo}>Fabric Type : {anotherInfo?.yarnType}</Text>
             </View>
             <View style={{ width: '30%', marginLeft: 40, fontSize: 14, display: 'flex', flexDirection: 'column' }}>
-              <Text style={{}}>Date : {format(createdAt, "PP")}</Text>
+              <Text style={{}}>Date : {createdAt ? format(new Date(createdAt), "PP") : "N/A"}</Text>
               <Text style={styles.childrenChalanInfo}>Challan No : {id}</Text>
               <Text style={styles.childrenChalanInfo}>Gate Pass No : </Text>
               {/* <Text style={styles.childrenChalanInfo}>Buyer : {order?.buyerName}</Text> */}
@@ -71,7 +66,7 @@ const ReturnChalan = ({ id,anotherInfo, data }) => {
             </View>
             <View style={{ width: "60%", height: "100%", borderRight: "1px solid black" }}>
               <Text style={{ textAlign: 'center', height: "5%", fontSize: 13, borderBottom: "1px solid black", paddingTop: 4 }}>Description of Yarn</Text>
-              <Text style={{ textAlign: 'left',  fontSize: 12, padding: 10, }}>{anotherInfo?.descriptionOfYarn} </Text>
+              <Text style={{ textAlign: 'left',  fontSize: 12, padding: 10, }}>{yarnDescription} </Text>
               <Text style={{ textAlign: 'left',  fontSize: 12, padding: 10,marginTop:200 }}>Process Loss </Text>
               <Text style={{textAlign:'left',height:"5%",width:"100%",position:'absolute',paddingTop:7,top:400,fontSize:12,textOverflow:"hidden",textAlign:'center',borderTop:"1px solid black"}}>Total</Text>
             </View>
@@ -85,7 +80,7 @@ const ReturnChalan = ({ id,anotherInfo, data }) => {
               
            <Text style={{ textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4,marginTop:10,  textAlign: 'center' }}> {data?.returnQuantity}  </Text>
            <Text style={{ textAlign: 'left', height: "5%", fontSize: 12, paddingTop: 4, marginTop: 220, textAlign: 'center' }}>  {data?.westQuantity} </Text>
-           <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,width:"100%",textAlign:'center',borderTop:"1px solid black"}}> {data?.returnQuantity + data?.westQuantity}</Text>
+           <Text style={{textAlign:'left',height:"5%",fontSize:12,position:'absolute',paddingTop:7,top:400,width:"100%",textAlign:'center',borderTop:"1px solid black"}}> {totalQuantity}</Text>
      
             </View>
             {/* <View style={{ width: "15%", height: "100%", borderRight: "1px solid black" }}>

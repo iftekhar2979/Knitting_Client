@@ -7,9 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Error from "@/components/utils/Error";
-import { useGetAllDeliveryManQuery } from "@/lib/features/delivery/deliveryApi";
 import { 
     FaSpinner, 
     FaTruckPickup, 
@@ -28,7 +26,6 @@ import Swal from "sweetalert2";
 
 const QuantityInfo = ({ id }) => {
     const { data: quantityData, isLoading: qLoading } = useGetOnlyQuantityInfoQuery(id);
-    const { data: deliveryMen, isLoading: dmLoading } = useGetAllDeliveryManQuery();
     const [createDelivery, { isLoading: deliveryLoading, isError: deliveryError }] = useCreateDeliveryMutation();
     
     const [vechile, setVechile] = useState("");
@@ -52,7 +49,7 @@ const QuantityInfo = ({ id }) => {
         }
     }, [deliveryQuantity, quantityData?.restQuantity]);
 
-    if (qLoading || dmLoading) return <Loading />;
+    if (qLoading) return <Loading />;
 
     const { 
         orderQuantity = 0, 
@@ -200,19 +197,15 @@ const QuantityInfo = ({ id }) => {
 
                             <div className="space-y-2">
                                 <Label className="text-xs font-bold uppercase tracking-wider text-slate-500">Delivery Personnel</Label>
-                                <Select onValueChange={setDeliveryMan} value={deliveryMan}>
-                                    <SelectTrigger className="h-12 border-slate-200 rounded-xl font-semibold">
-                                        <div className="flex items-center gap-2">
-                                            <FaUser className="text-slate-300" />
-                                            <SelectValue placeholder="Select delivery man" />
-                                        </div>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {deliveryMen?.map(man => (
-                                            <SelectItem key={man.id} value={man.name}>{man.name}</SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                                <div className="relative">
+                                    <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300" />
+                                    <Input
+                                        value={deliveryMan}
+                                        onChange={(e) => setDeliveryMan(e.target.value)}
+                                        placeholder="Delivery person name"
+                                        className="pl-10 h-12 border-slate-200 rounded-xl transition-all font-semibold"
+                                    />
+                                </div>
                             </div>
 
                             <div className="space-y-2 group">

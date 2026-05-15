@@ -10,27 +10,27 @@ import useDocumentTitle from '@/hooksAndFunctions/useDocumentTitle';
 import MakingDollarConvert from "@/hooksAndFunctions/numberToWord"
 const BillStatement = ({ id }) => {
     const { data: bill, isLoading, isError } = useGetSingleBillQuery(id);
-    const [updateBillNumber]=useUpdateBillNumberMutation()
+    const [updateBillNumber] = useUpdateBillNumberMutation()
     let [block, setBlock] = useState(false)
-    const [edit,setEdit]=useState(false)
-    const [state,setState]=useState("")
+    const [edit, setEdit] = useState(false)
+    const [state, setState] = useState("")
     // useDocumentTitle(`Bill Number ${bill ? bill[0]?.billDetails?.billNumber : ""}`)
     useEffect(() => {
         // Safely attempt to get the elementss
         const nav = document.getElementsByClassName("nav-back relative")[0];
         const footer = document.getElementsByClassName("px-4 py-8 dark:bg-gray-100 dark:text-gray-600")[0];
-        const sidebar= document.getElementsByClassName("flex flex-col h-screen bg-white dark:bg-gray-900  sm:pl-6")[0]
+        const sidebar = document.getElementsByClassName("flex flex-col h-screen bg-white dark:bg-gray-900  sm:pl-6")[0]
         // Check if elements exist before trying to modify them
         if (block) {
             if (nav) nav.classList.add("hidden");
             if (footer) footer.classList.add("hidden");
-            if(sidebar) sidebar.classList.add("hidden")
+            if (sidebar) sidebar.classList.add("hidden")
         }
         return () => {
             // Check again when cleaning up
             if (nav) nav.classList.remove("hidden");
             if (footer) footer.classList.remove("hidden");
-            if(sidebar) sidebar.classList.remove("hidden")
+            if (sidebar) sidebar.classList.remove("hidden")
         };
     }, [block])
     if (isLoading) {
@@ -38,11 +38,11 @@ const BillStatement = ({ id }) => {
     }
     if (isError) {
         return <div>Error loading bill data .</div>;
-    
+
     }
     // console.log(bill);
-    const handleUpdateBillNumber=()=>{
-        updateBillNumber({id,billNumber:state})
+    const handleUpdateBillNumber = () => {
+        updateBillNumber({ id, billNumber: state })
     }
     const handlePrint = () => {
         setBlock(true)
@@ -53,7 +53,7 @@ const BillStatement = ({ id }) => {
     }
 
     return (
-    
+
         <div>
             <section className='backgroundWaterMark bg-white'>
                 <div className='leading-4 text-black timesNewRoman'>
@@ -69,30 +69,30 @@ const BillStatement = ({ id }) => {
                     <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black', margin: "2px", marginBottom: '4px' }} className="mt-2"></h1>
                     <h1 style={{ width: '100%', height: '1px', backgroundColor: 'black' }}></h1>
                     <div className='text-center text-4xl  italic font-semibold  underline underLineOffset calibri' >Bill <span style={{ width: '153px', height: '1px', backgroundColor: 'black' }}></span></div>
-                   <div className="flex justify-between">
-                    <div className=' my-4 '>
+                    <div className="flex justify-between">
+                        <div className=' my-4 '>
+                            <div className='flex justify-between mt-2 '>
+                                <div className="flex "> <span className="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(bill[0]?.billDetails?.createdAt), 'PP')}</span></div>
+                            </div>
+                            <div ><span className="ml-2 widthHeading mt-2">To</span> <span className=''>: {bill[0]?.companyName}</span>
+                            </div>
+                            <div ><span className="ml-2 widthHeading mt-2">Address</span>  <span className=''>: {bill[0]?.company?.location}</span>
+                            </div>
+                            <div ><span className="ml-2 widthHeading mt-2">Season</span> <span className=''>: {bill[0].season} </span>
+                            </div>
+                        </div>
+
                         <div className='flex justify-between mt-2 '>
-                            <div className="flex "> <span className="ml-2 widthHeading">Date </span> <span className='ml-[5px]'> : {format(new Date(bill[0]?.billDetails?.createdAt), 'PP')}</span></div>
-                        </div>
-                        <div ><span className="ml-2 widthHeading mt-2">To</span> <span className=''>: {bill[0]?.companyName}</span>
-                        </div>
-                        <div ><span className="ml-2 widthHeading mt-2">Address</span>  <span className=''>: {bill[0]?.company?.location}</span>
-                        </div>
-                        <div ><span className="ml-2 widthHeading mt-2">Season</span> <span className=''>: {bill[0].season} </span>
+                            {/* <div className="flex "><span className="ml-2 widthHeading">Bill Number </span> <span className='ml-[5px]'> : {bill[0].billDetails.billNumber}</span></div> */}
+                            {!edit ? <h2 class="" onClick={() => setEdit(true)}>Bill Number : {bill[0].billDetails.billNumber}</h2> : <div className=''>Bill Number : <input type='text' onBlur={handleUpdateBillNumber} onChange={(e) => setState(e.target.value)} defaultValue={bill[0].billDetails.billNumber} /></div>}
                         </div>
                     </div>
-
-                    <div className='flex justify-between mt-2 '>
-                            {/* <div className="flex "><span className="ml-2 widthHeading">Bill Number </span> <span className='ml-[5px]'> : {bill[0].billDetails.billNumber}</span></div> */}
-                            {!edit ? <h2 class="" onClick={() => setEdit(true)}>Bill Number : {bill[0].billDetails.billNumber}</h2> : <div className=''>Bill Number : <input type='text' onBlur={handleUpdateBillNumber} onChange={(e)=>setState(e.target.value)} defaultValue={bill[0].billDetails.billNumber} /></div>}
-                        </div>
-                        </div>
                 </div>
 
 
                 <BillTable data={bill} />
                 <h2 class="font-semibold text-[11pt] mt-4 text-black italic">( In Words: {MakingDollarConvert(bill[0].billDetails.invoiceAmount)?.toUpperCase()} TAKA ONLY )</h2>
-                
+
                 <section class="w-full pt-4 mt-14">
                     <div className='flex justify-between '>
                         <div className='flex items-end'>
@@ -103,19 +103,19 @@ const BillStatement = ({ id }) => {
                             {/* <img src={storeManagerSignature} alt="store manager signature" className='w-28' /> */}
                             <p className='overline'>Store Manager</p>
                         </div>
-                        <div className='flex items-end '> 
+                        <div className='flex items-end '>
 
-                            <p className='overline'>Factory Manager / 
-                            Knitting Manager</p>
+                            <p className='overline'>Factory Manager /
+                                Knitting Manager</p>
                         </div>
                         <div className='flex items-end flex-col'>
-                                {/* <img src={authorestedSignature} alt="Hasan" className='w-28' /> */}
-                                <p className='overline'>Authorized Signature</p>
+                            {/* <img src={authorestedSignature} alt="Hasan" className='w-28' /> */}
+                            <p className='overline'>Authorized Signature</p>
                         </div>
                     </div>
 
                 </section>
-                
+
                 <div className='text-right'>
                     <Button className={`${block && 'hidden'}`} onClick={handlePrint}>Print this out!</Button>
                 </div>

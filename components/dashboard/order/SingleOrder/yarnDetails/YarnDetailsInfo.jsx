@@ -8,6 +8,7 @@ import { CSVLink } from "react-csv";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BiReset } from 'react-icons/bi';
+import { getYarnReturnTransactions } from './getYarnReturnTransactions';
 
 const YarnDetailsInfo = ({ id }) => {
     const { data, isLoading, isError } = useGetSingleYarnDetailsQuery(id);
@@ -24,7 +25,7 @@ const YarnDetailsInfo = ({ id }) => {
     const stats = data?.reduce((acc, item) => {
         acc.totalReceived += item.ReceivingQuantity || 0;
         acc.totalRest += item.restQuantity || 0;
-        const returns = item.yarnInformationWithDetails?.reduce((rAcc, r) => {
+        const returns = getYarnReturnTransactions(item).reduce((rAcc, r) => {
             rAcc.returned += r.returnQuantity || 0;
             rAcc.loss += r.westQuantity || 0;
             return rAcc;

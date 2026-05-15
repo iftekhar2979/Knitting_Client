@@ -24,7 +24,7 @@ export const columns = [
         accessorKey: "companyName",
         header: "Company",
         cell: ({ row }) => {
-            const companyName = row.original.company?.companyName || "N/A";
+            const companyName = row.original.companyName || "N/A";
             return <div className="font-semibold text-gray-800">{companyName}</div>
         }
     },
@@ -32,7 +32,7 @@ export const columns = [
         accessorKey: "buyerName",
         header: "Buyer",
         cell: ({ row }) => {
-            const buyerName = row.original.buyer?.buyerName || "N/A";
+            const buyerName = row.original?.buyerName || "N/A";
             return <div className="text-gray-600">{buyerName}</div>
         }
     },

@@ -21,6 +21,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import Swal from "sweetalert2";
 import { BiReset } from "react-icons/bi";
+import { getYarnReturnTransactions } from "./getYarnReturnTransactions";
 
 const SingleYarnInfo = ({ item }) => {
   const [addYarnReceived, { isLoading: isReturning }] = useAddYarnReceivedMutation();
@@ -31,11 +32,12 @@ const SingleYarnInfo = ({ item }) => {
     id,
     company: { companyName, location },
     yarnType,
+    descriptionOfYarn,
     ReceivingQuantity,
     restQuantity,
-    createdAt,
-    yarnInformationWithDetails = []
+    createdAt
   } = item;
+  const yarnReturnTransactions = getYarnReturnTransactions(item);
 
   const handleReturn = (e) => {
     const { name, value } = e.target;
@@ -150,17 +152,17 @@ const SingleYarnInfo = ({ item }) => {
         </div>
 
         {/* Sub-items List */}
-        {yarnInformationWithDetails.length > 0 && (
+        {yarnReturnTransactions.length > 0 && (
           <div className="space-y-3 pt-4 border-t">
             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
               <MdInfo /> Transactions History
             </p>
             <div className="space-y-2">
-              {yarnInformationWithDetails.map((transaction, idx) => (
+              {yarnReturnTransactions.map((transaction, idx) => (
                 <InfoOfYarn
                   key={transaction.id}
                   index={idx}
-                  anotherInfo={{ id, company: { companyName, location }, yarnType, ReceivingQuantity, createdAt }}
+                  anotherInfo={{ id, company: { companyName, location }, yarnType, descriptionOfYarn, ReceivingQuantity, createdAt }}
                   item={transaction}
                 />
               ))}

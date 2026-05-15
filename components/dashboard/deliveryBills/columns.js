@@ -47,7 +47,7 @@ export const columns = [
         header: "Bill / Chalan Number",
         cell: ({ row }) => {
             const { billNumber, id } = row.original
-            
+
             return (
                 <div className="flex flex-col gap-1">
                     <div className="font-bold text-sm text-gray-800 tracking-tight">
@@ -70,8 +70,8 @@ export const columns = [
     {
         id: "action",
         header: "Action",
-        cell: ({ row }) => {     
-            return(<Action id={row.original.id} chalanInfo={row.original} actionName={"Delete"} billAction={"Action"}/>)
+        cell: ({ row }) => {
+            return (<Action id={row.original.id} chalanInfo={row.original} actionName={"Delete"} billAction={"Action"} />)
         }
     }
 ]
